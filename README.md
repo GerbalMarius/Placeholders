@@ -1,0 +1,2 @@
+# Placeholders
+group_project
