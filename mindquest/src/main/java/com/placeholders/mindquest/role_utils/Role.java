@@ -1,6 +1,7 @@
 package com.placeholders.mindquest.role_utils;
 
 import com.placeholders.mindquest.user_utils.User;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(nullable = false, unique = true, length = 60)
     private String name;

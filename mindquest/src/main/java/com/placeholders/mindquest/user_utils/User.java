@@ -15,6 +15,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,7 +29,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;//primary key that will be invisible to users
+    private long id;//primary key that will be invisible to users
 
     @Column(nullable = false , unique = true, length = 90)
     private String email;//user's email
@@ -124,5 +125,19 @@ public class User {
     public String toString() {
         return String.format("User(id:%d, email:%s, firstName:%s, lastName:%s, roles:%s)", getId(), getEmail(),
                 getFirstName(), getLastName(), getRoles());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof User other)) return false;
+
+        return id == other.id && email.equals(other.email) && firstName.equals(other.firstName)
+                && lastName.equals(other.lastName) && Arrays.equals(roles.toArray(), other.roles.toArray());
+    }
+
+    @Override
+    public int hashCode() {
+       return Objects.hash(id, email, firstName, lastName, roles.hashCode());
     }
 }
