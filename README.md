@@ -35,7 +35,7 @@ A user friendly mental wealnesss app designed to keep track of the users mental 
 </ol>
 - For existing accounts : 
 <ol>
-  <li>Press "Sign in."</li>
+  <li>Press "Sign in.."</li>
   <li>Enter your email/phone number.</li>
   <li>Enter your password.</li>
   <li>Press "Sign in".</li>
