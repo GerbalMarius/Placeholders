@@ -1,6 +1,9 @@
 package com.placeholders.mindquest.user_utils;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * A user repository that will allow us to perform user data CRUD (create, read, update , delete) operations without having to write code ourselves.
@@ -9,4 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
+    @Modifying
+    @Query("delete from User u where u.id=:id")
+    void deleteById(@Param("id") long id);
 }

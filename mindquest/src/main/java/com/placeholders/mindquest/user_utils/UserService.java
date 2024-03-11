@@ -3,6 +3,7 @@ package com.placeholders.mindquest.user_utils;
 
 import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.role_utils.RoleRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,8 @@ public class UserService {
     public void saveUser(UserDTO userDTO){
         User user = new User(userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getFirstName(), userDTO.getLastName());
 
+
+
         Role role = roleRepository.findByName("ROLE_ADMIN");
 
         if (role == null) {
@@ -44,12 +47,7 @@ public class UserService {
     }
 
     public User findUserByEmail(String email){
-        User user = userRepository.findByEmail(email);
-
-        if (user == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return user;
+        return userRepository.findByEmail(email);
     }
 
     public List<UserDTO> findAll(){
@@ -65,9 +63,14 @@ public class UserService {
 
         userDTO.setEmail(user.getEmail());
 
+
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(userDTO.getLastName());
 
         return userDTO;
+    }
+
+    public void removeUserById(long id){
+        userRepository.deleteById(id);
     }
 }
