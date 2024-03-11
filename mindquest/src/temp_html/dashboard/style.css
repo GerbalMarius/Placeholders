@@ -1,0 +1,330 @@
+/*
+General
+*/
+
+@font-face
+{
+    font-family: Seurat-Pro-Extra-Bold;
+    src: url("./assets/Seurat-Pro-EB.otf") format("opentype");
+}
+
+@font-face
+{
+    font-family: Seurat-Pro-Bold;
+    src: url("./assets/Seurat-Pro-B.otf") format("opentype");
+}
+
+@font-face
+{
+    font-family: Seurat-Pro-Demi-Bold;
+    src: url("./assets/Seurat-Pro-DB.otf") format("opentype");
+}
+
+/*.black::selection
+{
+    background: #000000;
+    color: #ffffff;
+}
+
+.black::-moz-selection
+{
+    background: #000000;
+    color: #ffffff;
+}
+
+.white::selection
+{
+    background: #ffffff;
+    color: #000000;
+}
+
+.white::-moz-selection
+{
+    background: #ffffff;
+    color: #000000;
+}
+
+::selection
+{
+    background: rgb(255, 255, 255);
+    color: #000000;
+}
+
+::-moz-selection
+{
+    background: rgb(255, 255, 255);
+    color: #000000;
+}*/
+
+:root{
+    --text: #FFFFFF; /*NOTE: If changed be sure to update dot.svg color!*/
+    --container: rgba(255, 255, 255, 0.25);
+    --frame: #0e83b5bf;
+    /*--frame: rgba(14, 73, 181, .75);*/
+    --background: hwb(0 100% 0%);
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+*
+{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Seurat-Pro-Demi-Bold';
+    line-height: 1;
+    font-size: 24px;
+    color: var(--text);
+}
+
+/*
+Body
+*/
+
+body
+{
+    background-color: var(--background);
+    padding-bottom: 0.5rem;
+    background-image: url("./assets/parabolic-ellipse.svg");
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/*body
+{
+    background-color: var(--background);
+    padding-bottom: 0.5rem;
+    background-image: url("./assets/pattern.svg");
+    background-repeat: repeat;
+    background-position: center;
+    background-attachment: fixed;
+}*/
+
+/*
+Page
+*/
+
+header
+{
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    
+}
+
+.center
+{
+    width: 33rem;
+    padding: 1.5rem;
+    border-radius: 0 0 2rem 2rem;
+    overflow: hidden;
+    background-color: var(--frame);
+    backdrop-filter: blur(0.1rem);
+    display: flex;
+    justify-content: center;
+}
+
+#logo
+{
+    font-size: 3rem;
+    color: var(--text);
+    animation: load 3s !important;
+    font-family: 'Seurat-Pro-Extra-Bold';
+    filter: drop-shadow(0 0 0.25rem var(--shadow));
+}
+
+section
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+button
+{
+    background-color: var(--container);
+    border-radius: 1rem;
+    overflow: hidden;
+    font-size: 1rem;
+    padding: 1rem;
+    border: none;
+    transition: opacity 0.3s ease-in-out;
+    font-family: Seurat-Pro-Bold;
+}
+
+button:hover
+{
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+button:active
+{
+    filter: invert(100%);
+}
+
+.half
+{
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: .5rem;
+    margin: 0 .5rem .5rem .5rem;
+}
+
+h1
+{
+    font-size: 1.25rem;
+}
+
+li
+{
+	font-size: 0.75rem;
+    margin: 0;
+	padding: 0 0 0 1.5rem;
+	list-style: none;
+	background-image: url("./assets/dot.svg");
+	background-repeat: no-repeat;
+	background-position: left top;
+	background-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+ul
+{
+    padding: 0;
+}
+
+p
+{
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.box
+{
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    width: 32rem;
+    border-radius: 1.5rem;
+    overflow: auto;
+    backdrop-filter: blur(0.05rem);
+    background-color: var(--frame);
+    padding-top: .5rem;
+}
+
+.box-header
+{
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
+h1
+{
+    font-family: Seurat-Pro-Bold !important;
+    filter: drop-shadow(0 0 0.25rem var(--shadow));
+}
+
+.content
+{
+    padding: 1rem;
+    margin: 0 .5rem .5rem .5rem;
+    border-radius: 1rem;
+    background-color: var(--container);
+}
+
+.list-last
+{
+    margin: 0;
+}
+
+/*
+Load Animation
+*/
+
+@-webkit-keyframes load
+{
+    0%
+    {
+        -webkit-filter: blur(4vh) drop-shadow(0 0 0.25rem var(--shadow));
+        
+        -webkit-opacity: 0%;
+        height: 100vh;
+        -webkit-height: 100vh;
+    }
+    50%
+    {
+        -webkit-filter: blur(0) drop-shadow(0 0 0.25rem var(--shadow));
+        
+        -webkit-opacity: 100%;
+        height: 100vh;
+        -webkit-height: 100vh;
+    }
+    100%
+    {
+        -webkit-filter: blur(0) drop-shadow(0 0 0.25rem var(--shadow));
+        
+        -webkit-opacity: 100%;
+        height: auto;
+        -webkit-height: auto;
+    }
+}
+
+@keyframes load
+{
+    0%
+    {
+        -moz-filter: blur(4vh) drop-shadow(0 0 0.25rem var(--shadow));
+        filter: blur(4vh) drop-shadow(0 0 0.25rem var(--shadow));
+        -moz-opacity: 0%;
+        opacity: 0%;
+    }
+    50%
+    {
+        -moz-filter: blur(0) drop-shadow(0 0 0.25rem var(--shadow));
+        filter: blur(0) drop-shadow(0 0 0.25rem var(--shadow));
+        -moz-opacity: 100%;
+        opacity: 100%;
+    }
+    100%
+    {
+        -moz-filter: blur(0) drop-shadow(0 0 0.25rem var(--shadow));
+        filter: blur(0) drop-shadow(0 0 0.25rem var(--shadow));
+        -moz-opacity: 100%;
+        opacity: 100%;
+    }
+}
+
+#scrollBtn
+{
+    display: none;
+    position: fixed;
+    border: none;
+    bottom: .5rem;
+    right: .5rem;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    backdrop-filter: blur(0.05rem);
+    
+}
+
+#scrollBtn:hover
+{
+    opacity: 0.5 !important;
+}
+
+#scrollBtn:active img
+{
+    filter: invert(100%);
+}
+
+#scrollBtn img
+{
+    width: 2rem;
+    filter: drop-shadow(0 0 0.25rem var(--shadow));
+}
