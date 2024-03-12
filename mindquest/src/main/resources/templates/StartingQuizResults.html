@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/StartingQuizResults.css}">
+</head>
+<body>
+
+<div class="quiz-form">
+    <h1>Quiz Results</h1>
+    <p>Gender: <span th:text="${quizInfo.gender}"></span></p>
+    <p>Height: <span th:text="${quizInfo.height}"></span> meters</p>
+    <p>Weight: <span th:text="${quizInfo.weight}"></span> kilograms</p>
+    <p>Mental State: <span th:text="${mentalState}"></span></p>
+</div>
+
+</body>
+</html>
