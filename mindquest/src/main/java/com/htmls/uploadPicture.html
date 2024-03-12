@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Profile Picture</title>
+</head>
+<body>
+<h1>Upload Profile Picture</h1>
+<form id="uploadForm" action="/Settings/{id}/uploadProfilePicture" method="post" enctype="multipart/form-data">
+    <label for="profilePicture">Choose a profile picture:</label><br>
+    <input type="file" id="profilePicture" name="profilePicture" accept="image/*" required><br><br>
+
+    <button type="submit">Upload Picture</button>
+</form>
+
+<div id="imagePreview"></div>
+
+<script>
+    document.getElementById("profilePicture").addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            var imagePreview = document.getElementById("imagePreview");
+            imagePreview.innerHTML = "<img src='" + e.target.result + "' alt='Uploaded Image' style='max-width: 300px; max-height: 300px'>";
+        };
+
+        reader.readAsDataURL(file);
+    });
+</script>
+</body>
+</html>
