@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository users, RoleRepository roles,  PasswordEncoder passwordEncoder){
         this.userRepository = users;
@@ -70,7 +70,7 @@ public class UserService {
         return userDTO;
     }
 
-    public void removeUserById(long id){
-        userRepository.deleteById(id);
+    public User findUserByPassword(String password){
+       return userRepository.findByPassword(password);
     }
 }

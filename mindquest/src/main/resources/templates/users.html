@@ -28,6 +28,9 @@
     <div class="row col-md-10">
         <h2>Registered Users</h2>
     </div>
+    <div th:if="${param.success}" class="alert alert-success">
+        Logged in successfully!
+    </div>
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
         <tr>
