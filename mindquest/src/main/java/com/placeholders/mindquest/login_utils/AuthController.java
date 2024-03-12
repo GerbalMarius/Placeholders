@@ -39,10 +39,6 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String authPage(){
-        return "auth";
-    }
 
     //add user data to form register page
     @GetMapping("/register")
@@ -61,7 +57,6 @@ public class AuthController {
 
         User existingUser = userService.findUserByEmail(userData.getEmail());
 
-        System.out.println(existingUser.getPassword());
 
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             authResult.reject("email", null, "There is already an registered user with the same email.");
