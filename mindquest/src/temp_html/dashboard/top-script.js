@@ -1,9 +1,9 @@
 // Show/hide scroll to top button based on user scroll position
+var isTransitioning = false;
+
 window.onscroll = function() {
   showScrollButton();
 };
-
-var isTransitioning = false;
 
 function showScrollButton() {
   var scrollBtn = document.getElementById('scrollBtn');
