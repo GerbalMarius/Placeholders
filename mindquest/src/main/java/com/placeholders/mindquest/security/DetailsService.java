@@ -29,11 +29,7 @@ public class DetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email);
 
         if (user != null){
-            return org.springframework.security.core.userdetails.User.builder()
-                    .username(user.getEmail())
-                    .password(user.getPassword())
-                    .roles(String.valueOf(mapRolesToAuthorities(user.getRoles())))
-                    .build();
+            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
         }else {
             throw new UsernameNotFoundException("Invalid user name or password");
         }
