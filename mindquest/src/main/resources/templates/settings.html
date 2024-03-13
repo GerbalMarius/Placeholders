@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>User Settings</title>
+</head>
+<body>
+<h1 style="margin-top: 25px;">User settings</h1>
+<a th:href="@{/settings/change_user_name}" style="margin-top: 25px">Change first name</a>
+<br>
+<br>
+<a th:href="@{/settings/change_password}" style="margin-top: 25px">Change password</a>
+<br>
+<br>
+<a th:href="@{/settings/change_last_name}" style="padding-top: 25px">Change last name</a>
+<br>
+<br>
+<a th:href="@{/settings/pfp_upload}" style="padding-top: 25px">Change profile picture.</a>
+</body>
+</html>

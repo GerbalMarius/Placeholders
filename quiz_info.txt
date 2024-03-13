@@ -1,0 +1,1 @@
+male;2.0;100.0;8;6;yes;rarely;low;none;rarely

@@ -1,63 +1,94 @@
 package com.placeholders.mindquest.Settingscontrollers;
 
 import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
-import com.placeholders.mindquest.Settingsmodels.User;
+import com.placeholders.mindquest.user_utils.UserDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.Random;
 
-@RestController
+@Controller
 public class SettingsController {
     private ProfilePhoto photo = new ProfilePhoto("1","pfp.jpg");
-    private User user = new User("teemo","Vardenis","Pavardenis","var.pavard@gmail.com","boop123",photo);
-    @GetMapping("/Settings/{id}")
-    public User getUser(@PathVariable String id)
+    private UserDTO tempUser = new UserDTO(new Random().nextLong(0,1000), "Jonas", "Jonaitis", "jonas.jonaitis@gmail.com");
+
+    //TODO ORGANIZE PAGES ON A LATER DATE (TEMP SOLUTION FOR NOW.)
+    @GetMapping("/settings")
+    public String settingsPage(){
+        return "settings";
+    }
+
+    @GetMapping("/settings/change_user_name")
+    public String userNamePage(){
+        return "updateFirstName";
+    }
+    @GetMapping("/settings/change_password")
+    public String passwordPage(){
+        return "updatePassword";
+    }
+    @GetMapping("/settings/change_last_name")
+    public String lastNamePage(){
+        return "updateLastName";
+    }
+    @GetMapping("/settings/pfp_upload")
+    public String pfpUpload(){
+        return "uploadPicture";
+    }
+    @GetMapping("/settings/{id}")
+    public UserDTO getUser(@PathVariable long id)
     {
-        if(user == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return user;
+        if(tempUser == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return tempUser;
     }
-    @PutMapping("/Settings/{id}/updatePassword")
-    public String updatePassword(@PathVariable String id, @RequestParam String newPassword) {
+    @PutMapping("settings/{id}/updatePassword")
+    public String updatePassword(@PathVariable long id, @RequestParam String newPassword, Model model) {
         if(newPassword != null && !newPassword.isEmpty()) {
-            user.setPassWord(newPassword);
-            return "Slaptazodis pakeistas";
+            tempUser.setPassword(newPassword);
+            model.addAttribute("message", "Password was updated successfully");
+            return "redirect:/settings?password";
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Iveskite nauja slaptazodi, nepalikti tuscio langelio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Enter a new password, do not leave the field empty");
         }
     }
-    @PutMapping("/Settings/{id}/updateFirstName")
-    public String updateFirstName(@PathVariable String id, @RequestParam String firstName) {
+    @PutMapping("settings/{id}/updateFirstName")
+    public String updateFirstName(@PathVariable long id, @RequestParam String firstName, Model model) {
         if(firstName != null && !firstName.isEmpty()) {
-            user.setFirstName(firstName);
-            return "Vardas pakeistas";
+            tempUser.setFirstName(firstName);
+            model.addAttribute("message", "Name was changed successfully");
+            return "redirect:/settings?name";
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Iveskite varda, nepalikite tuscio langelio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New user name can't be empty");
         }
     }
-    @PutMapping("/Settings/{id}/updateLastName")
-    public String updateLastName(@PathVariable String id, @RequestParam String lastName) {
+    @PutMapping("settings/{id}/updateLastName")
+    public String updateLastName(@PathVariable long id, @RequestParam String lastName, Model model) {
         if(lastName != null && !lastName.isEmpty()) {
-            user.setLastName(lastName);
-            return "Pavarde pakeista";
+            tempUser.setLastName(lastName);
+            model.addAttribute("message", "Password was changed succesfully");
+            return "redirect:/settings?last_name";
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Iveskite pavarde, nepalikti tuscio langelio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New password can't be empty");
         }
     }
-    @PostMapping("/Settings/{id}/uploadProfilePicture")
-    public String uploadProfilePicture(@PathVariable String id, @RequestParam("profilePicture") MultipartFile profilePicture) {
+    @PostMapping("settings/{id}/uploadProfilePicture")
+    public String uploadProfilePicture(@PathVariable long id, @RequestParam("profilePicture") MultipartFile profilePicture, Model model) {
         if(profilePicture != null && !profilePicture.isEmpty()) {
             try {
                 photo.setData(profilePicture.getBytes());
-                return "Profilio paveikslelis pakeistas";
+                model.addAttribute("message", "Picture changed successfully");
+                return "redirect:/settings?profile_picture";
             } catch (IOException e) {
-                // Handle exceptions if any
-                return "Nepavyko ikelti profilio paveikslelio " + e.getMessage();
+              model.addAttribute("error", "Failed to upload picture." +" " + e.getMessage());
+              return "redirect:/settings?error";
             }
         } else {
-            return "Ikelkite nuotrauka";
+            model.addAttribute("pictureIsEmpty", "Picture update window is empty");
+            return "redirect:/settings?empty_picture";
         }
     }
 }

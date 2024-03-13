@@ -15,13 +15,13 @@
 
 <script>
     document.getElementById("changeLastNameForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
+        event.preventDefault();
 
-        // Get the value from the last name field
+
         var lastName = document.getElementById("lastName").value;
 
-        // Make a PUT request to update the last name
-        fetch("/Settings/{id}/updateLastName", {
+
+        fetch("/settings/{id}/updatePassword", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -35,8 +35,7 @@
                 throw new Error('Failed to update last name');
             }
             console.log('Last name updated successfully');
-            // Optionally, you can redirect the user to another page after successful last name update
-            // window.location.href = "/success.html";
+
         })
         .catch(error => {
             console.error('Error updating last name:', error);

@@ -13,14 +13,14 @@ import java.io.IOException;
 @Controller
 public class StaringQuizController {
 
-    @GetMapping("/startingquiz")
+    @GetMapping("/starting-quiz")
     public String startingQuiz(Model model) {
 
         model.addAttribute("quizInfo", new StartingQuizInfo());
-        return "startingQuiz";
+        return "StartingQuiz";
     }
 
-    @PostMapping("/startingquiz")
+    @PostMapping("/starting-quiz/results")
     public String SubmitQuiz(@ModelAttribute StartingQuizInfo startingQuizInfo, Model model) {
 
         // Calculates mental state and prints info that is submitted

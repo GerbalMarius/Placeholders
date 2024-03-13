@@ -1,5 +1,6 @@
 package com.placeholders.mindquest.user_utils;
 
+import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import com.placeholders.mindquest.role_utils.Role;
 
 import jakarta.persistence.CascadeType;

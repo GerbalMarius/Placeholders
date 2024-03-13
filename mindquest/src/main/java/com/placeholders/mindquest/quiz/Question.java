@@ -9,7 +9,7 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id; // Unique identifier for the question
+    private int id; // Unique identifier for the question
     private String questionTitle; // The text of the question
     private String option1;
     private String option2;

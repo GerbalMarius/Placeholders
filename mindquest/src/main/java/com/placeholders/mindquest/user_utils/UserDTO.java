@@ -1,5 +1,6 @@
 package com.placeholders.mindquest.user_utils;
 
+import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import jakarta.validation.constraints.NotEmpty;
 
 /**
@@ -8,9 +9,8 @@ import jakarta.validation.constraints.NotEmpty;
  */
 public class UserDTO {
     private long id;
-    @NotEmpty(message = "Name should not be empty")
+
     private String firstName;
-    @NotEmpty(message = "Last name should not be empty")
     private String lastName;
 
     @NotEmpty(message = "Email should not be empty")
@@ -18,6 +18,8 @@ public class UserDTO {
 
     @NotEmpty(message = "Password should not be empty")
     private String password;
+
+    private ProfilePhoto pfp;
 
     public UserDTO(){
 
@@ -28,6 +30,11 @@ public class UserDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public UserDTO(long id, String firstName, String lastName, String email, ProfilePhoto pfp){
+        this(id, firstName, lastName, email);
+        this.pfp = pfp;
     }
 
     public long getId() {
@@ -68,5 +75,13 @@ public class UserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ProfilePhoto getPfp() {
+        return pfp;
+    }
+
+    public void setPfp(ProfilePhoto pfp) {
+        this.pfp = pfp;
     }
 }

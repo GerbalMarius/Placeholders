@@ -17,11 +17,9 @@
     document.getElementById("changeFirstNameForm").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevent the form from submitting normally
 
-        // Get the value from the first name field
         var firstName = document.getElementById("firstName").value;
 
-        // Make a PUT request to update the first name
-        fetch("/Settings/{id}/updateFirstName", {
+        fetch("/settings/{id}/updateFirstName", {
             method: "PUT",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"

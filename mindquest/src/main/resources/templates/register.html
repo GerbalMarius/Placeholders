@@ -16,7 +16,7 @@
         <section>
             <div class="box">
                 <div class="box-header">
-                    <h1 class="white">Register</h1>
+                    <h1 class="white">Register <span th:if="${param.success}"><a th:href="@{/startingquiz}">Starter quizz</a></span></h1>
                 </div>
                 <div class="content">
                     <div th:if="${param.success}">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="form-label">Password</label>
-                            <input type="text" id="password" name="password" placeholder="Enter a password" th:field="*{password}"/>
+                            <input type="password" id="password" name="password" placeholder="Enter a password" th:field="*{password}"/>
                             <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
                         </div>
                         <div class="form-group">
