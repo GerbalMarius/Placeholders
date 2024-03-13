@@ -6,7 +6,7 @@ window.onscroll = function() {
 };
 
 function showScrollButton() {
-  var scrollBtn = document.getElementById('scrollBtn');
+  var scrollBtn = document.getElementById('top');
   var currentPosition = document.documentElement.scrollTop || document.body.scrollTop;
 
   if (currentPosition > 20 && !isTransitioning) {

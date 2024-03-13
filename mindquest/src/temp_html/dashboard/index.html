@@ -2,62 +2,38 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        
         <title>MindQuest</title>
-        <link rel="icon" type="image/x-icon" href="./favicon.ico">
         <script src="top-script.js"></script>
         <link rel="stylesheet" href="style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <header>
-            <div class="center">
-                <div id="logo" >MindQuest</div>
+            <div class="left">
+                <a id="logo" href="./index.html" class="navbar-brand">MindQuest</a>
             </div>
         </header>
         <section>
             <div class="box">
-                <div class="box-header">
-                    <h1 class="white">Explore MindQuest</h1>
-                </div>
-                <div class="half">
-                    <button onclick="window.location.href = 'https://ktu.edu'">Get Started</button>
-                    <button onclick="window.location.href = 'https://ktu.edu'">Log In</button>
+                <div id="summary" class="content">
+                    <p>Summary board is currently unavailable! Sorry for the inconvenience.</p>
                 </div>
             </div>
         </section>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">What is MindQuest?</h1>
-                </div>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, risus vitae cursus facilisis, sapien velit vulputate enim, sit amet ullamcorper felis purus sed neque. Nulla interdum, lacus convallis facilisis aliquam, elit:</p>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                        <li>Morbi commodo erat eu libero sollicitudin, in rhoncus magna egestas.</li>
-                        <li class="list-last">Aenean dapibus enim pulvinar, vestibulum ipsum consectetur, suscipit libero.</li>
-                    </ul>
+        <footer>
+            <div class="right">
+                <div class="four">
+                    <div id="profile-picture">
+                        <img src="./assets/face-smile.svg">
+                    </div>
+                    <h1 id="name">Tauras</h1>
+                    <a href="https://ktu.edu" class="button">Settings</a>
+                    <a href="https://ktu.edu" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
                 </div>
             </div>
-        </section>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">MindQuest Features</h1>
-                </div>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, risus vitae cursus facilisis, sapien velit vulputate enim, sit amet ullamcorper felis purus sed neque. Nulla interdum, lacus convallis facilisis aliquam, elit:</p>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                        <li>Morbi commodo erat eu libero sollicitudin, in rhoncus magna egestas.</li>
-                        <li class="list-last">Aenean dapibus enim pulvinar, vestibulum ipsum consectetur, suscipit libero.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <div id="scrollBtn" onclick="scrollToTop()">
-            <img src="./assets/top.svg">
+        </footer>
+        <div id="top" onclick="scrollToTop()">
+            <img alt="To Top" src="./assets/top.svg">
         </div>
     </body>
 </html>

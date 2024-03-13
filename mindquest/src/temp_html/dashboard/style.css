@@ -69,7 +69,7 @@ General
 {
     box-sizing: border-box;
     margin: 0;
-    font-family: 'Seurat-Pro-Demi-Bold';
+    font-family: 'Seurat-Pro-Demi-Bold', sans-serif;
     line-height: 1;
     font-size: 24px;
     color: var(--text);
@@ -82,7 +82,6 @@ Body
 body
 {
     background-color: var(--background);
-    padding-bottom: 0.5rem;
     background-image: url("./assets/parabolic-ellipse.svg");
     background-position: center;
     background-attachment: fixed;
@@ -103,16 +102,38 @@ header
     position: sticky;
     top: 0;
     display: flex;
-    justify-content: center;
-    z-index: 1;
+    justify-content: left;
+    z-index: 2;
     
 }
 
-.center
+.left
 {
     width: 33rem;
     padding: 1.5rem;
-    border-radius: 0 0 2rem 2rem;
+    border-radius: 0 0 2rem 0;
+    overflow: hidden;
+    background-color: var(--box);
+    backdrop-filter: blur(0.1rem);
+    display: flex;
+    justify-content: center;
+}
+
+footer
+{
+    margin-top: 0.5rem;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: right;
+    z-index: 1;
+}
+
+.right
+{
+    padding: 1rem;
+    border-radius: 2rem 0 0 0;
     overflow: hidden;
     background-color: var(--box);
     backdrop-filter: blur(0.1rem);
@@ -124,13 +145,14 @@ header
 {
     font-size: 3rem;
     color: var(--text);
-    font-family: 'Seurat-Pro-Extra-Bold';
+    font-family: 'Seurat-Pro-Extra-Bold', sans-serif;
     filter: drop-shadow(0 0 0.25rem var(--shadow));
 }
 
 section
 {
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     margin-top: 0.5rem;
@@ -140,7 +162,7 @@ section
 {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-    width: 32rem;
+    width: 48rem;
     border-radius: 1.5rem;
     overflow: auto;
     backdrop-filter: blur(0.05rem);
@@ -155,7 +177,7 @@ section
 
 h1
 {
-    font-family: Seurat-Pro-Bold !important;
+    font-family: Seurat-Pro-Bold, sans-serif !important;
     filter: drop-shadow(0 0 0.25rem var(--shadow));
     font-size: 1.25rem;
 }
@@ -168,23 +190,35 @@ h1
     background-color: var(--content);
 }
 
+#summary
+{
+    display: grid;
+	align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: calc(100vh - 14rem);
+}
+
+#summary p
+{
+    margin: 0;
+}
+
 p
 {
-    font-size: 0.75rem;
     margin-bottom: 0.5rem;
 }
 
 li
 {
 	font-size: 0.75rem;
-    margin: 0;
-	padding: 0 0 0 1.5rem;
+    padding: 0 0 0 1.5rem;
 	list-style: none;
 	background-image: url("./assets/dot.svg");
 	background-repeat: no-repeat;
 	background-position: left top;
 	background-size: 0.75rem;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem;
     color: var(--text);
 }
 
@@ -198,15 +232,35 @@ ul
     margin: 0;
 }
 
-.half
+.four
 {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 4rem auto auto auto;
     column-gap: .5rem;
-    margin: 0 .5rem .5rem .5rem;
+    width: 100%;
 }
 
-button
+#profile-picture
+{
+    height: 4rem;
+    filter: drop-shadow(0 0 0.25rem var(--shadow));
+}
+
+#profile-picture img
+{
+    height: 100%;
+    filter: drop-shadow(0 0 0.25rem var(--shadow));
+}
+
+#name
+{
+    display: grid;
+	align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.button
 {
     background-color: var(--content);
     border-radius: 1rem;
@@ -214,22 +268,42 @@ button
     font-size: 1rem;
     padding: 1rem;
     border: none;
-    transition: filter, opacity 0.3s ease-in-out;
-    font-family: Seurat-Pro-Bold;
+    transition: all 0.3s ease-in-out;
+    font-family: Seurat-Pro-Bold, sans-serif;
+    text-align: center;
+    display: grid;
+	align-items: center;
+    justify-content: center;
 }
 
-button:hover
+.button:hover
 {
     cursor: pointer;
     opacity: 0.5;
 }
 
-button:active
+.button:active
 {
-    filter: invert(100%);
+    background-color: var(--box);
 }
 
-#scrollBtn
+.content-button
+{
+    border-radius: 0.5rem !important;
+    padding: 0.5rem;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+a:visited
+{
+    color: var(--text);
+}
+
+#top
 {
     display: none;
     position: fixed;
@@ -240,23 +314,64 @@ button:active
     padding: 0;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    backdrop-filter: blur(0.05rem);
-    
+    transition: all 0.3s ease-in-out;
+    z-index: 2147483647;
 }
 
-#scrollBtn:hover
+#top:hover
 {
     opacity: 0.5 !important;
 }
 
-#scrollBtn:active img
+#top:active img
 {
     filter: invert(100%);
 }
 
-#scrollBtn img
+#top img
 {
     width: 2rem;
     filter: drop-shadow(0 0 0.25rem var(--shadow));
+}
+
+.text-link
+{
+    text-decoration: underline;
+}
+
+.text-link:hover{
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.text-link:active{
+    color: var(--box);
+}
+
+input
+{
+    margin-bottom: 0.5rem;
+    background-color: var(--content);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border: none;
+    transition: all 0.3s ease-in-out;
+}
+
+input:hover
+{
+    opacity: 0.5;
+}
+
+input:focus
+{
+    outline: none;
+    background-color: var(--box);
+}
+
+label, span, .text-link, input, p
+{
+    font-size: 0.75rem !important;
 }
