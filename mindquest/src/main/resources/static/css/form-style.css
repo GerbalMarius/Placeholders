@@ -1,9 +1,0 @@
-
-.hover-link{
-    color: rgb(0,100,200);
-    text-decoration: underline;
-}
-.hover-link:hover{
-    color: rgb(200,100,100);
-    text-decoration: none;
-}
