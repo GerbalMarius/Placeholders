@@ -1,6 +1,7 @@
 package com.placeholders.mindquest.user_utils;
 
 import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 /**
@@ -14,6 +15,7 @@ public class UserDTO {
     private String lastName;
 
     @NotEmpty(message = "Email should not be empty")
+    @Email
     private String email;
 
     @NotEmpty(message = "Password should not be empty")

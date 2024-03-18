@@ -32,6 +32,11 @@ public class Role {
 
     }
 
+    public Role(String name){
+        this.name = name;
+        this.users = new ArrayList<>();
+    }
+
     public Role(String name, List<User> users){
         this.name = name;
         this.users = new ArrayList<>(users);

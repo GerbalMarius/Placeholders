@@ -1,5 +1,6 @@
 package com.placeholders.mindquest.login_utils;
 
+import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserDTO;
 import com.placeholders.mindquest.user_utils.UserService;
@@ -17,13 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -83,12 +81,18 @@ public class AuthController {
     }
 
     @GetMapping("/login/check")
-    public String validateExistingUser( @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
+    public String validateExistingUser( @Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
         User userToFind = userService.findUserByEmail(userData.getEmail());
 
+        List<Role> userRoles = new ArrayList<>();
 
-        if (userToFind == null || userToFind.getEmail() == null || userToFind.getEmail().isEmpty()){
+        if (userToFind == null || userToFind.getEmail() == null || userToFind.getEmail().isEmpty()
+                || !userService.isValidPassword(userToFind, userData)) {
             authResult.reject("email", null, "Invalid email or password");
+        }
+
+        if (userToFind != null){
+            userRoles = userToFind.getRoles();
         }
 
 
@@ -97,7 +101,10 @@ public class AuthController {
             return "redirect:/login?error";
         }
 
-        return "redirect:/login?success";
+
+        return userRoles.stream().anyMatch(role -> role.getName().contains("ADMIN"))
+                ? "redirect:/users" :
+                "redirect:/login?success";
     }
     @GetMapping("/logout")
     public String logout(){
