@@ -25,7 +25,7 @@ public class StaringQuizController {
 
         // Calculates mental state and prints info that is submitted
         String mentalState = calculateMentalState(startingQuizInfo);
-        System.out.println("Submitted quiz info: " + startingQuizInfo.toString());
+        System.out.println("Submitted quiz info: " + startingQuizInfo);
 
         // Writes the submitted quiz info to a text file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("quiz_info.txt", true))) {

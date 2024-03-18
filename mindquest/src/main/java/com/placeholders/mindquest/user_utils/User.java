@@ -14,6 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +27,8 @@ import java.util.Objects;
  * @author marius
  */
 @Entity
+@Getter
+@Setter
 @Table(name = "users")
 public class User {
 
@@ -57,7 +61,6 @@ public class User {
 
     }
 
-
     public User(String email, String password, String firstName, String lastName) {
         this.email = email;
         this.password = password;
@@ -70,50 +73,10 @@ public class User {
         this.roles = new ArrayList<>(roles);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
     public void setEmail(String email) {
         this.email = Objects.requireNonNull(email, "Email can't be null");
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = Objects.requireNonNull(password, "Password can't be null");
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = Objects.requireNonNull(firstName, "Name can't be null");
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = Objects.requireNonNull(lastName, "LastName can't be null");
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
     public void setRoles(List<Role> roles) {
         this.roles = new ArrayList<>(Objects.requireNonNull(roles, "Roles can't be null"));
     }

@@ -3,22 +3,19 @@ package com.placeholders.mindquest.security;
 import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserRepository;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DetailsService implements UserDetailsService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public DetailsService(UserRepository repository){
         this.userRepository = repository;
