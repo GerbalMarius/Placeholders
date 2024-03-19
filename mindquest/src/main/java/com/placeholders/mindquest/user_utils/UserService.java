@@ -3,11 +3,9 @@ package com.placeholders.mindquest.user_utils;
 
 import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.role_utils.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,14 +18,14 @@ public class UserService {
 
     private final Set<String> adminKeys;
 
-    public UserService(UserRepository users, RoleRepository roles,  PasswordEncoder passwordEncoder){
+    public UserService(UserRepository users, RoleRepository roles, PasswordEncoder passwordEncoder) {
         this.userRepository = users;
         this.roleRepository = roles;
         this.passwordEncoder = passwordEncoder;
         this.adminKeys = Set.of("f7fde82ea02b", "ccbbab23654c", "5e12f9c12025", "2914f22fc348");
     }
 
-    public void saveUser(UserDTO userDTO){
+    public void saveUser(UserDTO userDTO) {
         User user = new User(userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getFirstName(), userDTO.getLastName());
 
 
@@ -42,8 +40,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    private Role assignRole(String passwordKey){
-        if (adminKeys.stream().anyMatch(key -> key.equals(passwordKey))){
+    private Role assignRole(String passwordKey) {
+        if (adminKeys.stream().anyMatch(key -> key.equals(passwordKey))) {
 
             Role admin = new Role("ROLE_ADMIN");
 
@@ -52,11 +50,11 @@ public class UserService {
         return roleRepository.save(new Role("USER"));
     }
 
-    public User findUserByEmail(String email){
+    public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public List<UserDTO> findAll(){
+    public List<UserDTO> findAll() {
         List<User> users = userRepository.findAll();
 
         return users.stream()
@@ -64,23 +62,20 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    private UserDTO convertUserToFormEntry(User user){
+    private UserDTO convertUserToFormEntry(User user) {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setEmail(user.getEmail());
 
 
         userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(userDTO.getLastName());
+        userDTO.setLastName(user.getLastName());
 
         return userDTO;
     }
 
-    public PasswordEncoder getPasswordEncoder() {
-        return passwordEncoder;
-    }
 
-    public boolean isValidPassword(User user , UserDTO userFormData){
+    public boolean isValidPassword(User user, UserDTO userFormData) {
         return passwordEncoder.matches(userFormData.getPassword(), user.getPassword());
     }
 }

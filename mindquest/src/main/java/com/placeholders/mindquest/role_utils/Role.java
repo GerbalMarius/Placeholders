@@ -42,7 +42,7 @@ public class Role {
         this.users = new ArrayList<>(users);
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 

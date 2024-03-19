@@ -38,12 +38,12 @@
                     <form th:action="@{/login/check}" method="get" role="form" class="form-horizontal" th:object="${user}">
                         <div class="form-group">
                             <label for="email" class="control-label">Email</label>
-                            <input type="text" id="email" name="email" placeholder="Enter email address" th:field="*{email}">
+                            <input type="text" id="email" name="email" required="required" placeholder="Enter email address" th:field="*{email}">
                             <p th:errors="*{email}" th:if="${#fields.hasErrors('email')}" class="text-danger">Invalid email*</p>
                         </div>
                         <div class="form-group">
                             <label for="password" class="control-label">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter password" th:field="*{password}">
+                            <input type="password" id="password" name="password" required="required" placeholder="Enter password" th:field="*{password}">
                             <p th:errors="*{password}" th:if="${#fields.hasErrors('password')}" class="text-danger">Invalid password*</p>
                         </div>
                         <div class="form-group">
