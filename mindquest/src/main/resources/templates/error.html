@@ -1,10 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MindQuest - Error</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>There was an unexpected error</h1>
+<header>
+    <div class="center">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="white">Unexpected Error</h1>
+        </div>
+        <div class="content">
+            <p class="last">An unexpected error has occurred.</p>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="full">
+            <a href="javascript:history.back()" class="button">Return</a>
+        </div>
+    </div>
+</section>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
 </body>
 </html>
