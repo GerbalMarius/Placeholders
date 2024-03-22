@@ -17,7 +17,7 @@ public class StaringQuizController {
     public String startingQuiz(Model model) {
 
         model.addAttribute("quizInfo", new StartingQuizInfo());
-        return "StartingQuiz";
+        return "starting-quiz";
     }
 
     @PostMapping("/starting-quiz/results")
@@ -38,7 +38,7 @@ public class StaringQuizController {
         // Returns a view with the submitted data and mental state
         model.addAttribute("quizInfo", startingQuizInfo);
         model.addAttribute("mentalState", mentalState);
-        return "StartingQuizResults";
+        return "starting-quiz-results";
     }
 
     private String calculateMentalState(StartingQuizInfo startingQuizInfo) {
