@@ -91,8 +91,8 @@ public class AuthController {
             model.addAttribute("message", "Invalid userName or password");
             return "redirect:/login?error";
         }
-
-
+        model.addAttribute("role", userRoles.get(0));
+        showAllUsers(model);
         return userRoles.stream().anyMatch(role -> role.getName().contains("ADMIN"))
                 ? "redirect:/users" :
                 "redirect:/login?success";
