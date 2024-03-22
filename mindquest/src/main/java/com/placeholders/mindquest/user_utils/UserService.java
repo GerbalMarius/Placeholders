@@ -78,4 +78,7 @@ public class UserService {
     public boolean isValidPassword(User user, UserDTO userFormData) {
         return passwordEncoder.matches(userFormData.getPassword(), user.getPassword());
     }
+    public void deleteUserById(int id){
+        userRepository.deleteById(id);
+    }
 }
