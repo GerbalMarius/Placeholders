@@ -2,15 +2,14 @@
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
-        <title>MindQuest</title>
+        <title>MindQuest - Dashboard</title>
         <script th:src="@{/js/top-script.js}"></script>
         <link rel="stylesheet" th:href="@{/css/dashboard-style.css}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
         <header>
             <div class="left">
-                <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
+                <a id="logo" th:href="@{/}">MindQuest</a>
             </div>
         </header>
         <section>
@@ -26,7 +25,7 @@
                     <div id="profile-picture">
                         <img th:src="@{/assets/face-smile.svg}">
                     </div>
-                    <h1 id="name">Tauras</h1>
+                    <h1 id="name">Name</h1>
                     <a th:href="@{/settings}" class="button">Settings</a>
                     <a th:href="@{/login}" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
                 </div>

@@ -25,19 +25,19 @@ public class SettingsController {
 
     @GetMapping("/settings/change_user_name")
     public String userNamePage(){
-        return "updateFirstName";
+        return "update-first-name";
     }
     @GetMapping("/settings/change_password")
     public String passwordPage(){
-        return "updatePassword";
+        return "update-password";
     }
     @GetMapping("/settings/change_last_name")
     public String lastNamePage(){
-        return "updateLastName";
+        return "update-last-name";
     }
     @GetMapping("/settings/pfp_upload")
     public String pfpUpload(){
-        return "uploadPicture";
+        return "upload-picture";
     }
 
 
