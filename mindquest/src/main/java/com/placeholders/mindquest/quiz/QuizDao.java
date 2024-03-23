@@ -1,2 +1,6 @@
-package com.placeholders.mindquest.quiz;public class QuizDao {
+package com.placeholders.mindquest.quiz;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface QuizDao extends JpaRepository<Quiz, Integer> {
 }

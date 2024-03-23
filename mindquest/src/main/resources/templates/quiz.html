@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" th:href="@{/css/StartingQuiz.css}">
 </head>
 <body>
-$END$
+<h1>Quiz</h1>
+<form id="quizForm" th:action="@{/quiz/getScore}" method="post" class="quiz-form">
+    <input type="hidden" name="quizId" th:value="${quiz.id}" />
+    <div th:each="question : ${quiz.questions}">
+        <h3 th:text="${question.questionTitle}"></h3>
+        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option1" required/> <span th:text="${question.option1}"></span></label><br>
+        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option2" required/> <span th:text="${question.option2}"></span></label><br>
+        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option3" required/> <span th:text="${question.option3}"></span></label><br>
+        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option4" required/> <span th:text="${question.option4}"></span></label><br>
+        <hr>
+    </div>
+    <button type="submit">Submit Quiz</button>
+</form>
 </body>
 </html>

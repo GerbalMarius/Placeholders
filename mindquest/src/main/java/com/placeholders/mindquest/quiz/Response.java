@@ -1,2 +1,11 @@
-package com.placeholders.mindquest.quiz;public class Response {
+package com.placeholders.mindquest.quiz;
+
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
+@Data
+@RequiredArgsConstructor
+public class Response {
+    private Integer id;
+    private String response;
 }

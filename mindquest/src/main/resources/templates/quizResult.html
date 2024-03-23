@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+    <link rel="stylesheet" th:href="@{/css/StartingQuiz.css}">
 </head>
 <body>
-$END$
+<h1>Quiz Result</h1>
+<p>Your mental wellness score: <span th:text="${score}"></span></p>
 </body>
 </html>
