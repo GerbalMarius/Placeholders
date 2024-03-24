@@ -17,7 +17,8 @@
             <div class="box">
                 <div id="summary">
                     <h1>Hello</h1>
-                    <h1 th:text="${currentUser.firstName}!"></h1>
+                    <h1 th:text="${currentUser.firstName}"></h1>
+                    <h1 th:if="${firstTime == true}"><a th:href="@{/starting-quiz}" class="button">Start Your journey here!</a></h1>
                 </div>
             </div>
         </section>

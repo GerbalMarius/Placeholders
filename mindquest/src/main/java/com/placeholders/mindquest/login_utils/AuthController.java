@@ -1,13 +1,13 @@
 package com.placeholders.mindquest.login_utils;
 
-import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserDTO;
 import com.placeholders.mindquest.user_utils.UserService;
 import jakarta.validation.Valid;
-import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,17 +17,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
+@Slf4j
 public class AuthController {
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
 
     private static User currentUser = null;
+    private static UserDTO firstTimeUser = null;
 
 
 
@@ -62,10 +63,14 @@ public class AuthController {
         if (authResult.hasErrors()){
             model.addAttribute("user", userData);
             model.addAttribute("message", "User already exists");
+            logger.info("Rejected register request");
             return "/register";
         }
 
         userService.saveUser(userData);
+        logger.info("Registration successful for user: " + userData.getEmail());
+
+        firstTimeUser = new UserDTO(userData.getId(), userData.getFirstName(), userData.getLastName(), userData.getEmail());
 
         return "redirect:/register?success";
     }
@@ -97,10 +102,14 @@ public class AuthController {
 
         if (authResult.hasErrors()){
             model.addAttribute("message", "Invalid userName or password");
+            logger.info("Rejected login request");
             return "redirect:/login?error";
         }
 
         currentUser = userToFind;
+
+        logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
+
 
 
         return  isAdmin ? "redirect:/users" : "redirect:/dashboard";
@@ -110,6 +119,10 @@ public class AuthController {
         return Optional.ofNullable(currentUser);
     }
 
+    public static Optional<UserDTO> firstTimeUser(){
+        return Optional.ofNullable(firstTimeUser);
+    }
+
     public static boolean isLoggedIn(){
         return currentUser().isPresent();
     }
@@ -117,6 +130,8 @@ public class AuthController {
     @GetMapping("/logout")
     public String logout(){
         currentUser = null;
+        firstTimeUser = null;
+        logger.info("Session has been cleared.");
         return "redirect:/login?logout";
     }
 
