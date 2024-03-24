@@ -22,7 +22,7 @@ public class HomeController {
         if (!AuthController.isLoggedIn() && AuthController.firstTimeUser().isEmpty()){
             return "redirect:/login?please";
         }
-
+        
         var user = getUser();
 
 
