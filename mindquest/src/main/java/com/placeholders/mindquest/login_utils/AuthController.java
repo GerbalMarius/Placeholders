@@ -81,9 +81,9 @@ public class AuthController {
 
     @GetMapping("/login/check")
     public String validateExistingUser( @Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
-        User userToFind = userService.findUserByEmail(userData.getEmail());
 
-        List<Role> userRoles = new ArrayList<>();
+        User userToFind = userService.findUserByEmail(userData.getEmail());
+        boolean isAdmin = false;
 
         if (userToFind == null || userToFind.getEmail() == null || userToFind.getEmail().isEmpty()
                 || !userService.isValidPassword(userToFind, userData)) {
@@ -91,7 +91,7 @@ public class AuthController {
         }
 
         if (userToFind != null){
-            userRoles = userToFind.getRoles();
+            isAdmin = userToFind.isAdmin();
         }
 
 
@@ -102,9 +102,8 @@ public class AuthController {
 
         currentUser = userToFind;
 
-        return userRoles.stream().anyMatch(role -> role.getName().contains("ADMIN"))
-                ? "redirect:/users" :
-                "redirect:/dashboard";
+
+        return  isAdmin ? "redirect:/users" : "redirect:/dashboard";
     }
 
     public static Optional<User> currentUser(){
