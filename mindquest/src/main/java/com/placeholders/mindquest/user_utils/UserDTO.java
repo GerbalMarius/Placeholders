@@ -28,7 +28,7 @@ public final class UserDTO {
     private ProfilePhoto pfp;
 
     public UserDTO(){
-
+        this(-1, "", "", "");
     }
 
     public UserDTO(long id, String firstName, String lastName, String email){

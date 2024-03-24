@@ -3,17 +3,7 @@ package com.placeholders.mindquest.user_utils;
 import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import com.placeholders.mindquest.role_utils.Role;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,9 +43,11 @@ public class User {
     @JoinTable(
             name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "role_id", referencedColumnName = "id")}
+            inverseJoinColumns ={@JoinColumn(name = "role_id", referencedColumnName = "id")},
+            foreignKey = @ForeignKey(name = "none")
     )
     private List<Role> roles = new ArrayList<>();
+    
 
     public User() {
 
@@ -78,6 +70,10 @@ public class User {
     }
     public void setRoles(List<Role> roles) {
         this.roles = new ArrayList<>(Objects.requireNonNull(roles, "Roles can't be null"));
+    }
+
+    public boolean isAdmin(){
+        return this.getRoles().stream().anyMatch(role -> role.getName().contains("ADMIN"));
     }
 
     /**

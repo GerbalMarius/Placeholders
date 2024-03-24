@@ -15,8 +15,8 @@
         </header>
         <section>
             <div class="box">
-                <div id="summary" class="content">
-                    <p>Summary board is currently unavailable! Sorry for the inconvenience.</p>
+                <div id="summary">
+                    <h1 th:text="${currentUser.firstName}"></h1>
                 </div>
             </div>
         </section>
@@ -28,7 +28,7 @@
                     </div>
                     <h1 id="name">Tauras</h1>
                     <a th:href="@{/settings}" class="button">Settings</a>
-                    <a th:href="@{/login}" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
+                    <a th:href="@{/logout}" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
                 </div>
             </div>
         </footer>

@@ -29,25 +29,26 @@ public class UserService {
         User user = new User(userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getFirstName(), userDTO.getLastName());
 
 
-        String adminRole = "ROLE_ADMIN";
+        String roleToFind;
 
-        Role role = roleRepository.findByName(adminRole);
+        if (adminKeys.stream().anyMatch(e -> e.equals(userDTO.getPassword()))){
+            roleToFind = "ROLE_ADMIN";
+        }
+        else {
+            roleToFind = "USER";
+        }
+
+        Role role = roleRepository.findByName(roleToFind);
 
         if (role == null) {
-            role = assignRole(user.getPassword());
+            role = assignRoleViaKey(roleToFind);
         }
         user.setRoles(List.of(role));
         userRepository.save(user);
     }
 
-    private Role assignRole(String passwordKey) {
-        if (adminKeys.stream().anyMatch(key -> key.equals(passwordKey))) {
-
-            Role admin = new Role("ROLE_ADMIN");
-
-            return roleRepository.save(admin);
-        }
-        return roleRepository.save(new Role("USER"));
+    private Role assignRoleViaKey(String roleName){
+       return roleRepository.save(new Role(roleName));
     }
 
     public User findUserByEmail(String email) {

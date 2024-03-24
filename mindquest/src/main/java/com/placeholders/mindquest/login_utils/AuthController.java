@@ -5,23 +5,31 @@ import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserDTO;
 import com.placeholders.mindquest.user_utils.UserService;
 import jakarta.validation.Valid;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AuthController {
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
+
+    private static User currentUser = null;
+
+
 
     public AuthController(UserService userService){
         this.userService = userService;
@@ -92,13 +100,24 @@ public class AuthController {
             return "redirect:/login?error";
         }
 
+        currentUser = userToFind;
 
         return userRoles.stream().anyMatch(role -> role.getName().contains("ADMIN"))
                 ? "redirect:/users" :
-                "redirect:/login?success";
+                "redirect:/dashboard";
     }
+
+    public static Optional<User> currentUser(){
+        return Optional.ofNullable(currentUser);
+    }
+
+    public static boolean isLoggedIn(){
+        return currentUser().isPresent();
+    }
+
     @GetMapping("/logout")
     public String logout(){
+        currentUser = null;
         return "redirect:/login?logout";
     }
 
@@ -107,6 +126,10 @@ public class AuthController {
     //handler method to add all users to our model
     @GetMapping("/users")
     public String showAllUsers(Model model){
+
+        if (!currentUser.isAdmin()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Normal users can't have administrative privileges");
+        }
 
         List<UserDTO> users = userService.findAll();
         model.addAttribute("users", users);
