@@ -12,14 +12,14 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class UserDTO {
+public final class UserDTO {
     private long id;
 
     private String firstName;
     private String lastName;
 
     @NotEmpty(message = "Email should not be empty")
-    @Email
+    @Email(regexp = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*([A-Za-z]{2,})$")
     private String email;
 
     @NotEmpty(message = "Password should not be empty")

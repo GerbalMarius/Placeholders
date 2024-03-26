@@ -35,12 +35,14 @@
         <thead class="table-dark">
         <tr>
             <th>Name</th>
+            <th>Last name</th>
             <th>Email</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
             <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
             <td th:text="${user.email}"></td>
         </tr>
         </tbody>

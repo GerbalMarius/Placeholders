@@ -73,7 +73,6 @@ public class User {
         this.roles = new ArrayList<>(roles);
     }
 
-
     public void setEmail(String email) {
         this.email = Objects.requireNonNull(email, "Email can't be null");
     }
