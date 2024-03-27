@@ -1,64 +1,62 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>MindQuest - Log In</title>
-        <script th:src="@{/js/top-script.js}"></script>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <header>
-            <div class="center">
-                <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
-            </div>
-        </header>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white"><a th:if="${param.success}" th:href="@{/users}">Users</a> <a th:if="${param.success}" th:href="@{/dashboard}">My Account</a></h1>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">Log In</h1>
-                </div>
-                <div class="content">
-                    <div th:if="${param.error}">
-                        <div class="alert alert-danger">Invalid email or password.</div>
-                    </div>
-                    <div th:if="${param.logout}">
-                        <div class="alert alert-success">Logged out successfully.</div>
-                    </div>
-                    <div th:if="${param.success}">
-                        <div class="alert alert-success">Logged in successfully.</div>
-                    </div>
-                    <form th:action="@{/login/check}" method="get" role="form" class="form-horizontal" th:object="${user}">
-                        <div class="form-group">
-                            <label for="email" class="control-label">Email</label>
-                            <input type="text" id="email" name="email" placeholder="Enter email address" th:field="*{email}">
-                            <p th:errors="*{email}" th:if="${#fields.hasErrors('email')}" class="text-danger">Invalid email*</p>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="control-label">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter password" th:field="*{password}">
-                            <p th:errors="*{password}" th:if="${#fields.hasErrors('password')}" class="text-danger">Invalid password*</p>
-                        </div>
-                        <div class="form-group">
-                            <button class="button content-button" type="submit">Submit</button>
-                            <span>Not registered?
-                                <a th:href="@{/register}" class="text-link">Sign up here.</a>
-                            </span>
-                            <span th:text="${message}"></span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <div id="top" onclick="scrollToTop()">
-            <img alt="To Top" th:src="@{/assets/top.svg}">
+<head>
+    <meta charset="UTF-8">
+    <title>MindQuest - Log In</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div class="center">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+    </div>
+</header>
+<section th:if="${param.success}">
+    <div class="box">
+        <div class="half">
+            <a th:href="@{/users}" class="button">Users</a>
+            <a th:href="@{/dashboard}" class="button">Dashboard</a>
         </div>
-    </body>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="major">Log In</h1>
+        </div>
+        <div class="content">
+            <div th:if="${param.error}" class="alert danger">Invalid email or password.</div>
+            <div th:if="${param.logout}" class="alert success">Logged out successfully.</div>
+            <div th:if="${param.success}" class="alert success">Logged in successfully.</div>
+            <form th:action="@{/login/check}" method="get" role="form" th:object="${user}">
+                <div>
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required="required" placeholder="Enter email address" th:field="*{email}">
+                    <span class="danger">*</span>
+                    <p th:errors="*{email}" th:if="${#fields.hasErrors('email')}" class="danger">Invalid email*</p>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required="required" placeholder="Enter password" th:field="*{password}">
+                    <span class="danger">*</span>
+                    <p th:errors="*{password}" th:if="${#fields.hasErrors('password')}" class="danger">Invalid password*</p>
+                </div>
+                <div>
+                    <button class="button content-button" type="submit">Continue</button>
+                    <span>Not registered?
+                        <a th:href="@{/register}" class="text-link">Sign up here.</a>
+                    </span>
+                </div>
+                <div th:if="${message}" style="margin-top: 1rem;">
+                    <span th:text="${message}" class="important"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
+</body>
 </html>

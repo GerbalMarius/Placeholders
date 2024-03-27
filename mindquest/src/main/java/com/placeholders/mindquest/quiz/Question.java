@@ -1,19 +1,21 @@
 package com.placeholders.mindquest.quiz;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
+@Data
+@Entity
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id; // Unique identifier for the question
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id; // Unique identifier for the question
     private String questionTitle; // The text of the question
     private String option1;
     private String option2;
