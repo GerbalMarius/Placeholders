@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Upload Profile Picture</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Change First Name</title>
 </head>
 <body>
+<div class="box">
 <h1>Upload Profile Picture</h1>
 <form id="uploadForm" action="/Settings/{id}/uploadProfilePicture" method="post" enctype="multipart/form-data">
     <label for="profilePicture">Choose a profile picture:</label><br>
@@ -28,5 +30,6 @@
         reader.readAsDataURL(file);
     });
 </script>
+</div>
 </body>
 </html>
