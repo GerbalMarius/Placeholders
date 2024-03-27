@@ -16,7 +16,7 @@ public class Journal {
     private int id;
     @Column(name = "title", nullable = false, length = 70)
     private String title;
-    @Column(name = "diaryEntry",nullable = false, length = 70)
+    @Column(name = "diaryEntry",nullable = false, length = 400)
     private String diaryEntry;
 
     public Journal(){

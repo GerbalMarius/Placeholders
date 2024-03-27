@@ -23,45 +23,38 @@
 <section>
     <div class="box">
         <div class="box-header">
-            <h1>Log In</h1>
             <h1 class="major">Log In</h1>
         </div>
-        <div class="content">
-            <div th:if="${param.error}" class="alert danger">Invalid email or password.</div>
-            <div th:if="${param.logout}" class="alert success">Logged out successfully.</div>
-            <div th:if="${param.success}" class="alert success">Logged in successfully.</div>
-            <form th:action="@{/login/check}" method="get" role="form" th:object="${user}">
-                <div>
-                    <label for="email">Email</label>
-                    <input type="text" id="email" name="email" required="required" placeholder="Enter email address" th:field="*{email}">
-                    <span class="danger">*</span>
-                    <p th:errors="*{email}" th:if="${#fields.hasErrors('email')}" class="danger">Invalid email*</p>
-                </div>
-                <div>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required="required" placeholder="Enter password" th:field="*{password}">
-                    <span class="danger">*</span>
-                    <p th:errors="*{password}" th:if="${#fields.hasErrors('password')}" class="danger">Invalid password*</p>
-                </div>
+        <div th:if="${param.error}" class="alert danger">Invalid email or password.</div>
+        <div th:if="${param.logout}" class="alert success">Logged out successfully.</div>
+        <div th:if="${param.success}" class="alert success">Logged in successfully.</div>
+        <form th:action="@{/login/check}" method="get" role="form" th:object="${user}">
+            <div>
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" required="required" placeholder="Enter email address"
+                       th:field="*{email}">
+                <span class="danger">*</span>
+                <p th:errors="*{email}" th:if="${#fields.hasErrors('email')}" class="danger">Invalid email*</p>
             </div>
-        </section>
-        <section>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required="required"
+                       placeholder="Enter password" th:field="*{password}">
+                <span class="danger">*</span>
+                <p th:errors="*{password}" th:if="${#fields.hasErrors('password')}" class="danger">Invalid
+                    password*</p>
+            </div>
+
             <div class="box">
-                <div class="box-header">
-                    <h1 class="white">Log In</h1>
-                    <h2 class="white" th:if="${param.please}">Please sign in to view your account</h2>
+            <div class="box-header">
+                <h2 class="white" th:if="${param.please}">Please sign in to view your account</h2>
                 <div>
                     <button class="button content-button" type="submit">Continue</button>
                     <span>Not registered?
                         <a th:href="@{/register}" class="text-link">Sign up here.</a>
                     </span>
-                </div>
-                <div th:if="${message}" style="margin-top: 1rem;">
-                    <span th:text="${message}" class="important"></span>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
 </section>
 <div id="top" onclick="scrollToTop()">
     <img alt="To Top" th:src="@{/assets/top.svg}">

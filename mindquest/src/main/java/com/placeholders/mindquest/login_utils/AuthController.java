@@ -110,7 +110,7 @@ public class AuthController {
 
         currentUser = userToFind;
       
-        showAllUsers(model);
+
 
         logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
         return  isAdmin ? "redirect:/users" : "redirect:/dashboard";

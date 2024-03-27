@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 @Controller
-@RequestMapping("quiz")
+@RequestMapping("/quiz")
 public class QuizController {
 
     @Autowired

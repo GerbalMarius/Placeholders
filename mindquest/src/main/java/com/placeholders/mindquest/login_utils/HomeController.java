@@ -28,11 +28,9 @@ public class HomeController {
 
         model.addAttribute("currentUser", user);
 
-        if (AuthController.firstTimeUser().isPresent()){
-            model.addAttribute("firstTime",true);
-            return "dashboard";
-        }
+        boolean isFirstTime = AuthController.firstTimeUser().isPresent();
 
+        model.addAttribute("firstTime",isFirstTime);
 
         return "dashboard";
     }

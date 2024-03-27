@@ -369,7 +369,7 @@ label, span, .text-link, input, p, .alert
 
 .important
 {
-    font-family: Seurat-Pro-Bold;
+    font-family: Seurat-Pro-Bold, sans-serif;
     font-style: italic;
 }
 
