@@ -39,12 +39,8 @@ public class SettingsController {
     public String pfpUpload(){
         return "upload-picture";
     }
-    @GetMapping("/settings/{id}")
-    public UserDTO getUser(@PathVariable long id)
-    {
-        if(tempUser == null) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return tempUser;
-    }
+
+
     @PutMapping("settings/{id}/updatePassword")
     public String updatePassword(@PathVariable long id, @RequestParam String newPassword, Model model) {
         if(newPassword != null && !newPassword.isEmpty()) {

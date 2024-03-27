@@ -10,9 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +71,7 @@ public class AuthController {
 
     @GetMapping("/login/check")
     public String validateExistingUser( @Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
+
         User userToFind = userService.findUserByEmail(userData.getEmail());
 
         List<Role> userRoles = new ArrayList<>();
@@ -92,7 +91,7 @@ public class AuthController {
             return "redirect:/login?error";
         }
 
-
+        showAllUsers(model);
         return userRoles.stream().anyMatch(role -> role.getName().contains("ADMIN"))
                 ? "redirect:/users" :
                 "redirect:/login?success";
@@ -111,5 +110,17 @@ public class AuthController {
         List<UserDTO> users = userService.findAll();
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @DeleteMapping("/users/{id}")
+    @ResponseBody
+    public String deleteUserByEmail(@PathVariable  int id, @Valid @ModelAttribute("user") UserDTO userData){
+        User user = userService.findUserByEmail(userData.getEmail());
+
+        if (user != null){
+            userService.deleteUserById(id);
+        }
+
+        return "redirect:/users?deleted";
     }
 }

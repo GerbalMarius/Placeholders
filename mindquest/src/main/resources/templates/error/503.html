@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MindQuest - 503</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div class="center">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="white">503 Service Unavailable</h1>
+        </div>
+        <div class="content">
+            <p class="last">The server is currently unable to handle the request due to temporary overloading or maintenance. This is usually a temporary condition.</p>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="full">
+            <a href="javascript:history.back()" class="button">Return</a>
+        </div>
+    </div>
+</section>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
+</body>
+</html>
