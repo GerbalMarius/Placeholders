@@ -37,6 +37,7 @@
             <th>Name</th>
             <th>Last name</th>
             <th>Email</th>
+            <th>Delete user</th>
         </tr>
         </thead>
         <tbody>
@@ -44,6 +45,9 @@
             <td th:text="${user.firstName}"></td>
             <td th:text="${user.lastName}"></td>
             <td th:text="${user.email}"></td>
+            <td>
+                <button>Delete User</button>
+            </td>
         </tr>
         </tbody>
     </table>

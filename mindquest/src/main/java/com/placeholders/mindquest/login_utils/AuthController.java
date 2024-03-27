@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -86,7 +87,7 @@ public class AuthController {
 
     @GetMapping("/login/check")
     public String validateExistingUser( @Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
-
+      
         User userToFind = userService.findUserByEmail(userData.getEmail());
         boolean isAdmin = false;
 
@@ -106,12 +107,12 @@ public class AuthController {
             return "redirect:/login?error";
         }
 
+
         currentUser = userToFind;
+      
+        showAllUsers(model);
 
         logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
-
-
-
         return  isAdmin ? "redirect:/users" : "redirect:/dashboard";
     }
 
@@ -148,5 +149,17 @@ public class AuthController {
         List<UserDTO> users = userService.findAll();
         model.addAttribute("users", users);
         return "users";
+    }
+
+    @DeleteMapping("/users/{id}")
+    @ResponseBody
+    public String deleteUserByEmail(@PathVariable  int id, @Valid @ModelAttribute("user") UserDTO userData){
+        User user = userService.findUserByEmail(userData.getEmail());
+
+        if (user != null){
+            userService.deleteUserById(id);
+        }
+
+        return "redirect:/users?deleted";
     }
 }
