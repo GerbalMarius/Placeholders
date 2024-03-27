@@ -17,13 +17,13 @@ public class QuizController {
 
     @GetMapping("create")
     public String getQuizCreationForm() {
-        return "getQuizCreationForm";
+        return "get-quiz-creation-form";
     }
 
     @PostMapping("createQuiz")
     public String createQuiz(@RequestParam int numOfQuestions, @RequestParam String title) {
         quizService.createQuiz(numOfQuestions, title);
-        return "createQuiz";
+        return "create-quiz";
     }
 
     @GetMapping("getQuiz")
@@ -51,7 +51,7 @@ public class QuizController {
 
         int result = quizService.calculateResult(quizId, responses);
         model.addAttribute("score", result);
-        return "quizResult";
+        return "quiz-result";
     }
 
 

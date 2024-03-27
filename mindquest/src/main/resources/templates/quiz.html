@@ -1,23 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz</title>
-    <link rel="stylesheet" th:href="@{/css/StartingQuiz.css}">
+    <title>MindQuest - Quiz</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1>Quiz</h1>
+<header>
+    <div class="center">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="major">Quiz</h1>
+        </div>
+        <div class="content">
+            <p class="last">Take this quiz to evaluate your mental wellness score. Click "Finish" at the end, if you want to complete the quiz and see the results!</p>
+        </div>
+    </div>
+</section>
 <form id="quizForm" th:action="@{/quiz/getScore}" method="post" class="quiz-form">
     <input type="hidden" name="quizId" th:value="${quiz.id}" />
-    <div th:each="question : ${quiz.questions}">
-        <h3 th:text="${question.questionTitle}"></h3>
-        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option1" required/> <span th:text="${question.option1}"></span></label><br>
-        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option2" required/> <span th:text="${question.option2}"></span></label><br>
-        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option3" required/> <span th:text="${question.option3}"></span></label><br>
-        <label><input type="radio" th:name="|responses[${question.id}].response|" value="option4" required/> <span th:text="${question.option4}"></span></label><br>
-        <hr>
-    </div>
-    <button type="submit">Submit Quiz</button>
+    <section  th:each="question : ${quiz.questions}">
+        <div class="box">
+            <div class="box-header">
+                <h1 th:text="${question.questionTitle}"></h1>
+            </div>
+            <div class="content">
+                <label><input type="radio" th:name="|responses[${question.id}].response|" value="option1" required/> <span th:text="${question.option1}"></span></label><br>
+                <label><input type="radio" th:name="|responses[${question.id}].response|" value="option2" required/> <span th:text="${question.option2}"></span></label><br>
+                <label><input type="radio" th:name="|responses[${question.id}].response|" value="option3" required/> <span th:text="${question.option3}"></span></label><br>
+                <label><input type="radio" th:name="|responses[${question.id}].response|" value="option4" required/> <span th:text="${question.option4}"></span></label><br>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="box">
+            <div class="full">
+                <button type="submit" class="button">Finish</button>
+            </div>
+        </div>
+    </section>
 </form>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
 </body>
 </html>
