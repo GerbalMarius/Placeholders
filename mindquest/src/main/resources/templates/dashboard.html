@@ -17,11 +17,12 @@
         <section>
             <div class="box">
                 <div id="summary">
-                    <h1>Hello</h1>
-                    <div class="content">
+                    <div class="box-header">
+                        <h1 style="font-size: 2rem">Hello!</h1>
+                    </div>
                     <h1 th:if="${firstTime == true}"><a th:href="@{/starting-quiz}" class="button">Start Your journey here!</a></h1>
                     <h1 th:unless="${firstTime == true}"><a th:href="@{/quiz/getQuiz}" class="button">Take your daly quest!</a></h1>
-                    </div>
+                    <a th:href="@{/journals}" class="button">Diary</a>
                 </div>
             </div>
         </section>
@@ -32,7 +33,6 @@
                         <img th:src="@{/assets/face-smile.svg}">
                     </div>
                     <h1 id="name" th:text="${currentUser.firstName}"></h1>
-                    <a th:href="@{/journals}" class="button">Diary</a>
                     <a th:href="@{/settings}" class="button">Settings</a>
                     <a th:href="@{/logout}" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
                 </div>
