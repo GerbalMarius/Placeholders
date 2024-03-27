@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -22,6 +22,7 @@ public class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
+
     @Test
     public void repositoryShouldCreateUser(){
         User user = new User("mariukas@gmail.com", "marius1254", "Marius", "Ambrazevicius");
@@ -30,6 +31,6 @@ public class UserRepositoryTests {
 
         User existingUser = entityManager.find(User.class, savedUser.getId());
 
-        Assertions.assertEquals(user.getEmail(), existingUser.getEmail());
+        assertEquals(user.getEmail(), existingUser.getEmail());
     }
 }

@@ -3,6 +3,7 @@ package com.placeholders.mindquest.user_utils;
 import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +29,7 @@ public final class UserDTO {
     private ProfilePhoto pfp;
 
     public UserDTO(){
-
+        this(-1, "", "", "");
     }
 
     public UserDTO(long id, String firstName, String lastName, String email){
