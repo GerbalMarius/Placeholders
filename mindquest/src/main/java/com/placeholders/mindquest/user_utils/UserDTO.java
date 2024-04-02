@@ -3,16 +3,13 @@ package com.placeholders.mindquest.user_utils;
 import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * User data transfer object used to transfer data between controller layer and frontend layer, basically the visible part of user data.
  * @author marius
  */
-@Getter
-@Setter
+@Data
 public final class UserDTO {
     private long id;
 
@@ -29,7 +26,7 @@ public final class UserDTO {
     private ProfilePhoto pfp;
 
     public UserDTO(){
-        this(-1, "", "", "");
+        this(0, "", "", "");
     }
 
     public UserDTO(long id, String firstName, String lastName, String email){
@@ -39,8 +36,9 @@ public final class UserDTO {
         this.email = email;
     }
 
-    public UserDTO(long id, String firstName, String lastName, String email, ProfilePhoto pfp){
+    public UserDTO(long id, String firstName, String lastName,String email, String password){
         this(id, firstName, lastName, email);
-        this.pfp = pfp;
+        this.password = password;
     }
+
 }

@@ -3,6 +3,7 @@ package com.placeholders.mindquest.user_utils;
 
 import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.role_utils.RoleRepository;
+import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,11 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
+    @Getter
     private final PasswordEncoder passwordEncoder;
 
+    @Getter
     private final Set<String> adminKeys;
 
     public UserService(UserRepository users, RoleRepository roles, PasswordEncoder passwordEncoder) {
@@ -25,7 +29,7 @@ public class UserService {
         this.adminKeys = Set.of("f7fde82ea02b", "ccbbab23654c", "5e12f9c12025", "2914f22fc348");
     }
 
-    public void saveUser(UserDTO userDTO) {
+    public User saveUser(UserDTO userDTO) {
         User user = new User(userDTO.getEmail(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getFirstName(), userDTO.getLastName());
 
 
@@ -37,18 +41,26 @@ public class UserService {
             role = assignRoleViaName(roleToFind);
         }
 
-        user.setRoles(List.of(role));
-        userRepository.save(user);
+        if (user.getRoles().isEmpty()) {
+            //sometimes it returns null for role value dunno why,
+            //so check is necessary
+            if (role == null) {
+                role = new Role(roleToFind);
+            }
+            user.setRoles(List.of(role));
+        }
+
+       return userRepository.save(user);
     }
 
+
     private String validateCredentials(UserDTO userDTO) {
-        String assignedRole;
+        String assignedRole = "USER";
 
         if (adminKeys.stream().anyMatch(e -> e.equals(userDTO.getPassword()))) {
             assignedRole = "ROLE_ADMIN";
-        } else {
-            assignedRole = "USER";
         }
+
         return assignedRole;
     }
 
@@ -84,8 +96,5 @@ public class UserService {
 
     public boolean isValidPassword(User user, UserDTO userFormData) {
         return passwordEncoder.matches(userFormData.getPassword(), user.getPassword());
-    }
-    public void deleteUserById(int id){
-        userRepository.deleteById(id);
     }
 }

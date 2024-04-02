@@ -150,16 +150,4 @@ public class AuthController {
         model.addAttribute("users", users);
         return "users";
     }
-
-    @DeleteMapping("/users/{id}")
-    @ResponseBody
-    public String deleteUserByEmail(@PathVariable  int id, @Valid @ModelAttribute("user") UserDTO userData){
-        User user = userService.findUserByEmail(userData.getEmail());
-
-        if (user != null){
-            userService.deleteUserById(id);
-        }
-
-        return "redirect:/users?deleted";
-    }
 }
