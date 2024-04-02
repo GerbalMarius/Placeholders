@@ -4,6 +4,7 @@ import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import com.placeholders.mindquest.role_utils.Role;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +18,7 @@ import java.util.Objects;
  * @author marius
  */
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "users")
 public class User {
 
@@ -76,27 +76,5 @@ public class User {
         return this.getRoles().stream().anyMatch(role -> role.getName().contains("ADMIN"));
     }
 
-    /**
-     * Use for logging if needed
-     * @return formatted user object
-     */
-    @Override
-    public String toString() {
-        return String.format("User(id:%d, email:%s, firstName:%s, lastName:%s, roles:%s)", getId(), getEmail(),
-                getFirstName(), getLastName(), getRoles());
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (!(obj instanceof User other)) return false;
-
-        return id == other.id && email.equals(other.email) && firstName.equals(other.firstName)
-                && lastName.equals(other.lastName) && Arrays.equals(roles.toArray(), other.roles.toArray());
-    }
-
-    @Override
-    public int hashCode() {
-       return Objects.hash(id, email, firstName, lastName, roles.hashCode());
-    }
 }
