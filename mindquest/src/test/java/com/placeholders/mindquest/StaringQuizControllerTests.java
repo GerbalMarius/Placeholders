@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import com.placeholders.mindquest.startingquiz.StaringQuizController;
 import com.placeholders.mindquest.startingquiz.StartingQuizInfo;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -75,9 +74,9 @@ class StaringQuizControllerTests {
         startingQuizInfo.setHeight(1.72);
         startingQuizInfo.setWeight(55);
 
-        Assertions.assertEquals("female", startingQuizInfo.getGender());
-        Assertions.assertEquals(1.72, startingQuizInfo.getHeight());
-        Assertions.assertEquals(55, startingQuizInfo.getWeight());
+        assertEquals("female", startingQuizInfo.getGender());
+        assertEquals(1.72, startingQuizInfo.getHeight());
+        assertEquals(55, startingQuizInfo.getWeight());
     }
 
     @Test
@@ -93,7 +92,7 @@ class StaringQuizControllerTests {
 
         String expected = "Good";
 
-        Assertions.assertEquals(expected, controller.calculateMentalState(startingQuizInfo));
+        assertEquals(expected, controller.calculateMentalState(startingQuizInfo));
     }
 
     @Test
@@ -107,7 +106,7 @@ class StaringQuizControllerTests {
         startingQuizInfo.setHardToSleep("yes");
         startingQuizInfo.setActivePerWeek("1-2");
 
-        Assertions.assertEquals("Fair", controller.calculateMentalState(startingQuizInfo));
+        assertEquals("Fair", controller.calculateMentalState(startingQuizInfo));
     }
 
     @Test
@@ -121,7 +120,7 @@ class StaringQuizControllerTests {
         startingQuizInfo.setHardToSleep("yes");
         startingQuizInfo.setActivePerWeek("none");
 
-        Assertions.assertEquals("Poor", controller.calculateMentalState(startingQuizInfo));
+        assertEquals("Poor", controller.calculateMentalState(startingQuizInfo));
     }
 
     @ParameterizedTest
@@ -132,7 +131,7 @@ class StaringQuizControllerTests {
             "high, always, sometimes, 4"
     })
     public void testCalculateStressScore(String stressLevel, String howOftenFeelTired, String fulfillment, int expected) {
-        Assertions.assertEquals(expected, controller.calculateStressScore(stressLevel, howOftenFeelTired, fulfillment));
+        assertEquals(expected, controller.calculateStressScore(stressLevel, howOftenFeelTired, fulfillment));
     }
 
     @ParameterizedTest
@@ -143,16 +142,16 @@ class StaringQuizControllerTests {
             "3, 4, yes, 0"
     })
     public void testCalculateSleepScore(int ratingOfSleep, int hoursOfSleep, String hardToSleep, int expected) {
-        Assertions.assertEquals(expected, controller.calculateSleepScore(ratingOfSleep, hoursOfSleep, hardToSleep));
+        assertEquals(expected, controller.calculateSleepScore(ratingOfSleep, hoursOfSleep, hardToSleep));
     }
 
     @Test
     public void testCalculateActivityScore() {
-        Assertions.assertEquals(5, controller.calculateActivityScore("5+"));
-        Assertions.assertEquals(4, controller.calculateActivityScore("3-4"));
-        Assertions.assertEquals(3, controller.calculateActivityScore("1-2"));
-        Assertions.assertEquals(1, controller.calculateActivityScore("none"));
-        Assertions.assertEquals(0, controller.calculateActivityScore(""));
+        assertEquals(5, controller.calculateActivityScore("5+"));
+        assertEquals(4, controller.calculateActivityScore("3-4"));
+        assertEquals(3, controller.calculateActivityScore("1-2"));
+        assertEquals(1, controller.calculateActivityScore("none"));
+        assertEquals(0, controller.calculateActivityScore(""));
     }
 
 }

@@ -42,11 +42,7 @@ public class UserService {
         }
 
         if (user.getRoles().isEmpty()) {
-            //sometimes it returns null for role value dunno why,
-            //so check is necessary
-            if (role == null) {
-                role = new Role(roleToFind);
-            }
+
             user.setRoles(List.of(role));
         }
 

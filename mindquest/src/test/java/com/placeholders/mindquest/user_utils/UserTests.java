@@ -77,11 +77,12 @@ public class UserTests {
 
     @Test
     public void userServiceShouldCreateUser(){
-        User user = new User("karolis@mockatis.gmail.com", "karolis123", "Karolis", "Mockaitis" , List.of(new Role("USER")));
+        User user = new User("karolis@mockatis.gmail.com", "karolis123", "Karolis", "Mockaitis");
 
         UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
 
         when(userRepository.save(any(User.class))).thenReturn(user);
+        when(roleRepository.save(any(Role.class))).thenReturn(USER_ROLE);
 
         User savedUser = userService.saveUser(userDTO);
 
@@ -137,24 +138,20 @@ public class UserTests {
 
     @Test
     public void passwordEncoderSuccessfullyEncryptsPassword(){
-        assertNotNull(passwordEncoder);
+
 
         User user = new User("john.doe@gmail.com", passwordEncoder.encode("john123"), "John", "Doe", List.of(USER_ROLE));
         UserDTO dtoForm = new UserDTO(0, "John", "Doe", "john.doe@gmail.com", "john123");
 
-        when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
-
-        assertNotEquals(user.getPassword(), dtoForm.getPassword());
 
 
+        assertNotNull(passwordEncoder);
+        assertNotEquals(dtoForm.getPassword(), user.getPassword());
 
-        //password encryption returns null because it is hidden from normal output streams
-        // we set it manually to succeed, will work normally during deployment ,
-        // because during tests the actual server does not start.
         when(userService.isValidPassword(user, dtoForm)).thenReturn(true);
-
         assertTrue(userService.isValidPassword(user, dtoForm));
     }
+
 
     @ParameterizedTest
     @CsvSource({"marius.ambrazevicius@gmail.com, true", "nosuchuser@gmail.com, false", "alice.smith@example.com, true", "idunno.idumb@gmail.com, false"})
