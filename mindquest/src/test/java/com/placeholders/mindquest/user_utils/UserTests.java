@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,7 +25,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserTests {
+class UserTests {
 
     private static final Role ADMIN_ROLE = Role.of("ROLE_ADMIN");
 
@@ -57,8 +56,10 @@ public class UserTests {
                 new User("bob.johnson@example.com", "bob789", "Bob", "Johnson")
         ));
         testUserDTOs = testUsers.stream()
-                .map(user -> new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail()))
+                .map(User::getTransferableData)
                 .collect(Collectors.toList());
+
+        when(roleRepository.save(any(Role.class))).thenReturn(USER_ROLE);
     }
 
     @AfterEach
@@ -76,13 +77,23 @@ public class UserTests {
     }
 
     @Test
+    public void transferableDataSuccessfullyCreatesDto(){
+        User user = testUsers.get(0);
+
+        assertNotNull(user);
+
+        UserDTO userDTO = user.getTransferableData();
+        assertEquals(user.getEmail(), userDTO.getEmail());
+    }
+
+
+    @Test
     public void userServiceShouldCreateUser(){
         User user = new User("karolis@mockatis.gmail.com", "karolis123", "Karolis", "Mockaitis");
 
         UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail());
 
         when(userRepository.save(any(User.class))).thenReturn(user);
-        when(roleRepository.save(any(Role.class))).thenReturn(USER_ROLE);
 
         User savedUser = userService.saveUser(userDTO);
 
@@ -133,7 +144,7 @@ public class UserTests {
 
         var foundUsers = userService.findAll();
 
-        assertEquals(foundUsers, testUserDTOs);
+        assertEquals(testUserDTOs, foundUsers);
     }
 
     @Test

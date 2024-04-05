@@ -72,21 +72,8 @@ public class UserService {
         List<User> users = userRepository.findAll();
 
         return users.stream()
-                .map(this::convertUserToFormEntry)
+                .map(User::getTransferableData)
                 .collect(Collectors.toList());
-    }
-
-    private UserDTO convertUserToFormEntry(User user) {
-        UserDTO userDTO = new UserDTO();
-
-        userDTO.setEmail(user.getEmail());
-
-
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-
-
-        return userDTO;
     }
 
 

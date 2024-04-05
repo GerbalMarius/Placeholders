@@ -1,5 +1,6 @@
 package com.placeholders.mindquest.login_utils;
 
+import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,6 @@ public class HomeController {
         if (!AuthController.isLoggedIn() && AuthController.firstTimeUser().isEmpty()){
             return "redirect:/login?please";
         }
-        
         var user = getUser();
 
 
@@ -42,7 +42,7 @@ public class HomeController {
         else if (AuthController.currentUser().isPresent()){
 
             return AuthController.currentUser()
-                    .map(user -> new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail()))
+                    .map(User::getTransferableData)
                     .orElse(new UserDTO());
         }
         throw new NoSuchElementException("No users currently present!");

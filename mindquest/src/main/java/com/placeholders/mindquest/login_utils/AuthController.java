@@ -102,7 +102,7 @@ public class AuthController {
 
 
         if (authResult.hasErrors()){
-            model.addAttribute("message", "Invalid userName or password");
+             model.addAttribute("message", "Invalid userName or password");
             logger.info("Rejected login request");
             return "redirect:/login?error";
         }
@@ -114,18 +114,6 @@ public class AuthController {
 
         logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
         return  isAdmin ? "redirect:/users" : "redirect:/dashboard";
-    }
-
-    public static Optional<User> currentUser(){
-        return Optional.ofNullable(currentUser);
-    }
-
-    public static Optional<UserDTO> firstTimeUser(){
-        return Optional.ofNullable(firstTimeUser);
-    }
-
-    public static boolean isLoggedIn(){
-        return currentUser().isPresent();
     }
 
     @GetMapping("/logout")
@@ -149,5 +137,25 @@ public class AuthController {
         List<UserDTO> users = userService.findAll();
         model.addAttribute("users", users);
         return "users";
+    }
+
+    public static Optional<User> currentUser(){
+        return Optional.ofNullable(currentUser);
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        AuthController.currentUser = currentUser;
+    }
+
+    public static Optional<UserDTO> firstTimeUser(){
+        return Optional.ofNullable(firstTimeUser);
+    }
+
+    public static void setFirstTimeUser(UserDTO firstTimeUser) {
+        AuthController.firstTimeUser = firstTimeUser;
+    }
+
+    public static boolean isLoggedIn(){
+        return currentUser().isPresent();
     }
 }

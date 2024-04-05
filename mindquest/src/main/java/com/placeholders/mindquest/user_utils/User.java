@@ -1,15 +1,11 @@
 package com.placeholders.mindquest.user_utils;
 
-import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import com.placeholders.mindquest.role_utils.Role;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -74,6 +70,14 @@ public class User {
 
     public boolean isAdmin(){
         return this.getRoles().stream().anyMatch(role -> role.getName().contains("ADMIN"));
+    }
+
+    /**
+     * Gets User in a form of a DTO
+     * @return user's dto
+     */
+    public UserDTO getTransferableData(){
+        return new UserDTO(id, firstName, lastName, email, password);
     }
 
 
