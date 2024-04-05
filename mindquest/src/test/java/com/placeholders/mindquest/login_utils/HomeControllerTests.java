@@ -85,8 +85,5 @@ class HomeControllerTests {
 
         assertEquals("dashboard", viewName);
     }
-
-    @Test
-    public void dashboardShouldThrowAnErrorWhenNoUsersAreCurrentlyPresent(){
-    }
+    
 }
