@@ -85,5 +85,5 @@ class HomeControllerTests {
 
         assertEquals("dashboard", viewName);
     }
-    
+
 }
