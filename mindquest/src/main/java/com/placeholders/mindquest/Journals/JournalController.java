@@ -1,10 +1,13 @@
 package com.placeholders.mindquest.Journals;
 
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class JournalController {
     private JournalRepository journalRepository;
 
     @GetMapping("/journals")
-    public String showRegisterPage(org.springframework.ui.Model model){
+    public String showRegisterPage(Model model){
         JournalDTO journal = new JournalDTO();
         model.addAttribute("journal", journal);
         List<Journal> journalList = journalRepository.findAll();
@@ -28,6 +31,7 @@ public class JournalController {
       journalRepository.deleteById(journalId);
       return "redirect:/journals";
   }
+
   @PostMapping("/createJournal")
   public String createJournalEntry(@Valid @ModelAttribute("journal") Journal journal) {
         Journal newJournal = new Journal();

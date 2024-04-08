@@ -1,59 +1,80 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>MindQuest - Register</title>
-        <script th:src="@{/js/top-script.js}"></script>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <header>
-            <div class="center">
-                <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
-            </div>
-        </header>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">Register <span th:if="${param.success}"><a th:href="@{/startingquiz}">Starter quizz</a></span></h1>
-                </div>
-                <div class="content">
-                    <div th:if="${param.success}">
-                        <div class="alert alert-info">You have successfully registered for our app!</div>
-                    </div>
-                    <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
-                        <h1 th:text="${message}" style="color: red;"></h1>
-                        <div class="form-group">
-                            <label for="firstName" class="form-label">First Name</label>
-                            <input  type="text" id="firstName" name="firstName" placeholder="Enter your first name" th:field="*{firstName}"/>
-                            <p th:errors="*{firstName}" class="text-danger" th:if="${#fields.hasErrors('firstName')}"></p>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName" class="form-label">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" th:field="*{lastName}"/>
-                            <p th:errors="*{lastName}" class="text-danger" th:if="${#fields.hasErrors('lastName')}"></p>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" id="email" name="email" placeholder="Enter a valid email address" th:field="*{email}"/>
-                            <p th:errors="*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Enter a password" th:field="*{password}"/>
-                            <p th:errors="*{password}" class="text-danger" th:if="${#fields.hasErrors('password')}"></p>
-                        </div>
-                        <div class="form-group">
-                            <button class="button content-button" type="submit">Register</button>
-                            <span>Already registered? <a th:href="@{/login}" class="text-link">Log in here.</a></span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
-        <div id="top" onclick="scrollToTop()">
-            <img alt="To Top" th:src="@{/assets/top.svg}">
+<head>
+    <meta charset="UTF-8">
+    <title>MindQuest - Register</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <div class="center">
+        <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
+    </div>
+</header>
+<section th:if="${param.success}">
+    <div class="box">
+        <div class="half">
+            <a th:href="@{/users}" class="button">Users</a>
+            <a th:href="@{/dashboard}" class="button">Dashboard</a>
         </div>
-    </body>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="white">Register</h1>
+        </div>
+        <div class="content">
+            <div th:if="${param.success}" class="alert success">You have successfully registered!</div>
+            <form method="post" role="form" th:action="@{/register/save}" th:object="${user}">
+                <div>
+                    <label for="firstName">First Name</label>
+                    <input  type="text" id="firstName" name="firstName" required="required" placeholder="Enter your first name" th:field="*{firstName}"/>
+                    <span class="danger">*</span>
+                    <p th:errors="*{firstName}" class="danger" th:if="${#fields.hasErrors('firstName')}"></p>
+                </div>
+                <div>
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required="required" placeholder="Enter your last name" th:field="*{lastName}"/>
+                    <span class="danger">*</span>
+                    <p th:errors="*{lastName}" class="danger" th:if="${#fields.hasErrors('lastName')}"></p>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required="required" placeholder="Enter a valid email address" th:field="*{email}"/>
+                    <span class="danger">*</span>
+                    <p th:errors="*{email}" class="danger" th:if="${#fields.hasErrors('email')}"></p>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required="required" placeholder="Enter a password" th:field="*{password}"/>
+                    <span class="danger">*</span>
+                    <p th:errors="*{password}" class="danger" th:if="${#fields.hasErrors('password')}"></p>
+                </div>
+                <div>
+                    <button class="button content-button" type="submit">Continue</button>
+                    <span>Already registered?
+                        <a th:href="@{/login}" class="text-link">Log in here.</a>
+                    </span>
+                </div>
+                <div th:if="${message}" style="margin-top: 1rem;">
+                    <span th:text="${message}" class="important"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<section th:if="${param.success}">
+    <div class="box">
+        <div class="full">
+            <a th:href="@{/starting-quiz}" class="button">Starting Quiz</a>
+        </div>
+    </div>
+</section>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
+</body>
 </html>

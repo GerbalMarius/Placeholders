@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+
     <head>
         <meta charset="UTF-8">
         <title>MindQuest</title>
@@ -15,8 +16,13 @@
         </header>
         <section>
             <div class="box">
-                <div id="summary" class="content">
-                    <p>Summary board is currently unavailable! Sorry for the inconvenience.</p>
+                <div id="summary">
+                    <div class="box-header">
+                        <h1 style="font-size: 2rem">Hello!</h1>
+                    </div>
+                    <h1 th:if="${firstTime == true}"><a th:href="@{/starting-quiz}" class="button">Start Your journey here!</a></h1>
+                    <h1 th:unless="${firstTime == true}"><a th:href="@{/quiz/getQuiz}" class="button">Take your daly quest!</a></h1>
+                    <a th:href="@{/journals}" class="button">Diary</a>
                 </div>
             </div>
         </section>
@@ -26,14 +32,14 @@
                     <div id="profile-picture">
                         <img th:src="@{/assets/face-smile.svg}">
                     </div>
-                    <h1 id="name">Tauras</h1>
+                    <h1 id="name" th:text="${currentUser.firstName}"></h1>
                     <a th:href="@{/settings}" class="button">Settings</a>
-                    <a th:href="@{/login}" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
+                    <a th:href="@{/logout}" class="button" style="color: hwb(0 25% 0%);">Log Out</a>
                 </div>
             </div>
         </footer>
-        <div id="top" onclick="scrollToTop()">
-            <img alt="To Top" src="./assets/top.svg">
-        </div>
-    </body>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" src="./assets/top.svg">
+</div>
+</body>
 </html>

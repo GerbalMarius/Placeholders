@@ -29,7 +29,6 @@ public class SecurityConfig {
 
         httpSecurity.csrf(Customizer.withDefaults());
 
-
         return httpSecurity.build();
     }
 

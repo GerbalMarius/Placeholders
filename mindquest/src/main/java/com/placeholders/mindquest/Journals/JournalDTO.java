@@ -1,22 +1,17 @@
 package com.placeholders.mindquest.Journals;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class JournalDTO {
     private int id;
     private String title;
     private String diaryEntry;
 
-    public JournalDTO()
-    {
-
-    }
-    public JournalDTO(int id, String title, String diaryEntry) {
-        this.id = id;
-        this.title = title;
-        this.diaryEntry = diaryEntry;
-    }
 }

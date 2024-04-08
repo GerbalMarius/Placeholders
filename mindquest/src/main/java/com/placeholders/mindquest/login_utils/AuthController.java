@@ -1,27 +1,37 @@
 package com.placeholders.mindquest.login_utils;
 
-import com.placeholders.mindquest.role_utils.Role;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserDTO;
 import com.placeholders.mindquest.user_utils.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
+@Slf4j
 public class AuthController {
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final UserService userService;
+
+    private static User currentUser = null;
+    private static UserDTO firstTimeUser = null;
+
+
 
     public AuthController(UserService userService){
         this.userService = userService;
@@ -54,10 +64,14 @@ public class AuthController {
         if (authResult.hasErrors()){
             model.addAttribute("user", userData);
             model.addAttribute("message", "User already exists");
+            logger.info("Rejected register request");
             return "/register";
         }
 
         userService.saveUser(userData);
+        logger.info("Registration successful for user: " + userData.getEmail());
+
+        firstTimeUser = new UserDTO(userData.getId(), userData.getFirstName(), userData.getLastName(), userData.getEmail());
 
         return "redirect:/register?success";
     }
@@ -73,9 +87,9 @@ public class AuthController {
 
     @GetMapping("/login/check")
     public String validateExistingUser( @Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
+      
         User userToFind = userService.findUserByEmail(userData.getEmail());
-
-        List<Role> userRoles = new ArrayList<>();
+        boolean isAdmin = false;
 
         if (userToFind == null || userToFind.getEmail() == null || userToFind.getEmail().isEmpty()
                 || !userService.isValidPassword(userToFind, userData)) {
@@ -83,22 +97,30 @@ public class AuthController {
         }
 
         if (userToFind != null){
-            userRoles = userToFind.getRoles();
+            isAdmin = userToFind.isAdmin();
         }
 
 
         if (authResult.hasErrors()){
-            model.addAttribute("message", "Invalid userName or password");
+             model.addAttribute("message", "Invalid userName or password");
+            logger.info("Rejected login request");
             return "redirect:/login?error";
         }
 
 
-        return userRoles.stream().anyMatch(role -> role.getName().contains("ADMIN"))
-                ? "redirect:/users" :
-                "redirect:/login?success";
+        currentUser = userToFind;
+      
+
+
+        logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
+        return  isAdmin ? "redirect:/users" : "redirect:/dashboard";
     }
+
     @GetMapping("/logout")
     public String logout(){
+        currentUser = null;
+        firstTimeUser = null;
+        logger.info("Session has been cleared.");
         return "redirect:/login?logout";
     }
 
@@ -108,8 +130,32 @@ public class AuthController {
     @GetMapping("/users")
     public String showAllUsers(Model model){
 
+        if (!currentUser.isAdmin()){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Normal users can't have administrative privileges");
+        }
+
         List<UserDTO> users = userService.findAll();
         model.addAttribute("users", users);
         return "users";
+    }
+
+    public static Optional<User> currentUser(){
+        return Optional.ofNullable(currentUser);
+    }
+
+    public static void setCurrentUser(User currentUser) {
+        AuthController.currentUser = currentUser;
+    }
+
+    public static Optional<UserDTO> firstTimeUser(){
+        return Optional.ofNullable(firstTimeUser);
+    }
+
+    public static void setFirstTimeUser(UserDTO firstTimeUser) {
+        AuthController.firstTimeUser = firstTimeUser;
+    }
+
+    public static boolean isLoggedIn(){
+        return currentUser().isPresent();
     }
 }

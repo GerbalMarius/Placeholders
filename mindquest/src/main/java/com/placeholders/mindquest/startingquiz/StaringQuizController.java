@@ -17,7 +17,7 @@ public class StaringQuizController {
     public String startingQuiz(Model model) {
 
         model.addAttribute("quizInfo", new StartingQuizInfo());
-        return "StartingQuiz";
+        return "starting-quiz";
     }
 
     @PostMapping("/starting-quiz/results")
@@ -38,10 +38,10 @@ public class StaringQuizController {
         // Returns a view with the submitted data and mental state
         model.addAttribute("quizInfo", startingQuizInfo);
         model.addAttribute("mentalState", mentalState);
-        return "StartingQuizResults";
+        return "starting-quiz-results";
     }
 
-    private String calculateMentalState(StartingQuizInfo startingQuizInfo) {
+    public String calculateMentalState(StartingQuizInfo startingQuizInfo) {
 
         int stressScore = calculateStressScore(startingQuizInfo.getStressLevel(), startingQuizInfo.getHowOftenFeelTired(), startingQuizInfo.getFulfillment());
         int sleepScore = calculateSleepScore(startingQuizInfo.getRatingOfSleep(), startingQuizInfo.getHoursOfSleep(), startingQuizInfo.getHardToSleep());
@@ -57,7 +57,7 @@ public class StaringQuizController {
         }
     }
 
-    private int calculateStressScore(String stressLevel, String howOftenFeelTired, String fulfillment) {
+    public int calculateStressScore(String stressLevel, String howOftenFeelTired, String fulfillment) {
 
         int stressScore = 0;
 
@@ -111,7 +111,7 @@ public class StaringQuizController {
 
         return stressScore;
     }
-    private int calculateSleepScore(int ratingOfSleep, int hoursOfSleep, String hardToSleep) {
+    public int calculateSleepScore(int ratingOfSleep, int hoursOfSleep, String hardToSleep) {
 
         int sleepScore = 0;
 
@@ -147,7 +147,7 @@ public class StaringQuizController {
         return sleepScore;
 
     }
-    private int calculateActivityScore(String activePerWeek) {
+    public int calculateActivityScore(String activePerWeek) {
         return switch (activePerWeek) {
             case "5+" -> 5; // Very active
             case "3-4" -> 4; // Moderately active

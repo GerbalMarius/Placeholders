@@ -42,7 +42,11 @@ public class Role {
         this.users = new ArrayList<>(users);
     }
 
-    public Long getId() {
+    public static Role of(String name){
+        return new Role(name);
+    }
+
+    public long getId() {
         return id;
     }
 

@@ -1,5 +1,6 @@
 package com.placeholders.mindquest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.IOException;
 
 @SpringBootApplication
+@Slf4j
 public class MindquestApplication {
 
 	private static final String URL = "http://localhost:8081";
@@ -34,7 +36,7 @@ public class MindquestApplication {
 				rt.exec("Open " + URL);
 			}
 		}catch (IOException ioxe){
-			logger.info("ERROR: COULDN'T OPEN WEBPAGE VIA URL " + URL);
+			logger.error("ERROR: COULDN'T OPEN WEBPAGE VIA URL " + URL);
 		}
 	}
 
