@@ -41,7 +41,6 @@ public class JournalController {
         journalRepository.save(newJournal);
         return "redirect:/journals";
   }
-
  @PostMapping("/updateJournal")
  public String updateJournal(@RequestParam("id") int journalId, @RequestParam("content") String content) {
      Journal journal = journalRepository.findById(journalId).orElse(null);
@@ -51,5 +50,8 @@ public class JournalController {
      }
      return "redirect:/journals";
  }
-
+    public void setJournalRepository(JournalRepository journalRepository) {
+        this.journalRepository = journalRepository;
+    }
 }
+
