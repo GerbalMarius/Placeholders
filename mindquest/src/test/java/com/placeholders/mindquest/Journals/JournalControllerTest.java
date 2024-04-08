@@ -1,4 +1,4 @@
-package com.placeholders.mindquest;
+package com.placeholders.mindquest.Journals;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.placeholders.mindquest.Journals.Journal;
-import com.placeholders.mindquest.Journals.JournalController;
-import com.placeholders.mindquest.Journals.JournalDTO;
-import com.placeholders.mindquest.Journals.JournalRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +30,7 @@ public class JournalControllerTest {
     private JournalRepository journalRepository;
     private JournalController journalController;
     private Model model;
+
 
     @BeforeEach
     public void setUp() {
@@ -65,14 +62,22 @@ public class JournalControllerTest {
     @Test
     public void testCreateJournalEntry() {
         JournalRepository journalRepository = mock(JournalRepository.class);
+
         JournalController journalController = new JournalController();
+
         journalController.setJournalRepository(journalRepository);
+
         Journal journalArgument = new Journal();
+
         journalArgument.setTitle("Test Title");
+
         when(journalRepository.save(any(Journal.class))).thenAnswer(invocation -> {
             Journal savedJournal = invocation.getArgument(0);
+
             assertEquals(journalArgument.getTitle(), savedJournal.getTitle());
+
             assertEquals("Insert text", savedJournal.getDiaryEntry());
+
             return savedJournal;
         });
         journalController.createJournalEntry(journalArgument);

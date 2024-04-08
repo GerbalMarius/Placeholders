@@ -1,10 +1,8 @@
-package com.placeholders.mindquest;
+package com.placeholders.mindquest.startingquiz;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import com.placeholders.mindquest.startingquiz.StaringQuizController;
-import com.placeholders.mindquest.startingquiz.StartingQuizInfo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

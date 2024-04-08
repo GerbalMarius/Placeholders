@@ -31,8 +31,6 @@ class UserTests {
 
     private static final Role USER_ROLE = Role.of("USER");
 
-
-
     @Mock
     private UserRepository userRepository;
 
@@ -46,7 +44,9 @@ class UserTests {
     private UserService userService;
 
     private List<User> testUsers;
+
     private List<UserDTO> testUserDTOs;
+
     @BeforeEach
      void init(){
         testUsers = new ArrayList<>( List.of(
@@ -151,12 +151,12 @@ class UserTests {
     public void passwordEncoderSuccessfullyEncryptsPassword(){
 
 
+        assertNotNull(passwordEncoder);
+
         User user = new User("john.doe@gmail.com", passwordEncoder.encode("john123"), "John", "Doe", List.of(USER_ROLE));
         UserDTO dtoForm = new UserDTO(0, "John", "Doe", "john.doe@gmail.com", "john123");
 
 
-
-        assertNotNull(passwordEncoder);
         assertNotEquals(dtoForm.getPassword(), user.getPassword());
 
         when(userService.isValidPassword(user, dtoForm)).thenReturn(true);
