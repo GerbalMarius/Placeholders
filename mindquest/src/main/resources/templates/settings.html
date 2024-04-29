@@ -17,5 +17,22 @@
 <br>
 <br>
 <a th:href="@{/settings/pfp_upload}" style="padding-top: 25px">Change profile picture.</a>
+<br>
+<br>
+<h1>User settings</h1>
+
+<div th:if="${user.isPresent()}" id="profile-picture">
+    <label>User ID: <span th:text="${user.get().getId()}"></span></label><br>
+    <label>First Name: <span th:text="${user.get().getFirstName()}"></span></label><br>
+    <label>Last Name: <span th:text="${user.get().getLastName()}"></span></label><br>
+    <label>Email: <span th:text="${user.get().getEmail()}"></span></label><br>
+
+</div>
+<div id="imagePreview">
+
+    <img th:if="${photo == null}" th:src="@{/assets/face-smile.svg}" alt="Default Image" style="max-width: 100px; max-height: 100px">
+
+    <img th:if="${photo != null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image" style="max-width: 100px; max-height: 100px">
+</div>
 </body>
 </html>
