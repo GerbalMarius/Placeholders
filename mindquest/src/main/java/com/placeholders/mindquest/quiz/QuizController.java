@@ -1,5 +1,7 @@
 package com.placeholders.mindquest.quiz;
 
+import com.placeholders.mindquest.tips.Tip;
+import com.placeholders.mindquest.tips.TipDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ public class QuizController {
 
     @Autowired
     QuizService quizService;
+
+    @Autowired
+    private TipDao tipDao;
 
     @GetMapping("create")
     public String getQuizCreationForm() {
@@ -50,9 +55,29 @@ public class QuizController {
         }
 
         int result = quizService.calculateResult(quizId, responses);
-        model.addAttribute("score", result);
+        int result1 = result*100/20;
+
+        model.addAttribute("score", result1);
+
+        String category = getCategoryFromScore(result);
+
+        Tip tip = tipDao.findRandomTipByCategory(category);
+
+        if (tip != null) {
+            model.addAttribute("tip", tip);
+        }
+
         return "quiz-result";
     }
 
+    private String getCategoryFromScore(int score) {
+        if (score >= 16) {
+            return "high";
+        } else if (score >= 11) {
+            return "medium";
+        } else {
+            return "low";
+        }
+    }
 
 }
