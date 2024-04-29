@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>MindQuest - Quiz</title>
     <script th:src="@{/js/top-script.js}"></script>
+    <script th:src="@{/js/quiz-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -24,8 +25,8 @@
 </section>
 <form id="quizForm" th:action="@{/quiz/getScore}" method="post" class="quiz-form">
     <input type="hidden" name="quizId" th:value="${quiz.id}" />
-    <section  th:each="question : ${quiz.questions}">
-        <div class="box">
+    <section class="question-section" th:each="question, iterStat : ${quiz.questions}">
+        <div class="box" id="question-box-[[${iterStat.index}]]">
             <div class="box-header">
                 <h1 th:text="${question.questionTitle}"></h1>
             </div>
@@ -37,16 +38,25 @@
             </div>
         </div>
     </section>
-    <section>
-        <div class="box">
-            <div class="full">
-                <button type="submit" class="button">Finish</button>
-            </div>
-        </div>
-    </section>
 </form>
+<section>
+    <div class="box">
+        <div class="half navigation-buttons">
+            <button class="prev-button button" type="button">Previous</button>
+            <button class="next-button button" type="button">Next</button>
+        </div>
+    </div>
+</section>
 <div id="top" onclick="scrollToTop()">
     <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
+<footer>
+    <div class="footer-center">
+        <span id="counter" class="index">1</span>
+        <span class="index">｜</span>
+        <span id="total" class="index">[[${quiz.questions.size()}]]</span>
+        <button type="submit" class="finish-button button">Finish</button>
+    </div>
+</footer>
 </body>
 </html>
