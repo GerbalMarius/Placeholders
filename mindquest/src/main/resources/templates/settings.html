@@ -17,5 +17,19 @@
 <br>
 <br>
 <a th:href="@{/settings/pfp_upload}" style="padding-top: 25px">Change profile picture.</a>
+<br>
+<br>
+<h1>User settings</h1>
+<!-- Label to display user information -->
+<div th:if="${user.isPresent()}" id="profile-picture">
+    <label>User ID: <span th:text="${user.get().getId()}"></span></label><br>
+    <label>First Name: <span th:text="${user.get().getFirstName()}"></span></label><br>
+    <label>Last Name: <span th:text="${user.get().getLastName()}"></span></label><br>
+    <label>Email: <span th:text="${user.get().getEmail()}"></span></label><br>
+    <!-- Add more labels for other user information as needed -->
+</div>
+<div th:if="${profilePhotoData != null}">
+    <img th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Profile Picture" style="width: 100px; height: 100px;">
+</div>
 </body>
 </html>

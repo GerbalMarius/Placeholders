@@ -7,41 +7,13 @@
 </head>
 <body>
 <div class="box">
-<h1>Change First Name</h1>
-<form id="changeFirstNameForm">
-    <label for="firstName">First Name:</label><br>
-    <input type="text" id="firstName" name="firstName" required><br>
-    <button type="submit">Change First Name</button><br>
-</form>
-
-<script>
-    document.getElementById("changeFirstNameForm").addEventListener("submit", function(event) {
-        event.preventDefault(); // Prevent the form from submitting normally
-
-        var firstName = document.getElementById("firstName").value;
-
-        fetch("/settings/{id}/updateFirstName", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: new URLSearchParams({
-                firstName: firstName
-            })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to update first name');
-            }
-            console.log('First name updated successfully');
-            // Optionally, you can redirect the user to another page after successful first name update
-            // window.location.href = "/success.html";
-        })
-        .catch(error => {
-            console.error('Error updating first name:', error);
-        });
-    });
-</script>
+    <h1>Change First Name</h1>
+    <form th:action="@{/settings/updateFirstName}" method="post">
+        <label for="firstName">First Name:</label><br>
+        <input type="text" id="firstName" name="firstName" required><br>
+        <button type="submit">Change First Name</button><br>
+    </form>
 </div>
+
 </body>
 </html>

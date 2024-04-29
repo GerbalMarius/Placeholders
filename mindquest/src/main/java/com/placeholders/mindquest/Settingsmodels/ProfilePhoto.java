@@ -1,22 +1,28 @@
 package com.placeholders.mindquest.Settingsmodels;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-
+@Entity
 @Setter
 @Getter
+@Table(name = "profilePhoto")
 public class ProfilePhoto {
-    private String id;
-    private String fileName;
+    @Id
+    private long id;
+
     @JsonIgnore
+    @Column(name = "data", nullable = false, length = 1000000)
     private byte[] data;
 
     public ProfilePhoto() {
     }
-    public ProfilePhoto(String id, String fileName) {
+    public ProfilePhoto(long id) {
         this.id = id;
-        this.fileName = fileName;
     }
 
 
