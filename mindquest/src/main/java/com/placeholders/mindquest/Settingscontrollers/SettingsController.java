@@ -4,7 +4,6 @@ import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
 import com.placeholders.mindquest.Settingsmodels.ProfilePhotoRepository;
 import com.placeholders.mindquest.login_utils.AuthController;
 import com.placeholders.mindquest.user_utils.User;
-import com.placeholders.mindquest.user_utils.UserDTO;
 import com.placeholders.mindquest.user_utils.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,16 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
-import java.util.Random;
+
 
 @Controller
 public class SettingsController {
@@ -33,8 +27,6 @@ public class SettingsController {
     private ProfilePhotoRepository profilePhotoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private UserDTO tempUser = new UserDTO(new Random().nextLong(0,1000), "Jonas", "Jonaitis", "jonas.jonaitis@gmail.com");
 
     //TODO ORGANIZE PAGES ON A LATER DATE (TEMP SOLUTION FOR NOW.)
     @GetMapping("/settings")
