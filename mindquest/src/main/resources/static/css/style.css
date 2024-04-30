@@ -129,9 +129,9 @@ header
     position: sticky;
     top: 0;
     display: flex;
-    justify-content: center;
+    justify-content: left;
     z-index: 1;
-    
+    pointer-events: none;
 }
 
 footer
@@ -139,33 +139,36 @@ footer
     position: fixed;
     bottom: 0;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     z-index: 1;
     width: 100%;
+    pointer-events: none;
 }
 
 .footer-center
 {
     width: 33rem;
     padding: 1.5rem;
-    border-radius: 2rem 2rem 0 0;
+    border-radius: 2rem 0 0 0;
     overflow: hidden;
     background-color: var(--box);
     backdrop-filter: blur(0.1rem);
     display: flex;
     justify-content: center;
+    pointer-events: all;
 }
 
 .center
 {
     width: 33rem;
     padding: 1.5rem;
-    border-radius: 0 0 2rem 2rem;
+    border-radius: 0 0 2rem 0;
     overflow: hidden;
     background-color: var(--box);
     backdrop-filter: blur(0.1rem);
     display: flex;
     justify-content: center;
+    pointer-events: all;
 }
 
 #logo
@@ -178,9 +181,11 @@ footer
 
 .index
 {
-    font-size: 3rem !important;
+    font-size: 2rem !important;
     font-family: Seurat-Pro-Bold, sans-serif !important;
     filter: drop-shadow(0 0 0.25rem var(--shadow)) !important;
+    display: grid;
+    align-items: center;
 }
 
 section
@@ -273,6 +278,11 @@ ul
     margin-left: 1.5rem !important;
 }
 
+.current-index
+{
+    margin-left: 2rem !important;
+}
+
 .button
 {
     background-color: var(--content);
@@ -318,7 +328,7 @@ a:visited
     display: none;
     position: fixed;
     border: none;
-    bottom: .5rem;
+    bottom: 6.5rem;
     right: .5rem;
     background-color: transparent;
     padding: 0;
@@ -447,4 +457,59 @@ label, span, .text-link, input, p, .alert
 .value-control:active
 {
     scale: 0.75;
+}
+
+.radio-label
+{
+    display: flex;
+}
+
+.radio-label input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0 !important;
+    top: 0.25rem;
+}
+
+.radio-label .radio-text
+{
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.select {
+    height: 0.75rem;
+    width: 0.75rem;
+    background-color: var(--content);
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+}
+
+.radio-label:hover input[type="radio"] ~ .select {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.radio-label input[type="radio"]:checked ~ .select {
+    background-color: var(--box);
+}
+
+.select:after {
+    position: relative;
+    content: "";
+    display: none;
+}
+
+.radio-label input[type="radio"]:checked ~ .select:after {
+    display: block;
+}
+
+.radio-label .select:after {
+    top: 0.125rem;
+    left: 0.125rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: white;
 }

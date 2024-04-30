@@ -1,4 +1,4 @@
-package com.placeholders.mindquest.Settingsmodels;
+package com.placeholders.mindquest.settings;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;

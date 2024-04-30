@@ -1,6 +1,5 @@
-package com.placeholders.mindquest.Settingsmodels;
+package com.placeholders.mindquest.settings;
 
-import com.placeholders.mindquest.role_utils.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 @Repository

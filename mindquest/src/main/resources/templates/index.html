@@ -1,62 +1,57 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>MindQuest</title>
-        <script th:src="@{/js/top-script.js}"></script>
-        <link rel="stylesheet" th:href="@{/css/style.css}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <header>
-            <div class="center">
-                <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
-                <a th:href="@{/dashboard}" class="button" style="margin-left: 1.5rem">My Account</a>
-            </div>
-        </header>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">Explore MindQuest</h1>
-                </div>
-                <div class="half">
-                    <a th:href="@{/register}" class="button">Get Started</a>
-                    <a th:href="@{/login}" class="button">Log In</a>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">What is MindQuest?</h1>
-                </div>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, risus vitae cursus facilisis, sapien velit vulputate enim, sit amet ullamcorper felis purus sed neque. Nulla interdum, lacus convallis facilisis aliquam, elit:</p>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                        <li>Morbi commodo erat eu libero sollicitudin, in rhoncus magna egestas.</li>
-                        <li class="list-last">Aenean dapibus enim pulvinar, vestibulum ipsum consectetur, suscipit libero.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <section>
-            <div class="box">
-                <div class="box-header">
-                    <h1 class="white">MindQuest Features</h1>
-                </div>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, risus vitae cursus facilisis, sapien velit vulputate enim, sit amet ullamcorper felis purus sed neque. Nulla interdum, lacus convallis facilisis aliquam, elit:</p>
-                    <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-                        <li>Morbi commodo erat eu libero sollicitudin, in rhoncus magna egestas.</li>
-                        <li class="list-last">Aenean dapibus enim pulvinar, vestibulum ipsum consectetur, suscipit libero.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-        <div id="top" onclick="scrollToTop()">
-            <img alt="To Top" th:src="@{/assets/top.svg}">
-              </div>
-        </body>
+<head>
+    <meta charset="UTF-8">
+    <title>MindQuest</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+    <div class="center">
+        <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
+        <a th:href="@{/dashboard}" class="button" style="margin-left: 1.5rem">To MindBoard</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="white">What is MindQuest?</h1>
+        </div>
+        <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, risus vitae cursus facilisis, sapien velit vulputate enim, sit amet ullamcorper felis purus sed neque. Nulla interdum, lacus convallis facilisis aliquam, elit:</p>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Morbi commodo erat eu libero sollicitudin, in rhoncus magna egestas.</li>
+                <li class="list-last">Aenean dapibus enim pulvinar, vestibulum ipsum consectetur, suscipit libero.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1 class="white">MindQuest Features</h1>
+        </div>
+        <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus, risus vitae cursus facilisis, sapien velit vulputate enim, sit amet ullamcorper felis purus sed neque. Nulla interdum, lacus convallis facilisis aliquam, elit:</p>
+            <ul>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
+                <li>Morbi commodo erat eu libero sollicitudin, in rhoncus magna egestas.</li>
+                <li class="list-last">Aenean dapibus enim pulvinar, vestibulum ipsum consectetur, suscipit libero.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="footer-center">
+        <a th:href="@{/register}" class="button" style="width: 100%">Get Started</a>
+        <a th:href="@{/login}" class="button" style="width: 100%; margin-left: 1.5rem;">Log In</a>
+    </div>
+</footer>
+<div id="top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
+</body>
 </html>

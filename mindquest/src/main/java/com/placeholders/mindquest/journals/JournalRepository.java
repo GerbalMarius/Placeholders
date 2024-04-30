@@ -1,4 +1,4 @@
-package com.placeholders.mindquest.Journals;
+package com.placeholders.mindquest.journals;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

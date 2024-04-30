@@ -1,7 +1,7 @@
-package com.placeholders.mindquest.Settingscontrollers;
+package com.placeholders.mindquest.settings;
 
-import com.placeholders.mindquest.Settingsmodels.ProfilePhoto;
-import com.placeholders.mindquest.Settingsmodels.ProfilePhotoRepository;
+import com.placeholders.mindquest.settings.ProfilePhoto;
+import com.placeholders.mindquest.settings.ProfilePhotoRepository;
 import com.placeholders.mindquest.login_utils.AuthController;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserRepository;
@@ -82,6 +82,7 @@ public class SettingsController {
     public String updateFirstName(@RequestParam String firstName, Model model) {
         Optional<User> currentUser = AuthController.currentUser();
         if(currentUser.isPresent()) {
+            currentUser.get().setFirstName(firstName);
             User user = userRepository.findByEmail(currentUser.get().getEmail());
             user.setFirstName(firstName);
             userRepository.save(user);
@@ -95,6 +96,7 @@ public class SettingsController {
     public String updateLastName(@RequestParam String lastName, Model model) {
         Optional<User> currentUser = AuthController.currentUser();
         if(currentUser.isPresent()) {
+            currentUser.get().setLastName(lastName);
             User user = userRepository.findByEmail(currentUser.get().getEmail());
             user.setLastName(lastName);
             userRepository.save(user);

@@ -1,4 +1,4 @@
-package com.placeholders.mindquest.startingquiz;
+package com.placeholders.mindquest.starting_quiz;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;

@@ -7,31 +7,28 @@ document.addEventListener("DOMContentLoaded", function() {
     questionSections.forEach((section, i) => {
       if (i === index) {
         section.style.display = 'flex';
+        // Show the "Please answer this question!" message if the current question is not answered
+        const inputs = section.querySelectorAll('input[type="radio"]');
+        const isQuestionAnswered = Array.from(inputs).some(input => input.checked);
+        const questionMessage = section.querySelector('.question');
+        if (isQuestionAnswered) {
+          questionMessage.style.display = 'none';
+        }
       } else {
         section.style.display = 'none';
       }
     });
 
-    // Hide/show next button based on current index
-    const nextButton = document.querySelector('.next-button');
-    nextButton.style.display = (index === questionSections.length - 1) ? 'none' : 'block';
-
-    // Hide/show previous button based on current index
-    const prevButton = document.querySelector('.prev-button');
-    prevButton.style.display = (index === 0) ? 'none' : 'block';
-
     // Update index counter
     document.getElementById('counter').textContent = index + 1;
 
-    // Change navigation-buttons class based on button visibility
-    const navigationButtons = document.querySelector('.navigation-buttons');
-    if (nextButton.style.display === 'none' || prevButton.style.display === 'none') {
-      navigationButtons.classList.remove('half');
-      navigationButtons.classList.add('full');
-    } else {
-      navigationButtons.classList.remove('full');
-      navigationButtons.classList.add('half');
-    }
+    // Disable/enable previous and next buttons based on current question index
+    const prevButton = document.querySelector('.prev-button');
+    const nextButton = document.querySelector('.next-button');
+    prevButton.disabled = index === 0;
+    nextButton.disabled = index === questionSections.length - 1;
+    prevButton.style.cursor = index === 0 ? 'not-allowed' : 'pointer';
+    nextButton.style.cursor = index === questionSections.length - 1 ? 'not-allowed' : 'pointer';
   }
 
   // Show the first question initially
@@ -39,9 +36,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Function to handle next button click
   function onNextClick() {
-    if (currentQuestionIndex < questionSections.length - 1) {
-      currentQuestionIndex++;
-      showQuestion(currentQuestionIndex);
+    // Check if the current question is answered
+    const currentQuestionInputs = questionSections[currentQuestionIndex].querySelectorAll('input[type="radio"]');
+    const isCurrentQuestionAnswered = Array.from(currentQuestionInputs).some(input => input.checked);
+
+    // If the current question is answered, proceed to the next question
+    if (isCurrentQuestionAnswered) {
+      if (currentQuestionIndex < questionSections.length - 1) {
+        currentQuestionIndex++;
+        showQuestion(currentQuestionIndex);
+      }
+    }
+    // If the current question is not answered, display the message
+    else {
+      const questionMessage = questionSections[currentQuestionIndex].querySelector('.question');
+      questionMessage.style.display = 'block';
     }
   }
 

@@ -21,7 +21,7 @@
                         <h1 style="font-size: 2rem">Hello!</h1>
                     </div>
                     <h1 th:if="${firstTime == true}"><a th:href="@{/starting-quiz}" class="button">Start Your journey here!</a></h1>
-                    <h1 th:unless="${firstTime == true}"><a th:href="@{/quiz/getQuiz}" class="button">Take your daly quest!</a></h1>
+                    <h1 th:unless="${firstTime == true}"><a th:href="@{/quiz/getQuiz}" class="button">Take your daily quest!</a></h1>
                     <a th:href="@{/journals}" class="button">Diary</a>
                 </div>
             </div>

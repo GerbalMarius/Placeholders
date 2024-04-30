@@ -1,4 +1,4 @@
-package com.placeholders.mindquest.Journals;
+package com.placeholders.mindquest.journals;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

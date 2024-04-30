@@ -1,4 +1,4 @@
-package com.placeholders.mindquest.startingquiz;
+package com.placeholders.mindquest.starting_quiz;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

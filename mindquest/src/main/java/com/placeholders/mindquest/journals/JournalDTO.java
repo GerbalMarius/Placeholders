@@ -1,4 +1,4 @@
-package com.placeholders.mindquest.Journals;
+package com.placeholders.mindquest.journals;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
