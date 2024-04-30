@@ -74,6 +74,8 @@ document.addEventListener("DOMContentLoaded", function() {
     if (unansweredQuestions !== -1) {
       currentQuestionIndex = unansweredQuestions;
       showQuestion(currentQuestionIndex);
+      const questionMessage = questionSections[currentQuestionIndex].querySelector('.question');
+      questionMessage.style.display = 'block';
     } else {
       // Otherwise, submit the form
       document.getElementById('quizForm').submit();
