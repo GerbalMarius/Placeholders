@@ -2,7 +2,7 @@
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MindQuest - Quiz Result</title>
+    <title>Quiz history</title>
     <script th:src="@{/js/top-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -16,27 +16,29 @@
 <section>
     <div class="box">
         <div class="box-header">
-            <h1>Quiz Result</h1>
-        </div>
-        <div class="box-content">
-            <p class="last">Your mental wellness score is <span class="bold underline" th:text="${score} + '%'"></span>!</p>
+            <h1>Quiz History</h1>
         </div>
     </div>
 </section>
-<section>
+<section th:each="time : ${timeStamps}">
     <div class="box">
         <div class="box-header">
-            <h2>Personalized Mental Wellness Tip</h2>
+            <h2>Score</h2>
         </div>
         <div class="box-content">
-            <p class="last"><span style="font-style: italic;" th:text="${tip.content}"></span></p>
+            <p class="last bold" th:text="${time.scorePercentageFormat()}"></p>
         </div>
-    </div>
-</section>
-<section>
-    <div class="box">
-        <div class="box-button">
-            <a th:href="@{/mindboard}" class="button button-full">OK</a>
+        <div class="box-header">
+            <h2>Date and Time</h2>
+        </div>
+        <div class="box-content">
+            <p class="last" th:text="${time.getFormatWithMinutesAndHours()}"></p>
+        </div>
+        <div class="box-header">
+            <h2>Tip Received</h2>
+        </div>
+        <div class="box-content">
+            <p class="last italic" th:text="${time.tipContent}"></p>
         </div>
     </div>
 </section>

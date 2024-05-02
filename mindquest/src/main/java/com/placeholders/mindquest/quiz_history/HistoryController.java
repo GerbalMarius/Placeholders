@@ -33,6 +33,6 @@ public class HistoryController {
             model.addAttribute("timeStamps", actual.getTimestampLog());
         });
 
-        return "quiz_history";
+        return "quiz-history";
     }
 }
