@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Make a request</title>
+</head>
+<body>
+<h1>Make a request for an admin.</h1>
+<h1 th:if="${param.success}" class="alert success">Your request was sent!</h1>
+<br>
+<form method="post" role="form" th:action="@{/dashboard/request/create}" th:object="${request}">
+    <div class="box">
+        <label for="message" class="form-label">
+            <textarea id="message" name="message" rows="6" cols="80" style="background-color: var(--content)"  th:field="*{message}">
+
+        </textarea>
+        </label>
+
+    </div>
+    <button class="button content-button" type="submit">Submit request</button>
+    <a th:href="@{/mindboard}" class="button content-button">Return</a>
+</form>
+</body>
+</html>

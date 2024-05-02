@@ -1,5 +1,10 @@
 package com.placeholders.mindquest.starting_quiz;
 
+import com.placeholders.mindquest.login_utils.AuthController;
+import com.placeholders.mindquest.user_utils.User;
+import com.placeholders.mindquest.user_utils.UserDTO;
+import com.placeholders.mindquest.user_utils.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +18,12 @@ import java.io.IOException;
 @Controller
 public class StaringQuizController {
 
+    @Autowired
+    private StartingQuizRepository startingQuizRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/starting_quiz")
     public String startingQuiz(Model model) {
 
@@ -23,21 +34,27 @@ public class StaringQuizController {
     @PostMapping("/starting-quiz/results")
     public String SubmitQuiz(@ModelAttribute StartingQuizInfo startingQuizInfo, Model model) {
 
+        if (AuthController.firstTimeUser().isEmpty()){
+            return "redirect:/register";
+        }
+
         // Calculates mental state and prints info that is submitted
         String mentalState = calculateMentalState(startingQuizInfo);
         System.out.println("Submitted quiz info: " + startingQuizInfo);
 
-        // Writes the submitted quiz info to a text file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("quiz_info.txt", true))) {
-            writer.write(startingQuizInfo.toString());
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        UserDTO user = AuthController.firstTimeUser().get();
+        final User actualUser = userRepository.findByEmail(user.getEmail());
+        actualUser.setStartingQuizInfo(startingQuizInfo);
+        startingQuizInfo.setUser(actualUser);
+        startingQuizRepository.save(startingQuizInfo);
+
+        AuthController.setFirstTimeUser(null);
+        AuthController.setCurrentUser(actualUser);
 
         // Returns a view with the submitted data and mental state
         model.addAttribute("quizInfo", startingQuizInfo);
         model.addAttribute("mentalState", mentalState);
+
         return "starting-quiz-result";
     }
 

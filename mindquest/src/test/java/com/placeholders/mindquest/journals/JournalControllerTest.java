@@ -41,10 +41,10 @@ public class JournalControllerTest {
     }
 
     @Test
-    public void testShowRegisterPage() throws Exception {
+    public void testShowJournalPage() throws Exception {
         List<Journal> journals = new ArrayList<>();
         when(journalRepository.findAll()).thenReturn(journals);
-        String viewName = journalController.showRegisterPage(model);
+        String viewName = journalController.showJournalPage(model);
         verify(model).addAttribute(eq("journal"), any(JournalDTO.class));
         verify(model).addAttribute("journalList", journals);
         assertEquals("journals", viewName);

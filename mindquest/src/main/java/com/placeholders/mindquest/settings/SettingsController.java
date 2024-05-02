@@ -26,15 +26,12 @@ public class SettingsController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //TODO ORGANIZE PAGES ON A LATER DATE (TEMP SOLUTION FOR NOW.)
+
     @GetMapping("/settings")
     public String settingsPage(Model model){
         Optional<User> user = AuthController.currentUser();
         ProfilePhoto photo = profilePhotoRepository.findById(user.get().getId());
-        if(user.isPresent())
-        {
-            model.addAttribute("user",user);
-        }
+        model.addAttribute("user", user);
         if(photo != null)
         {
             byte[] profilePhotoData = photo.getData();

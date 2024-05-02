@@ -1,14 +1,23 @@
 package com.placeholders.mindquest.quiz;
 
+import com.placeholders.mindquest.login_utils.AuthController;
+import com.placeholders.mindquest.points.Point;
+import com.placeholders.mindquest.points.PointService;
+import com.placeholders.mindquest.timestamp.TimeStamp;
+import com.placeholders.mindquest.timestamp.TimeStampService;
 import com.placeholders.mindquest.tips.Tip;
 import com.placeholders.mindquest.tips.TipDao;
+import com.placeholders.mindquest.user_utils.User;
+import com.placeholders.mindquest.user_utils.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/quiz")
@@ -19,6 +28,16 @@ public class QuizController {
 
     @Autowired
     private TipDao tipDao;
+
+    @Autowired
+    private PointService pointService;
+
+    @Autowired
+    private UserService userService;
+
+
+    @Autowired
+    private TimeStampService timeStampService;
 
     @GetMapping("create")
     public String getQuizCreationForm() {
@@ -59,12 +78,15 @@ public class QuizController {
 
         model.addAttribute("score", result1);
 
+        saveUserPoints(result1);
+
         String category = getCategoryFromScore(result);
 
         Tip tip = tipDao.findRandomTipByCategory(category);
 
         if (tip != null) {
             model.addAttribute("tip", tip);
+            saveTime(result1, tip.getContent());
         }
 
         return "quiz-result";
@@ -78,6 +100,34 @@ public class QuizController {
         } else {
             return "low";
         }
+    }
+
+    private  void saveUserPoints(final int result){
+        Optional<User> currentUser = AuthController.currentUser();
+
+        Point point = new Point(result);
+
+        currentUser.ifPresent( user -> {
+            final User realUser = userService.findUserByEmail(user.getEmail());
+            point.setUser(realUser);
+            realUser.addPoint(point);
+
+            pointService.savePoint(point);
+        });
+
+    }
+
+    private void saveTime(final int result, String content) {
+        Optional<User> currentUser = AuthController.currentUser();
+
+        TimeStamp timeStamp = new TimeStamp(LocalDateTime.now(), content, result);
+        currentUser.ifPresent(user -> {
+            final User realUser = userService.findUserByEmail(user.getEmail());
+
+            timeStamp.setUser(realUser);
+            realUser.addTimeStamp(timeStamp);
+            timeStampService.save(timeStamp);
+        });
     }
 
 }

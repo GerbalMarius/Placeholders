@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz history</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1 th:text="${user.getFirstName()}"></h1>
+<br>
+<div class="box" style="width: 400px !important; height: 450px !important; margin-top: 30px !important;" th:each="time : ${timeStamps}">
+    <h2 style="margin-left: 30px">Score result : </h2>
+    <h2 style="margin-left: 30px" th:text="${time.scorePercentageFormat()}"></h2>
+    <h2 style="margin-left: 30px" >Date taken : </h2>
+    <h2 style="margin-left: 30px" th:text="${time.getFormatWithMinutesAndHours()}"></h2>
+    <br>
+    <h2 style="margin-left: 30px">Tip received:</h2>
+    <br>
+    <h2 style="margin-left: 30px" th:text="${time.tipContent}"></h2>
+</div>
+<br>
+</body>
+</html>

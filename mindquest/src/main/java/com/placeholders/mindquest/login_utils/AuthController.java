@@ -42,6 +42,11 @@ public class AuthController {
     //add user data to form register page
     @GetMapping("/register")
     public String showRegisterPage(Model model){
+
+        if (AuthController.isLoggedIn()){
+            return "redirect:/mindboard";
+        }
+
         UserDTO user = new UserDTO();
         model.addAttribute("user", user);
 
@@ -53,6 +58,8 @@ public class AuthController {
     //And validate for existing users
     @PostMapping("/register/save")
     public String saveRegisteredUser(@Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
+
+
 
         User existingUser = userService.findUserByEmail(userData.getEmail());
 
@@ -68,18 +75,23 @@ public class AuthController {
             return "/register";
         }
 
-        userService.saveUser(userData);
+        User savedUser = userService.saveUser(userData);
         logger.info("Registration successful for user: " + userData.getEmail());
 
         firstTimeUser = new UserDTO(userData.getId(), userData.getFirstName(), userData.getLastName(), userData.getEmail());
 
-        return "redirect:/register?success";
+        return savedUser.isAdmin() ? "redirect:/users" : "redirect:/mindboard";
     }
 
 
     //to form login page
     @GetMapping("/login")
     public String loginPage(Model model){
+
+        if (AuthController.isLoggedIn()){
+            return "redirect:/mindboard";
+        }
+
         UserDTO userDTO = new UserDTO();
         model.addAttribute("user", userDTO);
         return "login";
@@ -87,6 +99,10 @@ public class AuthController {
 
     @GetMapping("/login/check")
     public String validateExistingUser( @Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
+
+        if (AuthController.isLoggedIn()){
+            return "redirect:/mindboard";
+        }
       
         User userToFind = userService.findUserByEmail(userData.getEmail());
         boolean isAdmin = false;
@@ -130,12 +146,17 @@ public class AuthController {
     @GetMapping("/users")
     public String showAllUsers(Model model){
 
+        if (currentUser == null){
+            return "redirect:/login?please";
+        }
+
         if (!currentUser.isAdmin()){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Normal users can't have administrative privileges");
         }
 
         List<UserDTO> users = userService.findAll();
         model.addAttribute("users", users);
+        model.addAttribute("current", currentUser);
         return "users";
     }
 

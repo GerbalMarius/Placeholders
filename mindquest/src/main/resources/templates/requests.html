@@ -2,7 +2,7 @@
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org"><!-- for admins to check all users-->
 <head>
     <meta charset="UTF-8">
-    <title>All Users</title>
+    <title>User requests</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
           rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
@@ -12,7 +12,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
     <div class="container-fluid">
         <a th:href="@{/}" class="navbar-brand">Home</a>
-        <a th:href="@{/users/requests}" class="navbar-brand">Requests</a>
+        <a th:href="@{/users}">Users</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -27,7 +27,7 @@
 </nav>
 <div class="container">
     <div class="row col-md-10">
-        <h2>Registered Users</h2>
+        <h2>User requests</h2>
     </div>
     <div th:if="${param.success}" class="alert alert-success">
         Logged in successfully!
@@ -35,22 +35,17 @@
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
         <tr>
-            <th>Name</th>
-            <th>Last name</th>
+            <th>Message</th>
             <th>Email</th>
-            <th>Delete user</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.firstName}"></td>
-            <td th:text="${user.lastName}"></td>
-            <td th:text="${user.email}"></td>
-            <td><button th:if="${!current.email.equals(user.email)}"><!--/*@thymesVar id="email" type="String"*/-->
-                <a th:href="@{user/delete(email=${user.email})}">Delete</a></button></td>
+        <tr th:each="request : ${requests}">
+            <td th:text="${request.message}"></td>
+            <td th:text="${request.email}"></td>
         </tr>
+
         </tbody>
     </table>
 </div>
 </body>
-</html>
