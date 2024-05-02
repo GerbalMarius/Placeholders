@@ -6,20 +6,33 @@
     <title>Make a request</title>
 </head>
 <body>
-<h1>Make a request for an admin.</h1>
-<h1 th:if="${param.success}" class="alert success">Your request was sent!</h1>
-<br>
-<form method="post" role="form" th:action="@{/dashboard/request/create}" th:object="${request}">
-    <div class="box">
-        <label for="message" class="form-label">
-            <textarea id="message" name="message" rows="6" cols="80" style="background-color: var(--content)"  th:field="*{message}">
-
-        </textarea>
-        </label>
-
+<header>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
     </div>
-    <button class="button content-button" type="submit">Submit request</button>
-    <a th:href="@{/mindboard}" class="button content-button">Return</a>
-</form>
+</header>
+<section>
+    <div class="box">
+        <div class="box-button">
+            <a th:href="@{/mindboard}" class="button button-full">Return</a>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1>Make a Request For Admin</h1>
+        </div>
+        <h1 th:if="${param.success}" class="alert success">Your request was sent!</h1>
+        <form method="post" role="form" th:action="@{/dashboard/request/create}" th:object="${request}">
+            <textarea id="content" name="message" rows="6" cols="80" style="background-color: var(--content)"  th:field="*{message}"></textarea>
+            <button class="button button-full" type="submit">Submit Request</button>
+        </form>
+    </div>
+</section>
+<div id="to-top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
 </body>
 </html>
