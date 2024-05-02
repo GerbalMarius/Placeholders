@@ -10,7 +10,6 @@
 <header>
     <div class="header-box">
         <a id="logo" th:href="@{/}">MindQuest</a>
-        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
     </div>
 </header>
 <section>
@@ -55,13 +54,6 @@
                     <span th:text="${message}" class="important"></span>
                 </div>
             </form>
-        </div>
-    </div>
-</section>
-<section th:if="${param.success}">
-    <div class="box">
-        <div class="box-button">
-            <a th:href="@{/starting_quiz}" class="button button-full">Take a Starting Quiz</a>
         </div>
     </div>
 </section>

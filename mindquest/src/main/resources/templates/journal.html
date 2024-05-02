@@ -50,7 +50,7 @@
         </div>
         <form th:action="@{/updateJournal}" method="post" >
             <input type="hidden" id="id" name="id" th:value="${journal.id}"/>
-            <textarea type="text" id="content" name="content" rows="4" cols="50" th:text="${journal.diaryEntry}" class="box"></textarea>
+            <textarea id="content" name="content" rows="4" cols="50" th:text="${journal.diaryEntry}" class="box"></textarea>
             <div class="box-button">
                 <button type="submit" class="button button-full">Save</button>
             </div>
