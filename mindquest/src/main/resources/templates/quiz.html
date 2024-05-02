@@ -9,30 +9,30 @@
 </head>
 <body>
 <header>
-    <div class="center">
-        <a id="logo" th:href="@{/}" class="navbar-brand">MindQuest</a>
-        <a th:href="@{/dashboard}" class="button" style="margin-left: 1.5rem">To MindBoard</a>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
     </div>
 </header>
 <section>
     <div class="box">
         <div class="box-header">
-            <h1 class="major">Quiz</h1>
+            <h1>Quiz</h1>
         </div>
-        <div class="content">
+        <div class="box-content">
             <p class="last">Take this quiz to evaluate your mental wellness score. Click "Finish" at the end, if you want to complete the quiz and see the results!</p>
         </div>
     </div>
 </section>
-<form id="quizForm" th:action="@{/quiz/getScore}" method="post" class="quiz-form">
+<form id="quizForm" th:action="@{/quiz/getScore}" method="post">
     <input type="hidden" name="quizId" th:value="${quiz.id}" />
     <section class="question-section" th:each="question, iterStat : ${quiz.questions}">
         <div class="box" id="question-box-[[${iterStat.index}]]">
             <div class="box-header">
-                <h1 th:text="${question.questionTitle}"></h1>
+                <h2 th:text="${question.questionTitle}"></h2>
             </div>
-            <div class="content">
-                <div class="alert danger question" style="display: none;">Please answer this question!</div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
                 <label class="radio-label"><input type="radio" th:name="|responses[${question.id}].response|" value="option1" required/><span class="select"></span><span class="radio-text" th:text="${question.option1}"></span></label><br>
                 <label class="radio-label"><input type="radio" th:name="|responses[${question.id}].response|" value="option2" required/><span class="select"></span><span class="radio-text" th:text="${question.option2}"></span></label><br>
                 <label class="radio-label"><input type="radio" th:name="|responses[${question.id}].response|" value="option3" required/><span class="select"></span><span class="radio-text" th:text="${question.option3}"></span></label><br>
@@ -41,17 +41,18 @@
         </div>
     </section>
 </form>
+<section class="bottom"></section>
 <footer>
-    <div class="footer-center">
+    <div class="footer-box">
         <button type="button" class="prev-button button" style="min-width: 3rem; !important">◀</button>
-        <span id="counter" class="index current-index">1</span>
+        <span id="counter" class="index margin-left-20">?</span>
         <span class="index">｜</span>
-        <span id="total" class="index">[[${quiz.questions.size()}]]</span>
-        <button type="button" class="next-button button" style="margin-left: 2rem !important; min-width: 3rem; !important">▶</button>
-        <button type="submit" class="finish-button button">Finish</button>
+        <span id="total" class="index">?</span>
+        <button type="button" class="next-button button margin-left-20" style="min-width: 3rem; !important">▶</button>
+        <button type="submit" class="button-finish button">Finish</button>
     </div>
 </footer>
-<div id="top" onclick="scrollToTop()">
+<div id="to-top" onclick="scrollToTop()" class="to-top-footer">
     <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
 </body>

@@ -8,28 +8,21 @@
 </head>
 <body>
 <header>
-    <div class="center">
+    <div class="header-box">
         <a id="logo" th:href="@{/}">MindQuest</a>
+        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
     </div>
 </header>
-<section th:if="${param.success}">
-    <div class="box">
-        <div class="half">
-            <a th:href="@{/users}" class="button">Users</a>
-            <a th:href="@{/dashboard}" class="button">Dashboard</a>
-        </div>
-    </div>
-</section>
 <section>
     <div class="box">
         <div class="box-header">
-            <h1 class="major">Log In</h1>
+            <h1>Log In</h1>
         </div>
-        <div class="content">
+        <div class="box-content">
             <div th:if="${param.error}" class="alert danger">Invalid email or password!</div>
             <div th:if="${param.logout}" class="alert success">Logged out successfully!</div>
             <div th:if="${param.success}" class="alert success">Logged in successfully!</div>
-            <div th:if="${param.please}" class="alert danger">Please log in to view your account!</div>
+            <div th:if="${param.please}" class="alert danger">Please log in to view your MindBoard!</div>
             <form th:action="@{/login/check}" method="get" role="form" th:object="${user}">
                 <div>
                     <label for="email">Email</label>
@@ -46,7 +39,7 @@
                     <p th:errors="*{password}" th:if="${#fields.hasErrors('password')}" class="danger">Invalid Password!</p>
                 </div>
                 <div>
-                    <button class="button content-button" type="submit">Continue</button>
+                    <button class="button button-content" type="submit">Continue</button>
                     <span>Not registered?
                         <a th:href="@{/register}" class="text-link">Sign up here.</a>
                     </span>
@@ -55,7 +48,7 @@
         </div>
     </div>
 </section>
-<div id="top" onclick="scrollToTop()">
+<div id="to-top" onclick="scrollToTop()">
     <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
 </body>

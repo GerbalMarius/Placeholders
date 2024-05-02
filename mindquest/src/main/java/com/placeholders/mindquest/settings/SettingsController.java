@@ -1,7 +1,5 @@
 package com.placeholders.mindquest.settings;
 
-import com.placeholders.mindquest.settings.ProfilePhoto;
-import com.placeholders.mindquest.settings.ProfilePhotoRepository;
 import com.placeholders.mindquest.login_utils.AuthController;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserRepository;
@@ -47,21 +45,21 @@ public class SettingsController {
         return "settings";
     }
 
-    @GetMapping("/settings/change_user_name")
+    @GetMapping("/settings/change_first_name")
     public String userNamePage(){
-        return "update-first-name";
+        return "change-first-name";
     }
     @GetMapping("/settings/change_password")
     public String passwordPage(){
-        return "update-password";
+        return "change-password";
     }
     @GetMapping("/settings/change_last_name")
     public String lastNamePage(){
-        return "update-last-name";
+        return "change-last-name";
     }
-    @GetMapping("/settings/pfp_upload")
+    @GetMapping("/settings/change_profile_picture")
     public String pfpUpload(){
-        return "upload-picture";
+        return "change-profile-picture";
     }
 
 
@@ -116,7 +114,7 @@ public class SettingsController {
                 photo.setId(currentUser.get().getId());
                 photo.setData(profilePicture.getBytes());
                 int photoSize = photo.getData().length;
-                if (photoSize < 100000)
+                if (photoSize < 5000000)
                 {
                     profilePhotoRepository.save(photo);
                     model.addAttribute("message", "Picture changed successfully");

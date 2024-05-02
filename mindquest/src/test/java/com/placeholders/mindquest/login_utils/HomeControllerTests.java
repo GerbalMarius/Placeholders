@@ -48,24 +48,24 @@ class HomeControllerTests {
     public void homePageRedirectsUnverifiedUsersToLoginPage(){
         //AuthController views default situation as not logged in
         //so by default it returns redirect str.
-        String viewName = homeController.dashboard(model);
+        String viewName = homeController.mindboard(model);
 
         assertEquals("redirect:/login?please", viewName);
     }
 
     @Test
-    public void dashboardVerificationShouldReturnFirstTimeUser(){
+    public void mindboardVerificationShouldReturnFirstTimeUser(){
 
         var testData = getTestUser().getTransferableData();
 
         AuthController.setFirstTimeUser(testData);
 
-        String viewName = homeController.dashboard(model);
+        String viewName = homeController.mindboard(model);
 
         verify(model).addAttribute("currentUser", testData);
         verify(model).addAttribute("firstTime", true);
 
-        assertEquals("dashboard", viewName);
+        assertEquals("mindboard", viewName);
     }
 
     private User getTestUser(){
@@ -74,16 +74,16 @@ class HomeControllerTests {
     }
 
     @Test
-    public void dashboardVerificationShouldReturnCurrentUser(){
+    public void mindboardVerificationShouldReturnCurrentUser(){
         var testData = getTestUser();
         AuthController.setCurrentUser(testData);
 
-        String viewName = homeController.dashboard(model);
+        String viewName = homeController.mindboard(model);
 
         verify(model).addAttribute("currentUser", testData.getTransferableData());
         verify(model).addAttribute("firstTime", false);//it is not his first time
 
-        assertEquals("dashboard", viewName);
+        assertEquals("mindboard", viewName);
     }
 
 }

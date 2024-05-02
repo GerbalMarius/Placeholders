@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MindQuest - 504</title>
+    <title>MindQuest - Starting Quiz Result</title>
     <script th:src="@{/js/top-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -16,17 +16,20 @@
 <section>
     <div class="box">
         <div class="box-header">
-            <h1>504 Gateway Timeout</h1>
+            <h1>Starting Quiz Result</h1>
         </div>
         <div class="box-content">
-            <p class="last">The server acting as a gateway or proxy did not receive a timely response from the upstream server while trying to fulfill the request.</p>
+            <p>Gender: <span class="bold" th:text="${quizInfo.gender}"></span></p>
+            <p>Height: <span class="bold" th:text="${quizInfo.height}"></span> meters</p>
+            <p>Weight: <span class="bold" th:text="${quizInfo.weight}"></span> kilograms</p>
+            <p class="last">Mental State: <span class="bold" th:text="${mentalState}"></span></p>
         </div>
     </div>
 </section>
 <section>
     <div class="box">
         <div class="box-button">
-            <a href="javascript:history.back()" class="button button-full">Return</a>
+            <a th:href="@{/mindboard}" class="button button-full">OK</a>
         </div>
     </div>
 </section>

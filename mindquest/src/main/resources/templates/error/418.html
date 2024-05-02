@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>MindQuest - 418</title>
-  <script th:src="@{/js/top-script.js}"></script>
-  <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta charset="UTF-8">
+    <title>MindQuest - 418</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header>
-  <div class="center">
-    <a id="logo" th:href="@{/}">MindQuest</a>
-  </div>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
+    </div>
 </header>
 <section>
-  <div class="box">
-    <div class="box-header">
-      <h1 class="white">418 I'm a teapot</h1>
+    <div class="box">
+        <div class="box-header">
+            <h1>418 I'm a teapot</h1>
+        </div>
+        <div class="box-content">
+            <p class="last">The server refuses the attempt to brew coffee with a teapot.</p>
+        </div>
     </div>
-    <div class="content">
-      <p class="last">The server refuses the attempt to brew coffee with a teapot.</p>
-    </div>
-  </div>
 </section>
 <section>
-  <div class="box">
-    <div class="full">
-      <a href="javascript:history.back()" class="button">Return</a>
+    <div class="box">
+        <div class="box-button">
+            <a href="javascript:history.back()" class="button button-full">Return</a>
+        </div>
     </div>
-  </div>
 </section>
-<div id="top" onclick="scrollToTop()">
-  <img alt="To Top" th:src="@{/assets/top.svg}">
+<div id="to-top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
 </body>
 </html>

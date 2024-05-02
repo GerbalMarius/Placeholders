@@ -113,7 +113,7 @@ public class AuthController {
 
 
         logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
-        return  isAdmin ? "redirect:/users" : "redirect:/dashboard";
+        return  isAdmin ? "redirect:/users" : "redirect:/mindboard";
     }
 
     @GetMapping("/logout")

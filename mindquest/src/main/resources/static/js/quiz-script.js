@@ -2,14 +2,26 @@ document.addEventListener("DOMContentLoaded", function() {
   const questionSections = document.querySelectorAll('.question-section');
   let currentQuestionIndex = 0;
 
+  const totalSpan = document.getElementById('total');
+  // Set the text content of the span to the count of question sections
+  totalSpan.textContent = questionSections.length;
+
   // Function to show current question and update navigation buttons visibility
   function showQuestion(index) {
     questionSections.forEach((section, i) => {
       if (i === index) {
         section.style.display = 'flex';
         // Show the "Please answer this question!" message if the current question is not answered
-        const inputs = section.querySelectorAll('input[type="radio"]');
-        const isQuestionAnswered = Array.from(inputs).some(input => input.checked);
+        const inputs = section.querySelectorAll('input[type="radio"], input[type="text"], input[type="number"]');
+        const isQuestionAnswered = Array.from(inputs).some(input => {
+          if (input.type === 'radio') {
+            return input.checked;
+          } else if (input.type === 'text') {
+            return input.value.trim() !== '' && input.validity.valid;
+          } else if (input.type === 'number') {
+            return input.value.trim() !== '' && input.validity.valid;
+          }
+        });
         const questionMessage = section.querySelector('.question');
         if (isQuestionAnswered) {
           questionMessage.style.display = 'none';
@@ -37,8 +49,16 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to handle next button click
   function onNextClick() {
     // Check if the current question is answered
-    const currentQuestionInputs = questionSections[currentQuestionIndex].querySelectorAll('input[type="radio"]');
-    const isCurrentQuestionAnswered = Array.from(currentQuestionInputs).some(input => input.checked);
+    const currentQuestionInputs = questionSections[currentQuestionIndex].querySelectorAll('input[type="radio"], input[type="text"], input[type="number"]');
+    const isCurrentQuestionAnswered = Array.from(currentQuestionInputs).some(input => {
+      if (input.type === 'radio') {
+        return input.checked;
+      } else if (input.type === 'text') {
+        return input.value.trim() !== '' && input.validity.valid;
+      } else if (input.type === 'number') {
+        return input.value.trim() !== '' && input.validity.valid;
+      }
+    });
 
     // If the current question is answered, proceed to the next question
     if (isCurrentQuestionAnswered) {
@@ -64,10 +84,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Function to handle form submission
   function onSubmit() {
+    // Check if the current question is answered
+    const currentQuestionInputs = questionSections[currentQuestionIndex].querySelectorAll('input[type="radio"], input[type="text"], input[type="number"]');
+    const isCurrentQuestionAnswered = Array.from(currentQuestionInputs).some(input => {
+      if (input.type === 'radio') {
+        return input.checked;
+      } else if (input.type === 'text') {
+        return input.value.trim() !== '' && input.validity.valid;
+      } else if (input.type === 'number') {
+        return input.value.trim() !== '' && input.validity.valid;
+      }
+    });
+
+    // If the current question is not answered, display the message
+    if (!isCurrentQuestionAnswered) {
+      const questionMessage = questionSections[currentQuestionIndex].querySelector('.question');
+      questionMessage.style.display = 'block';
+      return; // Prevent form submission
+    }
+
     // Check if there are any unanswered questions
     const unansweredQuestions = Array.from(questionSections).findIndex((section, index) => {
-      const inputs = section.querySelectorAll('input[type="radio"]');
-      return !Array.from(inputs).some(input => input.checked);
+      const inputs = section.querySelectorAll('input[type="radio"], input[type="text"], input[type="number"]');
+      return !Array.from(inputs).some(input => {
+        if (input.type === 'radio') {
+          return input.checked;
+        } else if (input.type === 'text') {
+          return input.value.trim() !== '' && input.validity.valid;
+        } else if (input.type === 'number') {
+          return input.value.trim() !== '' && input.validity.valid;
+        }
+      });
     });
 
     // If there are unanswered questions, jump to the first one
@@ -87,5 +134,5 @@ document.addEventListener("DOMContentLoaded", function() {
   document.querySelector('.prev-button').addEventListener('click', onPrevClick);
 
   // Add event listener to form submission
-  document.querySelector('.finish-button').addEventListener('click', onSubmit);
+  document.querySelector('.button-finish').addEventListener('click', onSubmit);
 });

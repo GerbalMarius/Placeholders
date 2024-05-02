@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MindQuest - MindBoard</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1>Hello!</h1>
+        </div>
+        <div th:if="${startingQuizNotTaken == true}" class="box-button">
+            <a th:href="@{/starting_quiz}" class="button button-full">Take a Starting Quiz</a>
+        </div>
+        <div th:unless="${startingQuizNotTaken == true}" class="box-button">
+            <a th:href="@{/quiz/getQuiz}" class="button button-full">Take a Daily Quiz</a>
+        </div>
+    </div>
+</section>
+<section th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-header">
+            <h2>Mental Wellness Metrics</h2>
+        </div>
+        <div class="box-content">
+            <p class="last italic">Mental Wellness Metrics are currently unavailable...</p>
+        </div>
+    </div>
+</section>
+<section th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-header">
+            <h2>What would you like to do?</h2>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/journal}" class="button button-full">Open Journal</a>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/meditation}" class="button button-full">View Meditation Recommendations</a>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/quiz_history}" class="button button-full">View Quiz History</a>
+        </div>
+    </div>
+</section>
+<section class="bottom"></section>
+<footer>
+    <div class="footer-box">
+        <a th:href="@{/settings/change_profile_picture}" class="button" id="profile-picture" style="position: absolute; top: 0.75rem; left: 0.75rem;">
+            <img th:if="${photo == null}" th:src="@{/assets/user.svg}" alt="Default Image" style="scale: 0.75;">
+            <img th:unless="${photo == null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image">
+        </a>
+        <a th:href="@{/settings/change_first_name}" class="index margin-left-20" style="margin-left: 5.75rem !important;">
+            <span th:text="${currentUser.firstName}" id="name" class="index text-link"></span>
+        </a>
+        <a th:href="@{/settings}" class="button button-full margin-left-20">Settings</a>
+        <a th:href="@{/logout}" class="button button-full margin-left-05" style="color: hwb(0 25% 0%);">Log Out</a>
+    </div>
+</footer>
+<div id="to-top" onclick="scrollToTop()" class="to-top-footer">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
+</body>
+</html>

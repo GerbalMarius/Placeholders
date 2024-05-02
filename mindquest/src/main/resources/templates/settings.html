@@ -1,38 +1,63 @@
 <!DOCTYPE html>
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>User Settings</title>
+    <meta charset="UTF-8">
+    <title>MindQuest - Settings</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<h1 style="margin-top: 25px;">User settings</h1>
-<a th:href="@{/settings/change_user_name}" style="margin-top: 25px">Change first name</a>
-<br>
-<br>
-<a th:href="@{/settings/change_password}" style="margin-top: 25px">Change password</a>
-<br>
-<br>
-<a th:href="@{/settings/change_last_name}" style="padding-top: 25px">Change last name</a>
-<br>
-<br>
-<a th:href="@{/settings/pfp_upload}" style="padding-top: 25px">Change profile picture.</a>
-<br>
-<br>
-<h1>User settings</h1>
-
-<div th:if="${user.isPresent()}" id="profile-picture">
-    <label>User ID: <span th:text="${user.get().getId()}"></span></label><br>
-    <label>First Name: <span th:text="${user.get().getFirstName()}"></span></label><br>
-    <label>Last Name: <span th:text="${user.get().getLastName()}"></span></label><br>
-    <label>Email: <span th:text="${user.get().getEmail()}"></span></label><br>
-
-</div>
-<div id="imagePreview">
-
-    <img th:if="${photo == null}" th:src="@{/assets/face-smile.svg}" alt="Default Image" style="max-width: 100px; max-height: 100px">
-
-    <img th:if="${photo != null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image" style="max-width: 100px; max-height: 100px">
+<header>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-button">
+            <a th:href="@{/mindboard}" class="button button-full">Return</a>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1>Settings</h1>
+        </div>
+        <div class="box-content">
+            <p>First Name: <span th:text="${user.get().getFirstName()}" class="bold"></span></p>
+            <p>Last Name: <span th:text="${user.get().getLastName()}" class="bold"></span></p>
+            <p>Email: <span th:text="${user.get().getEmail()}" class="bold"></span></p>
+            <p>Profile Picture:</p>
+            <div id="profile-picture" style="min-height: 6rem !important; min-width: 6rem !important; justify-content: left;">
+                <img th:if="${photo == null}" th:src="@{/assets/user.svg}" alt="Default Image" style="scale: 0.75; height: 6rem; width: 6rem;">
+                <img th:unless="${photo == null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image" style="height: 6rem; width: 6rem;">
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h2>Change Settings</h2>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/settings/change_password}" class="button button-full">Change Password</a>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/settings/change_first_name}" class="button button-full">Change First Name</a>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/settings/change_last_name}" class="button button-full">Change Last Name</a>
+        </div>
+        <div class="box-button">
+            <a th:href="@{/settings/change_profile_picture}" class="button button-full">Change Profile Picture</a>
+        </div>
+    </div>
+</section>
+<div id="to-top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
 </body>
 </html>

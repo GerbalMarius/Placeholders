@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface QuestionDao extends JpaRepository<Question, Integer> {
 
-    @Query(value = "SELECT * FROM question q ORDER BY RAND() LIMIT : numOfQuestions", nativeQuery = true)
+    @Query(value = "SELECT * FROM question q ORDER BY RAND() LIMIT :numOfQuestions", nativeQuery = true)
     List<Question> findRandomQuestions(@Param("numOfQuestions") int numOfQuestions);
 }

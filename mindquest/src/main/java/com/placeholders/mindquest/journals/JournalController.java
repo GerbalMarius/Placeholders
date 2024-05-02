@@ -17,29 +17,29 @@ public class JournalController {
     @Autowired
     private JournalRepository journalRepository;
 
-    @GetMapping("/journals")
+    @GetMapping("/journal")
     public String showRegisterPage(Model model){
         JournalDTO journal = new JournalDTO();
         model.addAttribute("journal", journal);
         List<Journal> journalList = journalRepository.findAll();
         model.addAttribute("journalList", journalList);
-        return "journals";
+        return "journal";
     }
   @PostMapping("/deleteJournal")
   public String deleteJournal(@RequestParam("id") int journalId) {
 
       journalRepository.deleteById(journalId);
-      return "redirect:/journals";
+      return "redirect:/journal";
   }
 
   @PostMapping("/createJournal")
   public String createJournalEntry(@Valid @ModelAttribute("journal") Journal journal) {
         Journal newJournal = new Journal();
         newJournal.setTitle(journal.getTitle());
-        newJournal.setDiaryEntry("Insert text");
+        newJournal.setDiaryEntry("What's on your mind...");
 
         journalRepository.save(newJournal);
-        return "redirect:/journals";
+        return "redirect:/journal";
   }
  @PostMapping("/updateJournal")
  public String updateJournal(@RequestParam("id") int journalId, @RequestParam("content") String content) {
@@ -48,7 +48,7 @@ public class JournalController {
          journal.setDiaryEntry(content);
          journalRepository.save(journal);
      }
-     return "redirect:/journals";
+     return "redirect:/journal";
  }
     public void setJournalRepository(JournalRepository journalRepository) {
         this.journalRepository = journalRepository;

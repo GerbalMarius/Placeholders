@@ -22,13 +22,13 @@ public class QuizController {
 
     @GetMapping("create")
     public String getQuizCreationForm() {
-        return "get-quiz-creation-form";
+        return "quiz-creation-form";
     }
 
     @PostMapping("createQuiz")
     public String createQuiz(@RequestParam int numOfQuestions, @RequestParam String title) {
         quizService.createQuiz(numOfQuestions, title);
-        return "create-quiz";
+        return "quiz-created";
     }
 
     @GetMapping("getQuiz")

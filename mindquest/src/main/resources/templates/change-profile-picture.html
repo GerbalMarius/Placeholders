@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MindQuest - Change Profile Picture</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+        <a class="button margin-left-15" th:href="@{/mindboard}">MindBoard</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-button">
+            <a th:href="@{/settings}" class="button button-full">Return</a>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1>Change Profile Picture</h1>
+        </div>
+        <div class="box-content">
+            <div class="alert danger question" id="alert" style="display: none;">Please select a picture to upload!</div>
+            <form id="uploadForm" th:action="@{/settings/uploadProfilePicture}" method="post" enctype="multipart/form-data">
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" required>
+                <button onclick="document.getElementById('profilePicture').click()" class="button button-content" id="input">Select a New Profile Picture</button>
+                <p style="margin-top: 0.5rem;">Profile Picture Preview:</p>
+                <div class="picture-frame" id="profile-picture" style="min-height: 6rem !important; min-width: 6rem !important; justify-content: left;">
+                </div>
+            </form>
+            <button class="button button-content" id="submit" type="submit" style="margin-top: 0.5rem;">Continue</button>
+        </div>
+    </div>
+</section>
+<div id="to-top" onclick="scrollToTop()">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
+</div>
+<script>
+    document.getElementById("profilePicture").addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+            var imagePreview = document.getElementById("profile-picture");
+            imagePreview.innerHTML = "<img src='" + e.target.result + "' alt='Uploaded Image' style='width: 6rem; height: 6rem'>";
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        function onSubmit() {
+            var imagePreview = document.getElementById("profile-picture");
+            var hasImage = imagePreview.querySelector('img');
+
+            // Check if there is no image inside profile-picture
+            if (!hasImage) {
+                // Show the danger message
+                document.getElementById('alert').style.display = 'block';
+            } else {
+                var fileInput = document.getElementById("profilePicture");
+                var file = fileInput.files[0];
+
+                // Check if the selected file size exceeds the limit
+                if (file && file.size >= 100000) {
+                    alert("Boi, u trynna fit yer mom into dis? get smt smallr that fits for a profile pic");
+                    return;
+                }
+
+                document.getElementById('uploadForm').submit();
+            }
+        }
+
+        document.querySelector('#submit').addEventListener('click', onSubmit);
+    });
+</script>
+</body>
+</html>

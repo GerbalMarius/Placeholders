@@ -13,7 +13,7 @@ import java.io.IOException;
 @Controller
 public class StaringQuizController {
 
-    @GetMapping("/starting-quiz")
+    @GetMapping("/starting_quiz")
     public String startingQuiz(Model model) {
 
         model.addAttribute("quizInfo", new StartingQuizInfo());
@@ -38,7 +38,7 @@ public class StaringQuizController {
         // Returns a view with the submitted data and mental state
         model.addAttribute("quizInfo", startingQuizInfo);
         model.addAttribute("mentalState", mentalState);
-        return "starting-quiz-results";
+        return "starting-quiz-result";
     }
 
     public String calculateMentalState(StartingQuizInfo startingQuizInfo) {
@@ -62,13 +62,13 @@ public class StaringQuizController {
         int stressScore = 0;
 
          switch (stressLevel) {
-             case "low":
+             case "Low":
                  stressScore += 5;
                  break;
-             case "moderate":
+             case "Moderate":
                  stressScore += 3;
                  break;
-             case "high":
+             case "High":
                  stressScore += 1;
                  break;
              default:
@@ -76,16 +76,16 @@ public class StaringQuizController {
         }
 
         switch (howOftenFeelTired) {
-            case "rarely":
+            case "Rarely":
                 stressScore += 5;
                 break;
-            case "sometimes":
+            case "Sometimes":
                 stressScore += 4;
                 break;
-            case "often":
+            case "Often":
                 stressScore += 2;
                 break;
-            case "always":
+            case "Always":
                 stressScore += 1;
                 break;
             default:
@@ -93,16 +93,16 @@ public class StaringQuizController {
         }
 
         switch (fulfillment) {
-            case "rarely":
+            case "Rarely":
                 stressScore += 1;
                 break;
-            case "sometimes":
+            case "Sometimes":
                 stressScore += 2;
                 break;
-            case "often":
+            case "Often":
                 stressScore += 4;
                 break;
-            case "always":
+            case "Always":
                 stressScore += 5;
                 break;
             default:
@@ -134,10 +134,10 @@ public class StaringQuizController {
         }
 
         switch (hardToSleep) {
-            case "yes":
+            case "Yes":
                 sleepScore += 0;
                 break;
-            case "no":
+            case "No":
                 sleepScore += 3;
                 break;
             default:
@@ -152,7 +152,7 @@ public class StaringQuizController {
             case "5+" -> 5; // Very active
             case "3-4" -> 4; // Moderately active
             case "1-2" -> 3; // Somewhat active
-            case "none" -> 1; // Inactive
+            case "None" -> 1; // Inactive
             default -> 0;
         };
     }

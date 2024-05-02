@@ -2,82 +2,199 @@
 <html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>MindQuest - Starting Quiz</title>
+    <script th:src="@{/js/top-script.js}"></script>
+    <script th:src="@{/js/quiz-script.js}"></script>
+    <script th:src="@{/js/value-input-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
-<div class="center">
-<h1>Starting Quiz</h1>
-
-<form th:action="@{/starting-quiz/results}" method="post" class="quiz-form">
-
-    <label>What is your gender?</label> <br/>
-    <select name="gender">
-        <option value="male">male</option>
-        <option value="female">female</option>
-        <option value="other">other</option>
-        <option value="not specified">not specified</option>
-    </select>
-    <br/> <br/>
-
-    <label>What is your height?(Please specify in meters)</label> <br/>
-    <input type="text" name="height"/> <br/> <br/>
-
-    <label>What is your weight?(Please specify in kilograms)</label> <br/>
-    <input type="text" name="weight"/> <br/> <br/>
-
-    <label>How would you rate the quality of your sleep on a scale of 1 to 10, with 1 being very poor and 10 being excellent?</label> <br/>
-    <input type="text" name="ratingOfSleep"/> <br/> <br/>
-
-    <label>How many hours of sleep do you typically get per night?</label> <br/>
-    <input type="text" name="hoursOfSleep"/> <br/> <br/>
-
-    <label>Do you have any difficulty falling asleep or staying asleep?</label> <br/>
-    <select name="hardToSleep">
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-    </select>
-    <br/> <br/>
-
-    <label>How often do you feel tired or fatigued during the day?</label> <br/>
-    <select name="howOftenFeelTired">
-        <option value="rarely">Rarely</option>
-        <option value="sometimes">Sometimes</option>
-        <option value="often">Often</option>
-        <option value="always">Always</option>
-    </select>
-    <br/> <br/>
-
-    <label>How would you describe your current level of stress?</label> <br/>
-    <select name="stressLevel">
-        <option value="low">Low</option>
-        <option value="moderate">Moderate</option>
-        <option value="high">High</option>
-    </select>
-    <br/> <br/>
-
-    <label>How many times do you engage in physical activity or exercise per week?</label> <br/>
-    <select name="activePerWeek">
-        <option value="none">None</option>
-        <option value="1-2">1-2</option>
-        <option value="3-4">3-4</option>
-        <option value="5+">5+</option>
-    </select>
-    <br/> <br/>
-
-    <label>How often do you engage in activities that bring you joy or a sense of fulfillment?</label> <br/>
-    <select name="fulfillment">
-        <option value="rarely">Rarely</option>
-        <option value="sometimes">Sometimes</option>
-        <option value="often">Often</option>
-        <option value="always">Always</option>
-    </select>
-    <br/> <br/>
-
-    <button type="submit">Submit</button>
+<header>
+    <div class="header-box">
+        <a id="logo" th:href="@{/}">MindQuest</a>
+    </div>
+</header>
+<section>
+    <div class="box">
+        <div class="box-header">
+            <h1>Starting Quiz</h1>
+        </div>
+        <div class="box-content">
+            <p class="last">Take this quiz to evaluate your mental wellness score. Click "Finish" at the end, if you want to complete the quiz and see the results!</p>
+        </div>
+    </div>
+</section>
+<form id="quizForm" th:action="@{/starting-quiz/results}" method="post">
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>What is your gender?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <label class="radio-label"><input type="radio" th:name="gender" value="Male" required/><span class="select"></span><span class="radio-text">Male</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="gender" value="Female" required/><span class="select"></span><span class="radio-text">Female</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="gender" value="Other" required/><span class="select"></span><span class="radio-text">Other</span></label>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>What is your height in meters?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <div style="display: flex;">
+                    <button type="button" class="value-control" onclick="decrease01('height')" title="Decrease value" aria-label="Decrease value">
+                        <img alt="Minus" th:src="@{/assets/minus.svg}">
+                    </button>
+                    <input class="value-input" type="number" inputmode="decimal" value="1.50" id="height" th:name="height" required="required" min="0.00" max="5.00" step="0.01" style="margin: 0;">
+                    <button type="button" class="value-control" onclick="increase01('height')" title="Increase value" aria-label="Increase value">
+                        <img alt="Plus" th:src="@{/assets/plus.svg}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>What is your weight in kilograms?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <div style="display: flex;">
+                    <button type="button" class="value-control" onclick="decrease5('weight')" title="Decrease value" aria-label="Decrease value">
+                        <img alt="Minus" th:src="@{/assets/minus.svg}">
+                    </button>
+                    <input class="value-input" type="number" inputmode="decimal" value="50.0" id="weight" th:name="weight" required="required" min="0.0" max="1000.0" step="0.5" style="margin: 0;">
+                    <button type="button" class="value-control" onclick="increase5('weight')" title="Increase value" aria-label="Increase value">
+                        <img alt="Plus" th:src="@{/assets/plus.svg}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>How would you rate the quality of your sleep on a scale of 1 to 10?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <div style="display: flex;">
+                    <button type="button" class="value-control" onclick="decrease('ratingOfSleep')" title="Decrease value" aria-label="Decrease value">
+                        <img alt="Minus" th:src="@{/assets/minus.svg}">
+                    </button>
+                    <input class="value-input" type="number" inputmode="numeric" value="1" id="ratingOfSleep" th:name="ratingOfSleep" required="required" min="1" max="10" style="margin: 0;">
+                    <button type="button" class="value-control" onclick="increase('ratingOfSleep')" title="Increase value" aria-label="Increase value">
+                        <img alt="Plus" th:src="@{/assets/plus.svg}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>How many hours of sleep do you typically get per night (1-12)?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <div style="display: flex;">
+                    <button type="button" class="value-control" onclick="decrease('hoursOfSleep')" title="Decrease value" aria-label="Decrease value">
+                        <img alt="Minus" th:src="@{/assets/minus.svg}">
+                    </button>
+                    <input class="value-input" type="number" inputmode="numeric" value="1" id="hoursOfSleep" th:name="hoursOfSleep" required="required" min="1" max="12" style="margin: 0;">
+                    <button type="button" class="value-control" onclick="increase('hoursOfSleep')" title="Increase value" aria-label="Increase value">
+                        <img alt="Plus" th:src="@{/assets/plus.svg}">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>Do you have any difficulty falling asleep or staying asleep?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <label class="radio-label"><input type="radio" th:name="hardToSleep" value="Yes" required/><span class="select"></span><span class="radio-text">Yes</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="hardToSleep" value="No" required/><span class="select"></span><span class="radio-text">No</span></label>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>How often do you feel tired or fatigued during the day?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <label class="radio-label"><input type="radio" th:name="howOftenFeelTired" value="Rarely" required/><span class="select"></span><span class="radio-text">Rarely</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="howOftenFeelTired" value="Sometimes" required/><span class="select"></span><span class="radio-text">Sometimes</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="howOftenFeelTired" value="Often" required/><span class="select"></span><span class="radio-text">Often</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="howOftenFeelTired" value="Always" required/><span class="select"></span><span class="radio-text">Always</span></label>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>How would you describe your current level of stress?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <label class="radio-label"><input type="radio" th:name="stressLevel" value="Low" required/><span class="select"></span><span class="radio-text">Low</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="stressLevel" value="Moderate" required/><span class="select"></span><span class="radio-text">Moderate</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="stressLevel" value="High" required/><span class="select"></span><span class="radio-text">High</span></label>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>How many times do you engage in physical activity or exercise per week?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <label class="radio-label"><input type="radio" th:name="activePerWeek" value="None" required/><span class="select"></span><span class="radio-text">None</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="activePerWeek" value="1-2" required/><span class="select"></span><span class="radio-text">1-2</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="activePerWeek" value="3-4" required/><span class="select"></span><span class="radio-text">3-4</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="activePerWeek" value="5+" required/><span class="select"></span><span class="radio-text">5+</span></label>
+            </div>
+        </div>
+    </section>
+    <section class="question-section">
+        <div class="box">
+            <div class="box-header">
+                <h2>How often do you engage in activities that bring you joy or a sense of fulfillment?</h2>
+            </div>
+            <div class="box-content">
+                <div class="alert danger question" style="display: none;">Please answer this question (correctly)!</div>
+                <label class="radio-label"><input type="radio" th:name="fulfillment" value="Rarely" required/><span class="select"></span><span class="radio-text">Rarely</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="fulfillment" value="Sometimes" required/><span class="select"></span><span class="radio-text">Sometimes</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="fulfillment" value="Often" required/><span class="select"></span><span class="radio-text">Often</span></label><br>
+                <label class="radio-label"><input type="radio" th:name="fulfillment" value="Always" required/><span class="select"></span><span class="radio-text">Always</span></label>
+            </div>
+        </div>
+    </section>
 </form>
+<section class="bottom"></section>
+<footer>
+    <div class="footer-box">
+        <button type="button" class="prev-button button" style="min-width: 3rem; !important">◀</button>
+        <span id="counter" class="index margin-left-20">?</span>
+        <span class="index">｜</span>
+        <span id="total" class="index">?</span>
+        <button type="button" class="next-button button margin-left-20" style="min-width: 3rem; !important">▶</button>
+        <button type="submit" class="button-finish button">Finish</button>
+    </div>
+</footer>
+<div id="to-top" onclick="scrollToTop()" class="to-top-footer">
+    <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
-
 </body>
 </html>
