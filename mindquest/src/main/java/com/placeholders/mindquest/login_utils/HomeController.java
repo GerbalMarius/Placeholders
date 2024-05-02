@@ -41,8 +41,8 @@ public class HomeController {
 
         model.addAttribute("startingQuizNotTaken",isFirstTime);
 
-        Optional<User> currentUser = AuthController.currentUser();
-        ProfilePhoto photo = profilePhotoRepository.findById(currentUser.get().getId());
+
+        ProfilePhoto photo = profilePhotoRepository.findById(user.getId());
         if(photo != null)
         {
             byte[] profilePhotoData = photo.getData();
