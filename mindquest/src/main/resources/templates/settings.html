@@ -30,10 +30,8 @@
             <p>Last Name: <span th:text="${user.get().getLastName()}" class="bold"></span></p>
             <p>Email: <span th:text="${user.get().getEmail()}" class="bold"></span></p>
             <p>Gender: <span th:text="${user.get().getStartingQuizInfo().getGender()}" class="bold"></span></p>
-            <p>Average sleep duration: <span th:text="${user.get().getStartingQuizInfo().getHoursOfSleep()}"></span></p>
-            <p>Stress level: <span th:text="${user.get().getStartingQuizInfo().getStressLevel()}"></span></p>
-            <p>Height : <span th:text="${user.get().getStartingQuizInfo().getHeight()}"></span></p>
-            <p>Weight : <span th:text="${user.get().getStartingQuizInfo().getWeight()}"></span></p>
+            <p>Height: <span th:text="${user.get().getStartingQuizInfo().getHeight()}"class="bold"></span><span class="bold"> meters</span></p>
+            <p>Weight: <span th:text="${user.get().getStartingQuizInfo().getWeight()}"class="bold"></span><span class="bold"> kilograms</span></p>
             <p>Profile Picture:</p>
             <div id="profile-picture" style="min-height: 6rem !important; min-width: 6rem !important; justify-content: left;">
                 <img th:if="${photo == null}" th:src="@{/assets/user.svg}" alt="Default Image" style="scale: 0.75; height: 6rem; width: 6rem;">
