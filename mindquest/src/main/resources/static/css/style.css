@@ -565,6 +565,22 @@ Margin
     margin-left: 2rem !important;
 }
 
+.margin-right-05 {
+    margin-right: 0.5rem !important;
+}
+
+.margin-right-10 {
+    margin-right: 1rem !important;
+}
+
+.margin-right-15 {
+    margin-right: 1.5rem !important;
+}
+
+.margin-right-20 {
+    margin-right: 2rem !important;
+}
+
 /*
 Miscellaneous
  */

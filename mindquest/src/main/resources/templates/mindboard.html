@@ -50,7 +50,7 @@
             <a th:href="@{/dashboard/history}" class="button button-full">View Quiz History</a>
         </div>
         <div class="box-button">
-            <a th:href="@{/dashboard/request}" class="button button-full">Make a request message.</a>
+            <a th:href="@{/dashboard/request}" class="button button-full">Make a Feature Request</a>
         </div>
     </div>
 </section>
@@ -61,11 +61,11 @@
             <img th:if="${photo == null}" th:src="@{/assets/user.svg}" alt="Default Image" style="scale: 0.75;">
             <img th:unless="${photo == null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image">
         </a>
-        <a th:href="@{/settings/change_first_name}" class="index margin-left-20" style="margin-left: 5.75rem !important;">
+        <a th:href="@{/settings/change_first_name}" class="index margin-left-20 margin-right-20" style="margin-left: 5.75rem !important;">
             <span th:text="${currentUser.firstName}" id="name" class="index text-link"></span>
         </a>
-        <a th:href="@{/settings}" class="button button-full margin-left-20">Settings</a>
-        <a th:href="@{/logout}" class="button button-full margin-left-05" style="color: hwb(0 25% 0%);">Log Out</a>
+        <a th:unless="${startingQuizNotTaken == true}" th:href="@{/settings}" class="button button-full  margin-right-05">Settings</a>
+        <a th:href="@{/logout}" class="button button-full" style="color: hwb(0 25% 0%);">Log Out</a>
     </div>
 </footer>
 <div id="to-top" onclick="scrollToTop()" class="to-top-footer">
