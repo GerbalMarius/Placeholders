@@ -79,6 +79,7 @@ public class AuthController {
         logger.info("Registration successful for user: " + userData.getEmail());
 
         firstTimeUser = new UserDTO(userData.getId(), userData.getFirstName(), userData.getLastName(), userData.getEmail());
+        currentUser = savedUser;
 
         return savedUser.isAdmin() ? "redirect:/users" : "redirect:/mindboard";
     }
