@@ -39,25 +39,25 @@ public class QuizController {
     @Autowired
     private TimeStampService timeStampService;
 
-    @GetMapping("create")
+    @GetMapping("/create")
     public String getQuizCreationForm() {
         return "quiz-creation-form";
     }
 
-    @PostMapping("createQuiz")
+    @PostMapping("/createQuiz")
     public String createQuiz(@RequestParam int numOfQuestions, @RequestParam String title) {
         quizService.createQuiz(numOfQuestions, title);
         return "quiz-created";
     }
 
-    @GetMapping("getQuiz")
+    @GetMapping("/getQuiz")
     public String getRandomQuiz(Model model) {
         Quiz randomQuiz = quizService.getRandomQuiz();
         model.addAttribute("quiz", randomQuiz);
         return "quiz";
     }
 
-    @PostMapping("getScore")
+    @PostMapping("/getScore")
     public String getScore(@RequestParam("quizId") Integer quizId, @RequestParam Map<String, String> allParams, Model model) {
         // Extracts responses from allParams
         ArrayList<Response> responses = new ArrayList<>();

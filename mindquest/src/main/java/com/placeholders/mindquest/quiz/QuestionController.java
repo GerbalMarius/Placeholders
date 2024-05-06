@@ -12,12 +12,12 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
-    @GetMapping("allQuestions")
+    @GetMapping("/allQuestions")
     public List<Question> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public String addQuestion(@RequestBody Question question) {
         return questionService.addQuestion(question);
     }

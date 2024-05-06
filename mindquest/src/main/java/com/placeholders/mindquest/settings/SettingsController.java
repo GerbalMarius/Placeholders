@@ -87,7 +87,7 @@ public class SettingsController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "New user name can't be empty");
         }
     }
-    @PostMapping("settings/updateLastName")
+    @PostMapping("/settings/updateLastName")
     public String updateLastName(@RequestParam String lastName, Model model) {
         Optional<User> currentUser = AuthController.currentUser();
         if(currentUser.isPresent()) {
