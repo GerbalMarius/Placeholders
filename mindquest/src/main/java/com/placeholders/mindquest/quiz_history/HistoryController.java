@@ -18,7 +18,7 @@ public class HistoryController {
     private UserService userService;
 
 
-    @GetMapping("/dashboard/history")
+    @GetMapping("/quiz/history")
     public String getQuizHistory(Model model){
 
         if (!AuthController.isLoggedIn()){
