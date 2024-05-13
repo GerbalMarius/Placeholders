@@ -68,7 +68,7 @@
                 var file = fileInput.files[0];
 
                 // Check if the selected file size exceeds the limit
-                if (file && file.size >= 100000) {
+                if (file && file.size >= 1024*1024*5) {
                     alert("Boi, u trynna fit yer mom into dis? get smt smallr that fits for a profile pic");
                     return;
                 }
