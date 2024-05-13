@@ -30,9 +30,8 @@ public class JournalController {
     private SqlService sqlService;
 
     @GetMapping("/journal")
-    public String showJournalPage(Model model) {
-
-        if (!AuthController.isLoggedIn()){
+    public String showJournalPage(Model model, @RequestParam(defaultValue = "0") int page) {
+        if (!AuthController.isLoggedIn()) {
             return "redirect:/login?please";
         }
 
@@ -41,8 +40,24 @@ public class JournalController {
 
         String email = AuthController.currentUser().get().getEmail();
 
+        int pageSize = 5;
+        int startIndex = page * pageSize;
+        int endIndex = startIndex + pageSize;
+
         List<Journal> journalList = userRepository.findByEmail(email).getDiaryEntries();
-        model.addAttribute("journalList", journalList);
+        List<Journal> displayedEntries = journalList.subList(
+                Math.min(startIndex, journalList.size()),
+                Math.min(endIndex, journalList.size())
+        );
+
+        model.addAttribute("journalList", displayedEntries);
+        model.addAttribute("currentPage", page);
+
+
+        int totalEntries = journalList.size();
+        int totalPages = (int) Math.ceil((double) totalEntries / pageSize);
+        model.addAttribute("totalPages", totalPages);
+
         return "journal";
     }
 

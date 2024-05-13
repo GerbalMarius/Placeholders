@@ -12,9 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
+import javax.imageio.ImageIO;
 
 
 @Controller
@@ -109,16 +119,16 @@ public class SettingsController {
             try {
                 ProfilePhoto photo = new ProfilePhoto();
                 photo.setId(currentUser.get().getId());
-                photo.setData(profilePicture.getBytes());
-                int photoSize = photo.getData().length;
-                if (photoSize < 5000000)
-                {
-                    profilePhotoRepository.save(photo);
-                    model.addAttribute("message", "Picture changed successfully");
-                    return "redirect:/settings?profile_picture";
+
+                byte[] compressedImageData = compressImage(profilePicture.getBytes(), 250, 250);
+                if (compressedImageData == null) {
+                    return "redirect:/settings?error=Failed+to+upload+picture+try+another+image,+recommnded+to+use+.png+format";
                 }
-                model.addAttribute("error", "Failed to upload picture." +" " + "The photo is too fat boi");
-                return "redirect:/settings?error";
+                photo.setData(compressedImageData);
+
+                profilePhotoRepository.save(photo);
+                model.addAttribute("message", "Picture changed successfully");
+                return "redirect:/settings?profile_picture";
             } catch (IOException e) {
                 model.addAttribute("error", "Failed to upload picture." +" " + e.getMessage());
                 return "redirect:/settings?error";
@@ -127,6 +137,26 @@ public class SettingsController {
             model.addAttribute("pictureIsEmpty", "Picture update window is empty");
             return "redirect:/settings?empty_picture";
         }
+    }
+
+    // Method to compress image
+    private byte[] compressImage(byte[] imageData, int targetWidth, int targetHeight) throws IOException {
+
+        BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
+        originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
+        if (originalImage == null) {
+            return null;
+        }
+        Image scaledImage = originalImage.getScaledInstance(targetWidth, targetHeight, Image.SCALE_SMOOTH);
+        BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+
+        Graphics2D g2d = resizedImage.createGraphics();
+        g2d.drawImage(scaledImage, 0, 0, null);
+        g2d.dispose();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(resizedImage, "jpg", outputStream);
+        return outputStream.toByteArray();
     }
 
 }

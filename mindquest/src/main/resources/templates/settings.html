@@ -37,6 +37,10 @@
                 <img th:if="${photo == null}" th:src="@{/assets/user.svg}" alt="Default Image" style="scale: 0.75; height: 6rem; width: 6rem;">
                 <img th:unless="${photo == null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image" style="height: 6rem; width: 6rem;">
             </div>
+            <br>
+            <div th:if="${param.error}">
+                <p class="alert danger">Error: <span th:text="${param.error}" class="alert danger"></span></p>
+            </div>
         </div>
     </div>
 </section>
@@ -57,10 +61,20 @@
         <div class="box-button">
             <a th:href="@{/settings/change_profile_picture}" class="button button-full">Change Profile Picture</a>
         </div>
+
     </div>
 </section>
 <div id="to-top" onclick="scrollToTop()">
     <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
+
+<script>
+    document.getElementById("change-profile-picture").addEventListener("click", function(event) {
+        var errorjpg = "[[${errorjpg}]]";
+        if (errorjpg !== null) {
+            alert(errorjpg);
+        }
+    });
+</script>
 </body>
 </html>

@@ -5,6 +5,26 @@
     <title>MindQuest - Journal Entries</title>
     <script th:src="@{/js/top-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script>
+        function goToPreviousPage() {
+           var currentPage = [[${currentPage}]];
+            if (currentPage === 0) {
+                alert("There is no previous page.");
+            } else {
+                window.location.href = "/journal?page=" + (currentPage - 1);
+            }
+        }
+
+        function goToNextPage() {
+             var currentPage = [[${currentPage}]];
+    var totalPages = [[${totalPages}]];
+            if (currentPage === totalPages - 1) {
+                alert("There is no next page.");
+            } else {
+                window.location.href = "/journal?page=" + (currentPage + 1);
+            }
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -39,7 +59,7 @@
 <section>
     <div class="box">
         <div class="box-header">
-            <h1>Journal</h1>
+            <h1 th:text="${currentPage +1 }"></h1><h1>__</h1><h1 th:text="${totalPages}"></h1>
         </div>
     </div>
 </section>
@@ -63,6 +83,13 @@
         </form>
     </div>
 </section>
+
+<div class="pagination">
+    <button onclick="goToPreviousPage()">Previous</button>
+    <button onclick="goToNextPage()">Next</button>
+</div>
+
+
 <div id="to-top" onclick="scrollToTop()">
     <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
