@@ -37,7 +37,7 @@ public class RequestController {
         return "requests";
     }
 
-    @GetMapping("/dashboard/request")
+    @GetMapping("/request")
     public String loadDashboardRequest(Model model) {
         var dto = new RequestDTO();
         model.addAttribute("request", dto);
@@ -59,6 +59,6 @@ public class RequestController {
         newRequest.setEmail(actualUser.getEmail());
 
         requestRepository.save(newRequest);
-        return "redirect:/dashboard/request?success";
+        return "redirect:/request?success";
     }
 }

@@ -44,7 +44,7 @@ public class JournalControllerTest {
     public void testShowJournalPage() throws Exception {
         List<Journal> journals = new ArrayList<>();
         when(journalRepository.findAll()).thenReturn(journals);
-        String viewName = journalController.showJournalPage(model);
+        String viewName = journalController.showJournalPage(model,0);
         verify(model).addAttribute(eq("journal"), any(JournalDTO.class));
         verify(model).addAttribute("journalList", journals);
         assertEquals("journals", viewName);

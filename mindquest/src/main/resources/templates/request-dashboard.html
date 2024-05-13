@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
-    <title>Make a request</title>
+    <title>MindQuest - Make a Request</title>
 </head>
 <body>
 <header>
@@ -24,7 +24,7 @@
         <div class="box-header">
             <h1>Make a Request For Admin</h1>
         </div>
-        <p th:if="${param.success}" class="alert success margin-left-05">Your request was sent!</p>
+        <p th:if="${param.success}" class="alert success margin-left-15">Your request was sent!</p>
         <form method="post" role="form" th:action="@{/dashboard/request/create}" th:object="${request}">
             <textarea required class="box" id="content" name="message" rows="6" cols="80"  th:field="*{message}" placeholder="What's on your mind..."></textarea>
             <div class="box-button">

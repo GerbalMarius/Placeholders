@@ -56,6 +56,9 @@ public class JournalController {
 
         int totalEntries = journalList.size();
         int totalPages = (int) Math.ceil((double) totalEntries / pageSize);
+        if (totalPages < 1) {
+            totalPages = 1;
+        }
         model.addAttribute("totalPages", totalPages);
 
         return "journal";
@@ -105,4 +108,3 @@ public class JournalController {
         this.journalRepository = journalRepository;
     }
 }
-

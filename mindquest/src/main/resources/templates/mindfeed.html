@@ -2,7 +2,7 @@
 <html lang="en-US" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MindQuest - Quiz History</title>
+    <title>MindQuest - MindFeed</title>
     <script th:src="@{/js/top-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -23,29 +23,23 @@
 <section>
     <div class="box">
         <div class="box-header">
-            <h1>Quiz History</h1>
+            <h1>MindFeed</h1>
         </div>
     </div>
 </section>
-<section th:each="time : ${timeStamps}">
+<section th:each="post : ${posts}">
     <div class="box">
-        <div class="box-header">
-            <h2>Score</h2>
-        </div>
-        <div class="box-content">
-            <p class="last bold" th:text="${time.scorePercentageFormat()}"></p>
+        <div class="box-content" style="padding: 0 !important; overflow: hidden; height: 14.5rem;">
+            <img style="object-fit: cover; height: 14.5rem; width: 100%;" th:src="${post.thumbnail}">
         </div>
         <div class="box-header">
-            <h2>Date and Time</h2>
+            <h2 th:text="${post.title}">Title</h2>
         </div>
         <div class="box-content">
-            <p class="last" th:text="${time.getFormatWithMinutesAndHours()}"></p>
+            <p class="last" th:text="${post.description}"></p>
         </div>
-        <div class="box-header">
-            <h2>Tip Received</h2>
-        </div>
-        <div class="box-content">
-            <p class="last italic" th:text="${time.tipContent}"></p>
+        <div class="box-button">
+            <a th:href="${post.source}" target="_blank" class="button button-full">Open</a>
         </div>
     </div>
 </section>

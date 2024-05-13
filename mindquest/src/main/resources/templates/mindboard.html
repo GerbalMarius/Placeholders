@@ -29,10 +29,10 @@
 <section th:unless="${startingQuizNotTaken == true}">
     <div class="box">
         <div class="box-header">
-            <h2>Mental Wellness Metrics</h2>
+            <h2>Mental Wellness Metrics</h2><h3 style="margin-top: 0.5rem;">Average: ??%</h3>
         </div>
         <div class="box-content">
-            <canvas id="scoreChart" style="width:100%; height:500px;"></canvas>
+            <canvas id="scoreChart" style="width: 100%; height: 14.5rem;"></canvas>
             <script th:inline="javascript">
 
                 let labels = /*[[${dates}]]*/ [];
@@ -40,14 +40,27 @@
                 console.log(labels);
                 console.log(itemdata);
 
+                // Function to format date from "YYYY-MM-DD HH:MM" to "YY-MM-DD"
+                const formatDate = (dateString) => {
+                    const date = new Date(dateString);
+                    const year = date.getFullYear().toString().slice(-2);
+                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                    const day = date.getDate().toString().padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                };
+
+                // Format all date labels
+                labels = labels.map(date => formatDate(date));
+
                 const data = {
                     labels: labels,
                     datasets: [{
                         data: itemdata,
-                        borderColor: 'rgb(50, 168, 168)',
+                        borderColor: 'white',
+                        backgroundColor: 'rgba(255, 255, 255, 0.25)', // Transparent white fill
                         fill: true,
                         tension: 0.1,
-                        hoverBorderColor: 'red'
+                        hoverBorderColor: '#0e83b5bf'
                     }]
                 };
 
@@ -67,9 +80,31 @@
                                     beginAtZero: true,
                                     callback: (value, index, values) => {
                                         return `${value}%`;
-                                    }
+                                    },
+                                    fontColor: 'white', // Set the font color to white
+                                    fontFamily: 'Seurat-Pro-Demi-Bold' // Set font to Metropolis
+                                },
+                                gridLines: {
+                                    color: 'rgba(255, 255, 255, 0.5)', // Set the grid line color to white
+                                    drawBorder: true, lineWidth: 0,
+                                    zeroLineColor: 'transparent'
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    fontColor: 'white', // Set the font color to white
+                                    fontFamily: 'Seurat-Pro-Demi-Bold' // Set font to Metropolis
+                                },
+                                gridLines: {
+                                    color: 'rgba(255, 255, 255, 0.5)', // Set the grid line color to white
+                                    drawBorder: true, lineWidth: 0,
+                                    zeroLineColor: 'transparent'
                                 }
                             }]
+                        },
+                        tooltips: {
+                            backgroundColor: '#0e83b5bf', // Set the background color of the tooltip to white
+                            bodyFontFamily: 'Seurat-Pro-Demi-Bold' // Set the font family of the tooltip
                         }
                     }
                 };
@@ -91,13 +126,13 @@
             <a th:href="@{/journal}" class="button button-full">Open Journal</a>
         </div>
         <div class="box-button">
-            <a th:href="@{/meditation}" class="button button-full">View Meditation Recommendations</a>
+            <a th:href="@{/posts}" class="button button-full">View MindFeed</a>
         </div>
         <div class="box-button">
-            <a th:href="@{/dashboard/history}" class="button button-full">View Quiz History</a>
+            <a th:href="@{/quiz/history}" class="button button-full">View Quiz History</a>
         </div>
         <div class="box-button">
-            <a th:href="@{/dashboard/request}" class="button button-full">Make a Feature Request</a>
+            <a th:href="@{/request}" class="button button-full">Make a Feature Request</a>
         </div>
     </div>
 </section>

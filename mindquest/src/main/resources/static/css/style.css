@@ -202,6 +202,12 @@ h2 {
     font-size: 1.25rem;
 }
 
+h3 {
+    font-family: Seurat-Pro-Bold, sans-serif !important;
+    filter: drop-shadow(0 0 0.25rem var(--shadow));
+    font-size: 0.75rem;
+}
+
 a {
     text-decoration: none;
 }
