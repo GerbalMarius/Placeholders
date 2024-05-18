@@ -75,15 +75,24 @@ public class HomeController {
             localDateTimeList.add(stamp.getTimestamp());
         }
 
-        List<String> dates = localDateTimeList.stream()
+        List<LocalDateTime> firstSeven = localDateTimeList.subList(0, Math.min(7, localDateTimeList.size()));
+        Collections.reverse(firstSeven);
+        List<Integer> firstSevenPoints = points.subList(0, Math.min(7, points.size()));
+        Collections.reverse(firstSevenPoints);
+
+        List<String> dates = firstSeven.stream()
                 .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .toList();
 
-        System.out.print(points);
-        System.out.print(dates);
+        double average = Math.round(firstSevenPoints.stream().mapToInt(Integer::intValue).average().orElse(0.0));
 
-        model.addAttribute("points", points);
+        System.out.print(firstSevenPoints);
+        System.out.print(dates);
+        System.out.print(average);
+
+        model.addAttribute("points", firstSevenPoints);
         model.addAttribute("dates", dates);
+        model.addAttribute("average", average);
 
         List<Post> posts = postService.getPostsPagedLatest(0, 3);
 
