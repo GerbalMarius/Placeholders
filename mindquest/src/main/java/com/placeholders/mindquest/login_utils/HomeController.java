@@ -1,5 +1,7 @@
 package com.placeholders.mindquest.login_utils;
 
+import com.placeholders.mindquest.mindfeed.Post;
+import com.placeholders.mindquest.mindfeed.PostService;
 import com.placeholders.mindquest.settings.ProfilePhoto;
 import com.placeholders.mindquest.settings.ProfilePhotoRepository;
 import com.placeholders.mindquest.timestamp.TimeStamp;
@@ -26,6 +28,12 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
+    private final PostService postService;
+
+    @Autowired
+    public HomeController(PostService postService) {
+        this.postService = postService;
+    }
 
     @GetMapping("")
     public String home(){
@@ -77,6 +85,9 @@ public class HomeController {
         model.addAttribute("points", points);
         model.addAttribute("dates", dates);
 
+        List<Post> posts = postService.getPostsPagedLatest(0, 3);
+
+        model.addAttribute("posts", posts);
 
         return "mindboard";
     }
@@ -93,6 +104,4 @@ public class HomeController {
         }
         throw new NoSuchElementException("No users currently present!");
     }
-
-
 }

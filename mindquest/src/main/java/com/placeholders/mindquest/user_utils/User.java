@@ -52,6 +52,7 @@ public class User {
     private List<Point> points;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("timestamp DESC")
     private List<TimeStamp> timestampLog;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
@@ -62,7 +63,6 @@ public class User {
     
 
     public User() {
-
     }
 
     public User(String email, String password, String firstName, String lastName) {

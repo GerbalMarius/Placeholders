@@ -5,6 +5,45 @@
     <title>MindQuest - Quiz History</title>
     <script th:src="@{/js/top-script.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentPage = [[${currentPage}]];
+            var totalPages = [[${totalPages}]];
+            notAllowed(currentPage, totalPages);
+        });
+
+        function goToPreviousPage() {
+            var currentPage = [[${currentPage}]];
+            var totalPages = [[${totalPages}]];
+            notAllowed(currentPage, totalPages);
+            if (currentPage === 0) {
+                //alert("There is no previous page.");
+            } else {
+                window.location.href = "/quiz/history?page=" + (currentPage - 1);
+            }
+        }
+
+        function goToNextPage() {
+            var currentPage = [[${currentPage}]];
+            var totalPages = [[${totalPages}]];
+            notAllowed(currentPage, totalPages);
+            if (currentPage === totalPages - 1) {
+                //alert("There is no next page.");
+            } else {
+                window.location.href = "/quiz/history?page=" + (currentPage + 1);
+            }
+        }
+
+        function notAllowed(current, total) {
+            // Disable/enable previous and next buttons based on current page index
+            const prevButton = document.querySelector('.prev-button');
+            const nextButton = document.querySelector('.next-button');
+            prevButton.disabled = current === 0;
+            nextButton.disabled = current === total - 1;
+            prevButton.style.cursor = current === 0 ? 'not-allowed' : 'pointer';
+            nextButton.style.cursor = current === total - 1 ? 'not-allowed' : 'pointer';
+        }
+    </script>
 </head>
 <body>
 <header>
@@ -30,26 +69,24 @@
 <section th:each="time : ${timeStamps}">
     <div class="box">
         <div class="box-header">
-            <h2>Score</h2>
+            <h2 th:text="${time.scorePercentageFormat()}"></h2><h3 style="margin-top: 0.5rem;" th:text="${time.getFormatWithMinutesAndHours()}"></h3>
         </div>
         <div class="box-content">
-            <p class="last bold" th:text="${time.scorePercentageFormat()}"></p>
-        </div>
-        <div class="box-header">
-            <h2>Date and Time</h2>
-        </div>
-        <div class="box-content">
-            <p class="last" th:text="${time.getFormatWithMinutesAndHours()}"></p>
-        </div>
-        <div class="box-header">
-            <h2>Tip Received</h2>
-        </div>
-        <div class="box-content">
-            <p class="last italic" th:text="${time.tipContent}"></p>
+            <p>Tip Received: </p><p class="last italic" th:text="${time.tipContent}"></p>
         </div>
     </div>
 </section>
-<div id="to-top" onclick="scrollToTop()">
+<section class="bottom"></section>
+<footer>
+    <div class="footer-box">
+        <button onclick="goToPreviousPage()" type="button" class="prev-button button" style="width: 100%; !important">Previous Page</button>
+        <span id="counter" class="index margin-left-20" th:text="${currentPage+1}">?</span>
+        <span class="index">｜</span>
+        <span id="total" class="index" th:text="${totalPages}">?</span>
+        <button onclick="goToNextPage()" type="button" class="next-button button margin-left-20" style="width: 100%; !important">Next Page</button>
+    </div>
+</footer>
+<div id="to-top" onclick="scrollToTop()" class="to-top-footer">
     <img alt="To Top" th:src="@{/assets/top.svg}">
 </div>
 </body>

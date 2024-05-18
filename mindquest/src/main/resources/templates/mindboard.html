@@ -13,15 +13,22 @@
         <a id="logo" th:href="@{/}">MindQuest</a>
     </div>
 </header>
-<section>
+<section th:if="${startingQuizNotTaken == true}" >
     <div class="box">
         <div class="box-header">
-            <h1>Hello!</h1>
+            <h1>Welcome <span class="bold" style="font-size: 2rem !important;" th:text="${currentUser.firstName}"></span>!</h1>
         </div>
-        <div th:if="${startingQuizNotTaken == true}" class="box-button">
+        <div class="box-button">
             <a th:href="@{/starting_quiz}" class="button button-full">Take a Starting Quiz</a>
         </div>
-        <div th:unless="${startingQuizNotTaken == true}" class="box-button">
+    </div>
+</section>
+<section th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-header">
+            <h1>Welcome Back <span class="bold" style="font-size: 2rem !important;" th:text="${currentUser.firstName}"></span>!</h1>
+        </div>
+        <div class="box-button">
             <a th:href="@{/quiz/getQuiz}" class="button button-full">Take a Daily Quiz</a>
         </div>
     </div>
@@ -115,24 +122,58 @@
                 );
             </script>
         </div>
+        <div class="box-button">
+            <a th:href="@{/quiz/history}" class="button button-full">View Quiz History</a>
+        </div>
     </div>
 </section>
 <section th:unless="${startingQuizNotTaken == true}">
     <div class="box">
         <div class="box-header">
-            <h2>What would you like to do?</h2>
+            <h2>Write a Journal Entry</h2>
         </div>
         <div class="box-button">
             <a th:href="@{/journal}" class="button button-full">Open Journal</a>
         </div>
-        <div class="box-button">
-            <a th:href="@{/mindfeed}" class="button button-full">View MindFeed</a>
+    </div>
+</section>
+<section th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-header">
+            <h2>Make a Feature Request</h2>
         </div>
         <div class="box-button">
-            <a th:href="@{/quiz/history}" class="button button-full">View Quiz History</a>
+            <a th:href="@{/request}" class="button button-full">Open Request Form</a>
+        </div>
+    </div>
+</section>
+<section th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-header">
+            <h1>MindFeed</h1>
+        </div>
+    </div>
+</section>
+<section th:each="post : ${posts}" th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-content" style="padding: 0 !important; overflow: hidden; height: 14.5rem;">
+            <img style="object-fit: cover; height: 14.5rem; width: 100%;" th:src="${post.thumbnail}">
+        </div>
+        <div class="box-header">
+            <h2 th:text="${post.title}">Title</h2>
+        </div>
+        <div class="box-content">
+            <p class="last" th:text="${post.description}"></p>
         </div>
         <div class="box-button">
-            <a th:href="@{/request}" class="button button-full">Make a Feature Request</a>
+            <a th:href="${post.source}" target="_blank" class="button button-full">Open</a>
+        </div>
+    </div>
+</section>
+<section th:unless="${startingQuizNotTaken == true}">
+    <div class="box">
+        <div class="box-button">
+            <a th:href="@{/mindfeed}" class="button button-full">View More from MindFeed</a>
         </div>
     </div>
 </section>

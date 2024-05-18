@@ -1,9 +1,11 @@
 package com.placeholders.mindquest.journals;
 
 import com.placeholders.mindquest.login_utils.AuthController;
+import com.placeholders.mindquest.mindfeed.PostService;
 import com.placeholders.mindquest.security.SqlService;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserRepository;
+import com.placeholders.mindquest.user_utils.UserService;
 import jakarta.validation.Valid;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
 
-
 @Controller
 public class JournalController {
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private JournalRepository journalRepository;
 
@@ -28,6 +32,13 @@ public class JournalController {
 
     @Autowired
     private SqlService sqlService;
+
+    private final JournalService journalService;
+
+    @Autowired
+    public JournalController(JournalService journalService) {
+        this.journalService = journalService;
+    }
 
     @GetMapping("/journal")
     public String showJournalPage(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -38,28 +49,26 @@ public class JournalController {
         JournalDTO journal = new JournalDTO();
         model.addAttribute("journal", journal);
 
-        String email = AuthController.currentUser().get().getEmail();
+        Optional<User> currUser = AuthController.currentUser();
 
-        int pageSize = 5;
-        int startIndex = page * pageSize;
-        int endIndex = startIndex + pageSize;
+        currUser.ifPresent(user -> {
+            final User actual = userService.findUserByEmail(user.getEmail());
+            model.addAttribute("user", actual);
 
-        List<Journal> journalList = userRepository.findByEmail(email).getDiaryEntries();
-        List<Journal> displayedEntries = journalList.subList(
-                Math.min(startIndex, journalList.size()),
-                Math.min(endIndex, journalList.size())
-        );
+            int pageSize = 5;
 
-        model.addAttribute("journalList", displayedEntries);
-        model.addAttribute("currentPage", page);
+            List<Journal> journalList = journalService.getJournalPagedLatest(page, pageSize, actual);
+
+            model.addAttribute("journalList", journalList);
+            model.addAttribute("currentPage", page);
 
 
-        int totalEntries = journalList.size();
-        int totalPages = (int) Math.ceil((double) totalEntries / pageSize);
-        if (totalPages < 1) {
-            totalPages = 1;
-        }
-        model.addAttribute("totalPages", totalPages);
+            long totalPages = journalService.getTotalPageCount(pageSize, actual);
+            if (totalPages < 1) {
+                totalPages = 1;
+            }
+            model.addAttribute("totalPages", totalPages);
+        });
 
         return "journal";
     }

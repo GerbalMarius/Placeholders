@@ -29,6 +29,7 @@ public class JournalControllerTest {
     @MockBean
     private JournalRepository journalRepository;
     private JournalController journalController;
+    private JournalService journalService;
     private Model model;
 
 
@@ -36,7 +37,7 @@ public class JournalControllerTest {
     public void setUp() {
         journalRepository = mock(JournalRepository.class);
         model = mock(Model.class);
-        journalController = new JournalController();
+        journalController = new JournalController(journalService);
         journalController.setJournalRepository(journalRepository);
     }
 
@@ -63,7 +64,7 @@ public class JournalControllerTest {
     public void testCreateJournalEntry() {
         JournalRepository journalRepository = mock(JournalRepository.class);
 
-        JournalController journalController = new JournalController();
+        JournalController journalController = new JournalController(journalService);
 
         journalController.setJournalRepository(journalRepository);
 

@@ -439,7 +439,7 @@ textarea {
     padding: 1rem !important;
     border: none;
     transition: all 0.3s ease-in-out;
-    width: 31rem !important;
+    width: calc(100% - 1rem) !important;
     resize: vertical;
 }
 
