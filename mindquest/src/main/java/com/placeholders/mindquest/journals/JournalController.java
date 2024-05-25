@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,6 @@ public class JournalController {
         if (!AuthController.isLoggedIn()) {
             return "redirect:/login?please";
         }
-
         JournalDTO journal = new JournalDTO();
         model.addAttribute("journal", journal);
 
@@ -74,14 +74,15 @@ public class JournalController {
     }
 
     @PostMapping("/deleteJournal")
-    public String deleteJournal(@RequestParam("id") int journalId) {
-
+    public String deleteJournal(@RequestParam("id") int journalId,@RequestParam("page") int page) {
+        long count = journalRepository.count();
+        if(count % 5 == 1 && page != 0 && page != 1) page--;
         sqlService.deleteJournal(journalId);
-        return "redirect:/journal";
+        return "redirect:/journal?page="+page;
     }
 
     @PostMapping("/createJournal")
-    public String createJournalEntry(@Valid @ModelAttribute("journal") Journal journal) {
+    public String createJournalEntry(@Valid @ModelAttribute("journal") Journal journal, @RequestParam("page") int page) {
         Journal newJournal = new Journal();
         newJournal.setTitle(journal.getTitle());
         newJournal.setDiaryEntry("What's on your mind...");
@@ -89,16 +90,17 @@ public class JournalController {
         Optional<User> curr = AuthController.currentUser();
         curr.ifPresent( u -> {
             val user = userRepository.findByEmail(u.getEmail());
+            newJournal.setDate(LocalDateTime.now());
             user.addJournal(newJournal);
             newJournal.setUser(user);
             journalRepository.save(newJournal);
         });
 
-        return "redirect:/journal";
+        return "redirect:/journal?page="+page;
     }
 
     @PostMapping("/updateJournal")
-    public String updateJournal(@RequestParam("id") int journalId, @RequestParam("content") String content) {
+    public String updateJournal(@RequestParam("id") int journalId, @RequestParam("content") String content,@RequestParam("page") int page) {
         val foundJournal = journalRepository.findById(journalId);
 //     if (journal != null) {
 //         journal.setDiaryEntry(content);
@@ -110,7 +112,7 @@ public class JournalController {
             journalRepository.save(journal);
         }
 
-        return "redirect:/journal";
+        return "redirect:/journal?page="+page;
     }
 
     public void setJournalRepository(JournalRepository journalRepository) {

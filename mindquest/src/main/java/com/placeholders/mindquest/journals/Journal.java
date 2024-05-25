@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+
 @Entity
 @Setter
 @Getter
@@ -18,7 +21,8 @@ public class Journal {
     private String title;
     @Column(name = "diaryEntry",nullable = false, length = 800)
     private String diaryEntry;
-
+    @Column(name ="entryDate",nullable = false)
+    private LocalDateTime date;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
