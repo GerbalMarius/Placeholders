@@ -106,6 +106,7 @@ public class JournalController {
         if (foundJournal.isPresent()) {
             val journal = foundJournal.get();
             journal.setDiaryEntry(content);
+            journal.setDate(LocalDateTime.now());
             journalRepository.save(journal);
         }
 
