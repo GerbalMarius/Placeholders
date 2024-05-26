@@ -28,15 +28,19 @@
         <div class="box-header">
             <h1>Welcome Back <span class="bold" style="font-size: 2rem !important;" th:text="${currentUser.firstName}"></span>!</h1>
         </div>
-        <div class="box-button">
+        <div class="box-button" th:unless="${param.quizAlreadyTaken}">
             <a th:href="@{/quiz/getQuiz}" class="button button-full">Take a Daily Quiz</a>
+        </div>
+        <div class="box-content" th:if="${param.quizAlreadyTaken}">
+            <h2 class="alert danger" style="color: hwb(0 25% 0%); text-align: center !important">You've already completed the daily quiz for today.</h2>
+            <h2 class="alert danger" style="color: hwb(0 25% 0%); text-align: center !important" th:text="'You can take the quiz again after ' + ${timeLeft}"></h2>
         </div>
     </div>
 </section>
 <section th:unless="${startingQuizNotTaken == true}">
     <div class="box">
         <div class="box-header">
-            <h2>Mental Wellness Metrics</h2><h3 style="margin-top: 0.5rem;">Average: ??%</h3>
+            <h2>Mental Wellness Metrics</h2><h3 style="margin-top: 0.5rem;" th:text="'Average: ' + ${average} + '%'"></h3>
         </div>
         <div class="box-content">
             <canvas id="scoreChart" style="width: 100%; height: 14.5rem;"></canvas>

@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 @Controller
@@ -47,14 +50,10 @@ public class HomeController {
             return "redirect:/login?please";
         }
         var user = getUser();
-
-
         model.addAttribute("currentUser", user);
 
         boolean isFirstTime = AuthController.firstTimeUser().isPresent();
-
         model.addAttribute("startingQuizNotTaken",isFirstTime);
-
 
         ProfilePhoto photo = profilePhotoRepository.findById(user.getId());
         if(photo != null)
@@ -66,6 +65,19 @@ public class HomeController {
         }
 
         final User actual = userService.findUserByEmail(user.getEmail());
+        processTimestamps(actual, model);
+
+        timeLeftTillDailyQuiz(model);
+
+        List<Post> posts = postService.getPostsPagedLatest(0, 3);
+
+        model.addAttribute("posts", posts);
+
+        return "mindboard";
+    }
+
+    private void processTimestamps(User actual, Model model) {
+
         List<TimeStamp> stamps = actual.getTimestampLog();
         List<Integer> points = new ArrayList<>();
         List<LocalDateTime> localDateTimeList = new ArrayList<>();
@@ -75,21 +87,33 @@ public class HomeController {
             localDateTimeList.add(stamp.getTimestamp());
         }
 
-        List<String> dates = localDateTimeList.stream()
+        List<LocalDateTime> firstSeven = localDateTimeList.subList(0, Math.min(7, localDateTimeList.size()));
+        Collections.reverse(firstSeven);
+        List<Integer> firstSevenPoints = points.subList(0, Math.min(7, points.size()));
+        Collections.reverse(firstSevenPoints);
+
+        List<String> dates = firstSeven.stream()
                 .map(date -> date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .toList();
 
-        System.out.print(points);
-        System.out.print(dates);
+        double average = Math.round(firstSevenPoints.stream().mapToInt(Integer::intValue).average().orElse(0.0));
 
-        model.addAttribute("points", points);
+        model.addAttribute("points", firstSevenPoints);
         model.addAttribute("dates", dates);
+        model.addAttribute("average", average);
+    }
 
-        List<Post> posts = postService.getPostsPagedLatest(0, 3);
+    private void timeLeftTillDailyQuiz(Model model) {
 
-        model.addAttribute("posts", posts);
+        LocalTime now = LocalTime.now();
+        LocalTime midnight = LocalTime.of(23, 59,59);
 
-        return "mindboard";
+        long hoursLeft = now.until(midnight, ChronoUnit.HOURS);
+        long minutesLeft = now.until(midnight, ChronoUnit.MINUTES) % 60;
+
+        String timeLeft = String.format("%d hours %d minutes", hoursLeft, minutesLeft);
+
+        model.addAttribute("timeLeft", timeLeft);
     }
 
     private static UserDTO getUser() {

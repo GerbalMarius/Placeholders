@@ -14,8 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,9 +56,41 @@ public class QuizController {
 
     @GetMapping("/getQuiz")
     public String getRandomQuiz(Model model) {
-        Quiz randomQuiz = quizService.getRandomQuiz();
-        model.addAttribute("quiz", randomQuiz);
-        return "quiz";
+
+        Optional<User> currentUser = AuthController.currentUser();
+        if (currentUser.isPresent()) {
+
+            model.addAttribute("hoursLeft", 0);
+
+            User user = userService.findUserByEmail(currentUser.get().getEmail());
+            if (isAccessAllowed(user)) {
+
+                Quiz randomQuiz = quizService.getRandomQuiz();
+                model.addAttribute("quiz", randomQuiz);
+                return "quiz";
+            }
+            else {
+                return "redirect:/mindboard?quizAlreadyTaken"; // access is not allowed
+            }
+        }
+        else {
+            return "login"; // user is not authenticated
+        }
+
+    }
+
+    public static boolean isAccessAllowed(User user) {
+
+        List<TimeStamp> stamps = user.getTimestampLog();
+        if (!stamps.isEmpty()) {
+
+            TimeStamp lastTimeStamp = stamps.get(0);
+            LocalDateTime lastTimeTheTestTaken = lastTimeStamp.getTimestamp();
+            LocalDate currentDate = LocalDate.now();
+
+            return !currentDate.equals(LocalDate.from(lastTimeTheTestTaken));
+        }
+        return true; // allow access if no previous test taken
     }
 
     @PostMapping("/getScore")
