@@ -67,6 +67,7 @@
         <div class="box-content">
             <form method="post" role="form" th:action="@{/createJournal}" th:object="${journal}">
                 <div>
+                    <input type="hidden" name="page" th:value="${currentPage}" />
                     <label for="title">New Journal Entry Title</label>
                     <input type="text" id="title" name="title" required placeholder="Enter journal entry title" th:field="*{title}">
                 </div>
@@ -85,10 +86,11 @@
 <section th:each="journal : ${journalList}">
     <div class="box">
         <div class="box-header">
-            <h2 th:text="${journal.title}"></h2><h3 style="margin-top: 0.5rem;">YYYY-MM-DD HH:MM</h3>
+            <h2 th:text="${journal.title}"></h2><h3 style="margin-top: 0.5rem;" th:text="${journal.date}"></h3>
         </div>
         <form th:action="@{/updateJournal}" method="post" >
             <input type="hidden" id="id" name="id" th:value="${journal.id}"/>
+            <input type="hidden" name="page" th:value="${currentPage}" />
             <textarea placeholder="What's on your mind..." id="content" name="content" rows="8" cols="60" th:text="${journal.diaryEntry}" class="box"></textarea>
             <div class="box-button">
                 <button type="submit" class="button button-full">Save</button>
@@ -96,6 +98,7 @@
         </form>
         <form th:action="@{/deleteJournal}" method="post">
             <input type="hidden" th:name="id" th:value="${journal.id}"/>
+            <input type="hidden" name="page" th:value="${currentPage}" />
             <div class="box-button">
                 <button type="submit" class="button button-full">Delete</button>
             </div>

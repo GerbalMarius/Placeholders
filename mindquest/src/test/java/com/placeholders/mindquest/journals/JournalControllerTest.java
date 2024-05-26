@@ -55,7 +55,7 @@ public class JournalControllerTest {
     public void testDeleteJournal() {
         int journalId = 1;
 
-        journalController.deleteJournal(journalId);
+        journalController.deleteJournal(journalId,0);
 
         verify(journalRepository).deleteById(journalId);
     }
@@ -81,7 +81,7 @@ public class JournalControllerTest {
 
             return savedJournal;
         });
-        journalController.createJournalEntry(journalArgument);
+        journalController.createJournalEntry(journalArgument,0);
         verify(journalRepository).save(any(Journal.class));
     }
     @Test
@@ -103,7 +103,7 @@ public class JournalControllerTest {
 
         when(journalRepository.findById(anyInt())).thenReturn(Optional.of(journal));
 
-        journalController.updateJournal(journalId, content);
+        journalController.updateJournal(journalId, content,0);
 
         assert(journal.getDiaryEntry().equals(content));
         verify(journalRepository).save(journal);
