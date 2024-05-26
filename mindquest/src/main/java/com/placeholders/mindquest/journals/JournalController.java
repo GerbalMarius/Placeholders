@@ -101,11 +101,8 @@ public class JournalController {
 
     @PostMapping("/updateJournal")
     public String updateJournal(@RequestParam("id") int journalId, @RequestParam("content") String content,@RequestParam("page") int page) {
+
         val foundJournal = journalRepository.findById(journalId);
-//     if (journal != null) {
-//         journal.setDiaryEntry(content);
-//         journalRepository.save(journal);
-//     }
         if (foundJournal.isPresent()) {
             val journal = foundJournal.get();
             journal.setDiaryEntry(content);
