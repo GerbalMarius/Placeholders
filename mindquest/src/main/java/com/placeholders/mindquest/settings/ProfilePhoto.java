@@ -16,7 +16,7 @@ public class ProfilePhoto {
     private long id;
 
     @JsonIgnore
-    @Column(name = "data", nullable = false, length = 1024*1024*5)
+    @Column(name = "data", nullable = false, length = 1000000)
     private byte[] data;
 
     public ProfilePhoto() {

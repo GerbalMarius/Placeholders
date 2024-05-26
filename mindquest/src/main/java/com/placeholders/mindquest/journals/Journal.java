@@ -17,12 +17,16 @@ public class Journal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "title", nullable = false, length = 70)
     private String title;
+
     @Column(name = "diaryEntry",nullable = false, length = 800)
     private String diaryEntry;
+
     @Column(name ="entryDate",nullable = false)
     private LocalDateTime date;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;

@@ -29,7 +29,6 @@ public class AuthController {
     private final UserService userService;
 
     private static User currentUser = null;
-    private static UserDTO firstTimeUser = null;
 
 
 
@@ -59,10 +58,7 @@ public class AuthController {
     @PostMapping("/register/save")
     public String saveRegisteredUser(@Valid @ModelAttribute("user") UserDTO userData, BindingResult authResult, Model model){
 
-
-
         User existingUser = userService.findUserByEmail(userData.getEmail());
-
 
         if (existingUser != null && existingUser.getEmail() != null && !existingUser.getEmail().isEmpty()){
             authResult.reject("email", null, "There is already an registered user with the same email.");
@@ -78,7 +74,6 @@ public class AuthController {
         User savedUser = userService.saveUser(userData);
         logger.info("Registration successful for user: " + userData.getEmail());
 
-        firstTimeUser = new UserDTO(userData.getId(), userData.getFirstName(), userData.getLastName(), userData.getEmail());
         currentUser = savedUser;
 
         return savedUser.isAdmin() ? "redirect:/users" : "redirect:/mindboard";
@@ -126,17 +121,15 @@ public class AuthController {
 
 
         currentUser = userToFind;
-      
 
 
-        logger.info("Login successful for user: " + userData.getEmail() + " " + (isAdmin ? "ADMIN" : " "));
+        logger.info("Login successful for user: {} {}", userData.getEmail(), isAdmin ? "ADMIN" : " ");
         return  isAdmin ? "redirect:/users" : "redirect:/mindboard";
     }
 
     @GetMapping("/logout")
     public String logout(){
         currentUser = null;
-        firstTimeUser = null;
         logger.info("Session has been cleared.");
         return "redirect:/login?logout";
     }
@@ -169,13 +162,6 @@ public class AuthController {
         AuthController.currentUser = currentUser;
     }
 
-    public static Optional<UserDTO> firstTimeUser(){
-        return Optional.ofNullable(firstTimeUser);
-    }
-
-    public static void setFirstTimeUser(UserDTO firstTimeUser) {
-        AuthController.firstTimeUser = firstTimeUser;
-    }
 
     public static boolean isLoggedIn(){
         return currentUser().isPresent();

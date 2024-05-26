@@ -47,6 +47,11 @@ public class StartingQuizInfo {
     @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
+    public StartingQuizInfo() {
+
+    }
+
+
     @Override
     public String toString() {
         return  gender + ";" + height + ";" + weight + ";" + ratingOfSleep + ";" + hoursOfSleep + ";" + hardToSleep + ";" +

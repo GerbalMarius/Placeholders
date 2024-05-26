@@ -18,11 +18,14 @@ import java.io.IOException;
 @Controller
 public class StaringQuizController {
 
-    @Autowired
-    private StartingQuizRepository startingQuizRepository;
+    private final StartingQuizRepository startingQuizRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public StaringQuizController(StartingQuizRepository startingQuizRepository, UserRepository userRepository) {
+        this.startingQuizRepository = startingQuizRepository;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/starting_quiz")
     public String startingQuiz(Model model) {
@@ -34,7 +37,7 @@ public class StaringQuizController {
     @PostMapping("/starting-quiz/results")
     public String SubmitQuiz(@ModelAttribute StartingQuizInfo startingQuizInfo, Model model) {
 
-        if (AuthController.firstTimeUser().isEmpty()){
+        if (!AuthController.isLoggedIn()){
             return "redirect:/register";
         }
 
@@ -42,13 +45,13 @@ public class StaringQuizController {
         String mentalState = calculateMentalState(startingQuizInfo);
         System.out.println("Submitted quiz info: " + startingQuizInfo);
 
-        UserDTO user = AuthController.firstTimeUser().get();
+        UserDTO user = AuthController.currentUser().get().getTransferableData();
         final User actualUser = userRepository.findByEmail(user.getEmail());
         actualUser.setStartingQuizInfo(startingQuizInfo);
         startingQuizInfo.setUser(actualUser);
         startingQuizRepository.save(startingQuizInfo);
 
-        AuthController.setFirstTimeUser(null);
+
         AuthController.setCurrentUser(actualUser);
 
         // Returns a view with the submitted data and mental state

@@ -72,7 +72,6 @@ class AuthControllerTests {
         dtoCaptor = null;
         emptyUserData();
 
-        AuthController.setFirstTimeUser(null);
         AuthController.setCurrentUser(null);
     }
 
@@ -129,7 +128,7 @@ class AuthControllerTests {
         String viewName = authController.saveRegisteredUser(userData, authResult, model);
 
         assertFalse(authResult.hasErrors());
-        assertEquals("redirect:/register?success", viewName);
+        assertEquals("redirect:/mindboard", viewName);
     }
 
     @Test
@@ -181,7 +180,7 @@ class AuthControllerTests {
                 ),
                 Arguments.of(
                         new User("not@admin.gmail.com", "1254", "NotAdmin", "NotAdmin", List.of(Role.of("USER"))),
-                        "redirect:/dashboard"
+                        "redirect:/mindboard"
                 )
         );
     }
@@ -191,7 +190,6 @@ class AuthControllerTests {
 
         String viewName = authController.logout();
 
-        assertFalse(AuthController.firstTimeUser().isPresent());
         assertFalse(AuthController.isLoggedIn());
         assertEquals("redirect:/login?logout", viewName);
     }

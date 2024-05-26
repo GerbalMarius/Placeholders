@@ -4,6 +4,7 @@ import com.placeholders.mindquest.mindfeed.Post;
 import com.placeholders.mindquest.mindfeed.PostService;
 import com.placeholders.mindquest.settings.ProfilePhoto;
 import com.placeholders.mindquest.settings.ProfilePhotoRepository;
+import com.placeholders.mindquest.starting_quiz.StartingQuizRepository;
 import com.placeholders.mindquest.timestamp.TimeStamp;
 import com.placeholders.mindquest.user_utils.User;
 import com.placeholders.mindquest.user_utils.UserDTO;
@@ -25,17 +26,20 @@ import java.util.*;
 @RequestMapping("/")
 public class HomeController {
 
-    @Autowired
-    private ProfilePhotoRepository profilePhotoRepository;
+    private final ProfilePhotoRepository profilePhotoRepository;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     private final PostService postService;
 
-    @Autowired
-    public HomeController(PostService postService) {
+    private final StartingQuizRepository startingQuizRepository;
+
+    public HomeController(PostService postService, ProfilePhotoRepository profilePhotoRepository, UserService userService
+    , StartingQuizRepository startingQuizRepository) {
         this.postService = postService;
+        this.profilePhotoRepository = profilePhotoRepository;
+        this.userService = userService;
+        this.startingQuizRepository = startingQuizRepository;
     }
 
     @GetMapping("")
@@ -46,14 +50,13 @@ public class HomeController {
     @GetMapping("/mindboard")
     public String mindboard(Model model){
 
-        if (!AuthController.isLoggedIn() && AuthController.firstTimeUser().isEmpty()){
+        if (!AuthController.isLoggedIn()){
             return "redirect:/login?please";
         }
         var user = getUser();
         model.addAttribute("currentUser", user);
 
-        boolean isFirstTime = AuthController.firstTimeUser().isPresent();
-        model.addAttribute("startingQuizNotTaken",isFirstTime);
+
 
         ProfilePhoto photo = profilePhotoRepository.findById(user.getId());
         if(photo != null)
@@ -65,6 +68,10 @@ public class HomeController {
         }
 
         final User actual = userService.findUserByEmail(user.getEmail());
+
+        boolean isFirstTime = startingQuizRepository.findByUserId(actual.getId()) == null;
+
+        model.addAttribute("startingQuizNotTaken",isFirstTime);
         processTimestamps(actual, model);
 
         timeLeftTillDailyQuiz(model);
@@ -106,7 +113,7 @@ public class HomeController {
     private void timeLeftTillDailyQuiz(Model model) {
 
         LocalTime now = LocalTime.now();
-        LocalTime midnight = LocalTime.of(23, 59,59);
+        LocalTime midnight = LocalTime.MAX; //23:59:59.59
 
         long hoursLeft = now.until(midnight, ChronoUnit.HOURS);
         long minutesLeft = now.until(midnight, ChronoUnit.MINUTES) % 60;
@@ -117,10 +124,7 @@ public class HomeController {
     }
 
     private static UserDTO getUser() {
-        if (AuthController.firstTimeUser().isPresent()){
-            return AuthController.firstTimeUser().get();
-        }
-        else if (AuthController.currentUser().isPresent()){
+        if (AuthController.currentUser().isPresent()){
 
             return AuthController.currentUser()
                     .map(User::getTransferableData)
