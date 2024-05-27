@@ -38,7 +38,7 @@
                 <img th:unless="${photo == null}" th:src="${'data:image/png;base64,' + profilePhotoData}" alt="Uploaded Image" style="height: 6rem; width: 6rem;">
             </div>
             <div style="margin-top: 0.5rem" th:if="${param.error}">
-                <p class="alert danger">Error: <span th:text="${param.error}" class="alert danger"></span></p>
+                <p class="alert danger" style="margin-bottom: 0 !important;">Error: <span th:text="${param.error}" class="alert danger" style="margin-bottom: 0 !important;"></span></p>
             </div>
         </div>
     </div>
