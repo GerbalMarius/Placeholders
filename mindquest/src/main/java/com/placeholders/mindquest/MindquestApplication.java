@@ -12,7 +12,7 @@ import java.io.IOException;
 @Slf4j
 public class MindquestApplication {
 
-	private static final String URL = "http://localhost:8081";
+	private static final String URL = "http://localhost:8085";
 	private static final Logger logger = LoggerFactory.getLogger(MindquestApplication.class);
 
 	public static void main(String[] args) {
