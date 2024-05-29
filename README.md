@@ -63,4 +63,4 @@ We encourage users to contribute their ideas and suggestions to help us improve 
 
 
 *MindQuest is developed and maintained by the Placeholders Team ❤️.*
-For more information about Spring, please refer to the [Spring Documentation](https://spring.io/docs).
+For more information about Spring, please refer to the [Spring Documentation](https://spring.io/projects).
